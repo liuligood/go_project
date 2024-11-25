@@ -3,7 +3,7 @@ package main
 import (
 	"crmeb_go/config"
 	"crmeb_go/internal/server"
-	xconfig "crmeb_go/utils/iconfig"
+	iconfig "crmeb_go/utils/iconfig"
 	"crmeb_go/utils/izap"
 	"flag"
 	"fmt"
@@ -43,11 +43,11 @@ func (p *program) Start() error {
 
 	var c config.Conf
 	*confFile = "/Users/ranzhou/project/src/crmeb_go/config/config.yaml"
-	xconfig.New(&c, *confFile)
+	iconfig.New(&c, *confFile)
 
 	logger := izap.NewZap(c.Log) // 初始化zap日志库
-	//p.svcContext = server.NewSvcContext(c, logger)
-	//
+	p.svcContext = server.NewSvcContext(c, logger)
+
 	//appCxt := internal.Register(p.svcContext)
 	//
 	//go func() {

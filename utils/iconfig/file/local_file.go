@@ -38,6 +38,7 @@ func (f *Config) Load() (map[string]interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return config, nil
 }
 

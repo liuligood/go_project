@@ -13,11 +13,13 @@ type FileReader interface {
 
 func New(c interface{}, confFile string) {
 	var reader FileReader
+
 	if confFile != "" {
 		reader = file.NewConfig(confFile)
 	} else {
 		reader = nacos.NewConfig("yaml")
 	}
+
 	load(&c, reader)
 }
 
@@ -31,12 +33,13 @@ func load(c interface{}, reader FileReader) {
 		panic("iconfig load error：must provide a iconfig content")
 	}
 
-	configBytes, err := json.Marshal(rawConfig)
+	configByteList, err := json.Marshal(rawConfig)
 	if err != nil {
 		panic(fmt.Errorf("failed to marshal iconfig: %w", err))
 	}
 
-	if err := json.Unmarshal(configBytes, &c); err != nil {
+	if err := json.Unmarshal(configByteList, &c); err != nil {
 		panic(fmt.Errorf("failed to unmarshal iconfig into struct: %w", err))
 	}
+
 }

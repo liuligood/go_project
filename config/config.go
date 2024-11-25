@@ -4,6 +4,9 @@ type Conf struct {
 	App    App    `json:"app"`    // 应用配置
 	Server Server `json:"server"` // 服务配置
 	Log    Zap    `json:"log"`    // 日志配置
+	System System `json:"system"` // 系统配置
+	Mysql  Mysql  `json:"mysql"`  // mysql
+	Pgsql  Pgsql  `json:"pgsql"`  // pgsql
 }
 
 type App struct {
@@ -21,4 +24,17 @@ type Server struct {
 type Network struct {
 	Addr string `json:"addr"` // 地址
 	Mode string `json:"mode"` // 模式（etcd、直连）
+}
+
+type System struct {
+	DbType        string `mapstructure:"db-type" json:"db-type" yaml:"db-type"`    // 数据库类型:mysql(默认)|sqlite|sqlserver|postgresql
+	OssType       string `mapstructure:"oss-type" json:"oss-type" yaml:"oss-type"` // Oss类型
+	RouterPrefix  string `mapstructure:"router-prefix" json:"router-prefix" yaml:"router-prefix"`
+	Addr          int    `mapstructure:"addr" json:"addr" yaml:"addr"` // 端口值
+	LimitCountIP  int    `mapstructure:"iplimit-count" json:"iplimit-count" yaml:"iplimit-count"`
+	LimitTimeIP   int    `mapstructure:"iplimit-time" json:"iplimit-time" yaml:"iplimit-time"`
+	UseMultipoint bool   `mapstructure:"use-multipoint" json:"use-multipoint" yaml:"use-multipoint"`    // 多点登录拦截
+	UseRedis      bool   `mapstructure:"use-redis" json:"use-redis" yaml:"use-redis"`                   // 使用redis
+	UseMongo      bool   `mapstructure:"use-mongo" json:"use-mongo" yaml:"use-mongo"`                   // 使用mongo
+	UseStrictAuth bool   `mapstructure:"use-strict-auth" json:"use-strict-auth" yaml:"use-strict-auth"` // 使用树形角色分配模式
 }

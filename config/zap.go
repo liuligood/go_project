@@ -33,6 +33,7 @@ func (c *Zap) Levels() []zapcore.Level {
 	return levels
 }
 
+// Encoder 日志编码器
 func (c *Zap) Encoder() zapcore.Encoder {
 	config := zapcore.EncoderConfig{
 		TimeKey:       "time",

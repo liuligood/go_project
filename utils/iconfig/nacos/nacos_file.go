@@ -43,13 +43,15 @@ func NewConfig(formatName string) *Config {
 }
 
 func (n *Config) Load() (map[string]interface{}, error) {
+	var err error
+
 	n.nacos = new(ConfigNacos)
 	if err := env.Parse(n.nacos); err != nil {
 		panic(err)
 	}
 
 	if n.nacos.Host == "" || n.nacos.Port == 0 || n.nacos.UserName == "" || n.nacos.PassWd == "" {
-		panic("nacos 配置文件信息缺失：" + fmt.Sprintf("nacos 配置信息：%+v", n.nacos))
+		panic("Nacos 配置文件信息缺失：" + fmt.Sprintf("Nacos 配置信息：%+v", n.nacos))
 	}
 
 	// 初始化配置项
@@ -59,9 +61,11 @@ func (n *Config) Load() (map[string]interface{}, error) {
 
 	separator := string(os.PathSeparator)
 	currentPath := file.GetCurrentPath() + separator
+
 	if n.nacos.CacheDir == "" {
 		n.nacos.CacheDir = currentPath + "public" + separator + "nacos" + separator + "cache"
 	}
+
 	if n.nacos.LogDir == "" {
 		n.nacos.LogDir = currentPath + "log"
 	}
@@ -81,7 +85,6 @@ func (n *Config) Load() (map[string]interface{}, error) {
 		ClientConfig:  cc,
 	}
 
-	var err error
 	n.client, err = clients.NewConfigClient(*n.connCfg)
 	if err != nil {
 		return nil, err

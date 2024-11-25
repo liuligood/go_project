@@ -18,16 +18,20 @@ func NewZapCore(za *config.Zap, level zapcore.Level) *ZapCore {
 	entity := &ZapCore{level: level, zap: za}
 
 	syncer := entity.WriteSyncer()
+
+	// 定义一个用于判断日志级别是否应该被启用的函数，这个函数在创建 zapcore.Core 实例时被使用，以确保只有特定级别的日志会被记录。
 	levelEnabler := zap.LevelEnablerFunc(func(l zapcore.Level) bool {
 		return l == level
 	})
 
+	// 定义core
 	entity.Core = zapcore.NewCore(za.Encoder(), syncer, levelEnabler)
 
 	return entity
 }
 
 func (z *ZapCore) WriteSyncer(formats ...string) zapcore.WriteSyncer {
+	// 用于管理日志文件的切割和保存
 	cutter := NewCutter(
 		z.zap.Director,
 		z.level.String(),
@@ -41,6 +45,7 @@ func (z *ZapCore) WriteSyncer(formats ...string) zapcore.WriteSyncer {
 		return zapcore.AddSync(multiSyncer)
 	}
 
+	// 输出位置
 	return zapcore.AddSync(cutter)
 }
 
