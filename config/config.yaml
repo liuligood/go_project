@@ -1,0 +1,21 @@
+app:
+  name: crmeb_go
+  env: local
+  key: '7kgDM7GoR0KngCJEwBIc3bk80v55bJgijXKlRj4wt1k='
+server:
+  http:
+    addr: :8190
+  rpc:
+    addr: :9100
+
+log:
+  level: info
+  format: console # console 有颜色  json 无颜色
+  prefix: "[test/dazhou]"
+  director: log
+  show-line: true
+  encode-level: LowercaseColorLevelEncoder
+  stacktrace-key: stacktrace
+  log-in-console: true
+  retention-day: -1
+

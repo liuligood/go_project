@@ -1,8 +1,8 @@
-package config
+package iconfig
 
 import (
-	"crmeb_go/util/config/file"
-	"crmeb_go/util/config/nacos"
+	"crmeb_go/utils/iconfig/file"
+	"crmeb_go/utils/iconfig/nacos"
 	"encoding/json"
 	"fmt"
 )
@@ -28,15 +28,15 @@ func load(c interface{}, reader FileReader) {
 	}
 
 	if rawConfig == nil {
-		panic("config load error：must provide a config content")
+		panic("iconfig load error：must provide a iconfig content")
 	}
 
 	configBytes, err := json.Marshal(rawConfig)
 	if err != nil {
-		panic(fmt.Errorf("failed to marshal config: %w", err))
+		panic(fmt.Errorf("failed to marshal iconfig: %w", err))
 	}
 
 	if err := json.Unmarshal(configBytes, &c); err != nil {
-		panic(fmt.Errorf("failed to unmarshal config into struct: %w", err))
+		panic(fmt.Errorf("failed to unmarshal iconfig into struct: %w", err))
 	}
 }

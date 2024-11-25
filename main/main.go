@@ -3,7 +3,8 @@ package main
 import (
 	"crmeb_go/config"
 	"crmeb_go/internal/server"
-	xconfig "crmeb_go/util/config"
+	xconfig "crmeb_go/utils/iconfig"
+	"crmeb_go/utils/izap"
 	"flag"
 	"fmt"
 	"github.com/judwhite/go-svc"
@@ -41,22 +42,22 @@ func (p *program) Start() error {
 	flag.Parse()
 
 	var c config.Conf
+	*confFile = "/Users/ranzhou/project/src/crmeb_go/config/config.yaml"
 	xconfig.New(&c, *confFile)
 
-	//logger := xlog.NewLogger(c.Log.Path, c.App.Name)
-
-	p.svcContext = server.NewSvcContext(c, logger)
-
-	appCxt := internal.Register(p.svcContext)
-
-	go func() {
-		newApp(c, appCxt)
-	}()
+	logger := izap.NewZap(c.Log) // 初始化zap日志库
+	//p.svcContext = server.NewSvcContext(c, logger)
+	//
+	//appCxt := internal.Register(p.svcContext)
+	//
+	//go func() {
+	//	newApp(c, appCxt)
+	//}()
 
 	return nil
 }
 
-//func newApp(c config.Conf, appCxt *internal.AppContent) {
+//func newApp(c iconfig.Conf, appCxt *internal.AppContent) {
 //	// 创建并配置验证器
 //	r := gin.New()
 //

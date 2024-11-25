@@ -1,7 +1,7 @@
 package nacos
 
 import (
-	"crmeb_go/util/config/parser"
+	"crmeb_go/utils/iconfig/parser"
 	"errors"
 	"fmt"
 	"github.com/caarlos0/env/v9"

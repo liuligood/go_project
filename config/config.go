@@ -3,7 +3,7 @@ package config
 type Conf struct {
 	App    App    `json:"app"`    // 应用配置
 	Server Server `json:"server"` // 服务配置
-	Log    Log    `json:"log"`    // 日志配置
+	Log    Zap    `json:"log"`    // 日志配置
 }
 
 type App struct {

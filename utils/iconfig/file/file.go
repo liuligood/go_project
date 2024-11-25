@@ -1,7 +1,7 @@
 package file
 
 import (
-	"crmeb_go/util/config/parser"
+	"crmeb_go/utils/iconfig/parser"
 	"errors"
 	"os"
 	"path/filepath"

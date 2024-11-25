@@ -1,7 +1,8 @@
 package parser
 
-type Yaml struct {
-}
+import "gopkg.in/yaml.v3"
+
+type Yaml struct{}
 
 func (y *Yaml) Load(content []byte, config *map[string]interface{}) error {
 	// 解析YAML
