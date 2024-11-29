@@ -30,7 +30,7 @@ func (s GetRealNameService) GetRealName(params service_data.GetRealNameParams) (
 	if err := s.svc.Repo.EbUserRepository.QueryOne(params.Ctx, "uid = ?", []any{params.UserId}, &userInfoModel, options); err != nil {
 		return data, err
 	}
-
+	s.svc.Logger.Error("测试日志")
 	data.RealName = userInfoModel.RealName
 	data.UserId = userInfoModel.UID
 
