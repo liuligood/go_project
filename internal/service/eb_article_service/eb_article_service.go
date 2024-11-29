@@ -1,11 +1,10 @@
-package service
+package eb_article_service
 
 import (
 	"crmeb_go/internal/server"
 )
 
 type EbArticleServiceImpl interface {
-
 }
 
 // EbArticleService 服务

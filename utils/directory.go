@@ -41,7 +41,7 @@ func PathExists(path string) (bool, error) {
 //			return err
 //		}
 //		if !exist {
-//			server.SvcContext("create directory" + v)
+//			service.SvcContext("create directory" + v)
 //			if err := os.MkdirAll(v, os.ModePerm); err != nil {
 //				global.GVA_LOG.Error("create directory"+v, zap.Any(" error:", err))
 //				return err

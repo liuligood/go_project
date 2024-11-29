@@ -41,5 +41,4 @@ func load(c interface{}, reader FileReader) {
 	if err := json.Unmarshal(configByteList, &c); err != nil {
 		panic(fmt.Errorf("failed to unmarshal iconfig into struct: %w", err))
 	}
-
 }
