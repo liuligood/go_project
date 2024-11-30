@@ -7,6 +7,7 @@ type Conf struct {
 	System System `json:"system"` // 系统配置
 	Mysql  Mysql  `json:"mysql"`  // mysql
 	Pgsql  Pgsql  `json:"pgsql"`  // pgsql
+	Cors   CORS   `json:"cors"`   // 跨域配置
 }
 
 type App struct {

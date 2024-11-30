@@ -3,6 +3,7 @@ package main
 import (
 	"crmeb_go/config"
 	"crmeb_go/internal"
+	"crmeb_go/internal/middleware"
 	"crmeb_go/internal/router"
 	"crmeb_go/internal/server"
 	"crmeb_go/utils/binder"
@@ -66,9 +67,14 @@ func newApp(c config.Conf, appCxt *internal.AppContent) {
 	// 创建并配置验证器
 	r := gin.New()
 
+	// CorsByRules 按照配置的规则放行跨域请求
+	r.Use(gin.Recovery(), middleware.CorsByRules(c))
+
 	binding.Validator = new(binder.Validator)
 
 	router.Register(r, appCxt)
+
+	appCxt.Svc.Logger.Info("use middleware cors")
 
 	err := r.Run(c.Server.Http.Addr)
 

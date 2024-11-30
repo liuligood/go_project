@@ -7,7 +7,7 @@ import (
 )
 
 type EbUserServiceImpl interface {
-	GetRealNameImpl
+	GetRealName(params service_data.GetRealNameParams) (data eb_user_data.GetRealNameData, err error)
 }
 
 // EbUserService 用户表 模型服务

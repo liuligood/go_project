@@ -10,7 +10,7 @@ server:
 #    addr: "9100"
 
 log:
-  level: info # info error warn
+  level: debug # info error warn
   format: console # console 有颜色  json 无颜色
   prefix: "[test/dazhou]"
   director: log
@@ -47,5 +47,21 @@ mysql:
   password: 'dazhou520' # 数据库密码
   max-idle-conns: 10 # 连接池相关
   max-open-conns: 100 # 连接池相关
-  log-mode: "" # 是控制台打印日志级别 "silent"、"error"、"warn"、"info" 不填默认info  填入silent可以关闭控制台日志
-  log-zap: false # 日志是否用zap保存到本地
+  log-mode: "error" # 是控制台打印日志级别 "silent"、"error"、"warn"、"info" 不填默认info  填入silent可以关闭控制台日志
+  log-zap: true # 日志是否用zap保存到本地
+
+
+cors:
+  mode: allow-all # 放行模式: allow-all, 放行全部; whitelist, 白名单模式, 来自白名单内域名的请求添加 cors 头; strict-whitelist 严格白名单模式, 白名单外的请求一律拒绝
+  whitelist:
+    - allow-origin: example1.com
+      allow-headers: Content-Type,AccessToken,X-CSRF-Token, Authorization, Token,X-Token,X-User-Id
+      allow-methods: POST, GET
+      expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
+
+      allow-credentials: true # 布尔值
+    - allow-origin: example2.com
+      allow-headers: content-type
+      allow-methods: GET, POST
+      expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
+      allow-credentials: true # 布尔值
