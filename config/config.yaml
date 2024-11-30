@@ -25,7 +25,7 @@ log:
 system:
   db-type: mysql
   oss-type: local # 控制oss选择走本地还是 七牛等其他仓 自行增加其他oss仓可以在 service/utils/upload/upload.go 中 NewOss函数配置
-  use-redis: false # 使用redis
+  use-redis: true # 使用redis
   use-mongo: false     # 使用mongo
   use-multipoint: false
   # IP限制次数 一个小时15000次
@@ -65,3 +65,27 @@ cors:
       allow-methods: GET, POST
       expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
       allow-credentials: true # 布尔值
+
+redis:
+  #是否使用redis集群模式
+  useCluster: false
+  #使用集群模式addr和db默认无效
+  addr: 127.0.0.1:6379
+  password: ""
+  db: 0
+#  clusterAddrs:
+#    - "127.0.0.1:7000"
+#    - "127.0.0.1:7001"
+#    - "127.0.0.1:7002"
+
+# redis_list configuration
+redis_list:
+  - name: cache           # 数据库的名称,注意: name 需要在 redis-list 中唯一
+    useCluster: false     # 是否使用redis集群模式
+    addr: 127.0.0.1:6379  # 使用集群模式addr和db默认无效
+    password: ""
+    db: 0
+    clusterAddrs:
+      - "127.0.0.1:7000"
+      - "127.0.0.1:7001"
+      - "127.0.0.1:7002"

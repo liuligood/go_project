@@ -1,13 +1,15 @@
 package config
 
 type Conf struct {
-	App    App    `json:"app"`    // 应用配置
-	Server Server `json:"server"` // 服务配置
-	Log    Zap    `json:"log"`    // 日志配置
-	System System `json:"system"` // 系统配置
-	Mysql  Mysql  `json:"mysql"`  // mysql
-	Pgsql  Pgsql  `json:"pgsql"`  // pgsql
-	Cors   CORS   `json:"cors"`   // 跨域配置
+	App       App     `json:"app"`        // 应用配置
+	Server    Server  `json:"server"`     // 服务配置
+	Log       Zap     `json:"log"`        // 日志配置
+	System    System  `json:"system"`     // 系统配置
+	Mysql     Mysql   `json:"mysql"`      // mysql
+	Pgsql     Pgsql   `json:"pgsql"`      // pgsql
+	Cors      CORS    `json:"cors"`       // 跨域配置
+	Redis     Redis   `json:"redis"`      // redis
+	RedisList []Redis `json:"redis_list"` // redisList
 }
 
 type App struct {

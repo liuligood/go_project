@@ -16,4 +16,6 @@ func ApiRegister(app *gin.RouterGroup, appCxt *internal.AppContent) {
 	// 用户路由
 	user.Register(app.Group("/user"), appCxt)
 
+	// 授权路由
+	user.Register(app.Group("/admin"), appCxt)
 }
