@@ -5,14 +5,13 @@ import (
 	service_data "crmeb_go/internal/data/sevice_data"
 	"crmeb_go/internal/model/eb_user_model"
 	"crmeb_go/internal/server"
+	"go.uber.org/zap"
 )
 
-// GetRealNameImpl
 type GetRealNameImpl interface {
 	GetRealName(params service_data.GetRealNameParams) (data eb_user_data.GetRealNameData, err error)
 }
 
-// GetRealNameService
 type GetRealNameService struct {
 	svc *server.SvcContext
 }
@@ -28,9 +27,11 @@ func (s GetRealNameService) GetRealName(params service_data.GetRealNameParams) (
 	}
 
 	if err := s.svc.Repo.EbUserRepository.QueryOne(params.Ctx, "uid = ?", []any{params.UserId}, &userInfoModel, options); err != nil {
+		s.svc.Logger.Error("EbUserRepository.QueryOne [err]:%v", zap.Error(err))
+
 		return data, err
 	}
-	s.svc.Logger.Error("测试日志")
+
 	data.RealName = userInfoModel.RealName
 	data.UserId = userInfoModel.UID
 
