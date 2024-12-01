@@ -5,7 +5,7 @@ app:
 
 server:
   http:
-    addr: :8100
+    addr: :8080
 #  rpc:
 #    addr: "9100"
 
@@ -36,12 +36,14 @@ system:
   router-prefix: ""
   #  严格角色模式 打开后权限将会存在上下级关系
   use-strict-auth: false
+  # 是否同步config表数据到redis
+  async-config: true
 
 
 mysql:
   path: 'localhost'   # 链接地址
   port: '3306'   # 链接端口
-  config: ''  # 其他配置 例如时区
+  config: 'parseTime=true&loc=Local'  # 其他配置 例如时区
   db-name: 'crmeb'  # 数据库名称
   username: 'root' # 数据库用户名
   password: 'dazhou520' # 数据库密码

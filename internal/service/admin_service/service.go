@@ -2,11 +2,13 @@ package admin_service
 
 import (
 	"crmeb_go/internal/data/admin_data"
+	service_data "crmeb_go/internal/data/sevice_data"
 	"crmeb_go/internal/server"
 )
 
 type AdminServiceImpl interface {
 	GetValidateCode() (data admin_data.ValidateCodeData, err error)
+	GetLoginPic(params service_data.GetLoginPicParams) (data admin_data.GetLoginPicResp, err error)
 }
 
 type AdminService struct {
@@ -19,4 +21,8 @@ func NewAdminService(svc *server.SvcContext) *AdminService {
 
 func (a AdminService) GetValidateCode() (data admin_data.ValidateCodeData, err error) {
 	return NewGetValidateCodeService(a.svc).GetValidateCode()
+}
+
+func (a AdminService) GetLoginPic(params service_data.GetLoginPicParams) (data admin_data.GetLoginPicResp, err error) {
+	return NewGetLoginPicService(a.svc).GetLoginPic(params)
 }

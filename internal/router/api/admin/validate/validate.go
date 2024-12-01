@@ -8,5 +8,5 @@ import (
 
 func Register(app *gin.RouterGroup, appCxt *internal.AppContent) {
 	// 获取验证码
-	app.GET("code", validate_controller.GetValidateCode(appCxt.Service))
+	app.GET("code/get", validate_controller.GetValidateCode(appCxt.Service))
 }
