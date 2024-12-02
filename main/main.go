@@ -51,7 +51,9 @@ func (p *program) Start() error {
 	*confFile = "config/config.yaml"
 	iconfig.New(&c, *confFile)
 
-	logger := izap.NewZap(c.Log) // 初始化zap日志库
+	// 初始化zap日志库
+	logger := izap.NewZap(c.Log)
+
 	p.svcContext = server.NewSvcContext(c, logger)
 
 	appCxt := internal.Register(p.svcContext)

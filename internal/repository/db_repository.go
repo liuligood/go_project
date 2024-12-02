@@ -10,7 +10,7 @@ import (
 	"gorm.io/gorm/clause"
 )
 
-// DBRepository 表示数据访问对象【mysql、Clickhouse、Hologres】
+// DBRepository 表示数据访问对象【mysql】
 type DBRepository struct {
 	Model   model.DBModelImpl
 	Log     *zap.Logger

@@ -4,7 +4,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// DBModelImpl 数据库模型接口【mysql、Clickhouse、Hologres】
+// DBModelImpl 数据库模型接口
 type DBModelImpl interface {
 	DB() *gorm.DB
 	Connection() string

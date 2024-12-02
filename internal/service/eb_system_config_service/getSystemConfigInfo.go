@@ -1,7 +1,6 @@
 package eb_system_config_service
 
 import (
-	"crmeb_go/internal/common/define"
 	"crmeb_go/internal/data/redis_data"
 	service_data "crmeb_go/internal/data/sevice_data"
 	"crmeb_go/internal/model/eb_system_config_model"
@@ -33,16 +32,6 @@ func (g GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.GetS
 
 	// 如果同步配置没有开启
 	if !g.svc.Conf.System.AsyncConfig {
-		options := map[string]any{
-			"select": "name,value,create_time",
-		}
-
-		err := g.svc.Repo.EbSystemConfigRepository.QueryOne(params.Ctx, "name = ? and status", []any{params.Name, define.NoStatus}, &model, options)
-		if err != nil {
-			g.svc.Logger.Error("EbSystemConfigRepository.QueryOne [err]:%v", zap.Error(err))
-
-			return data, err
-		}
 
 		data.Name = model.Name
 		data.Value = model.Value
