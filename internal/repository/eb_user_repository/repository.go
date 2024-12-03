@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
+	"time"
 )
 
 // EbUserRepository 用户表 模型仓库
@@ -21,8 +22,8 @@ func NewEbUserRepository(db *gorm.DB, log *zap.Logger) *EbUserRepository {
 }
 
 func (r *EbUserRepository) GetRealName(ctx context.Context, userId uint64) (data model.EbUser, err error) {
-	ud := gen.Use(r.DB).EbSmsRecord.WithContext(ctx)
-	take, err := ud.Take()
+	recordDo := r.Gen.EbSmsRecord.WithContext(ctx)
+	take, err := recordDo.Take()
 	if err != nil {
 		r.Log.Error("EbSmsRecord.Take [err]:%v", zap.Error(err))
 
@@ -30,23 +31,24 @@ func (r *EbUserRepository) GetRealName(ctx context.Context, userId uint64) (data
 	}
 
 	ssx := model.EbSystemRole{
-		ID:       int32(1),
+		ID:       int32(23),
 		RoleName: "123456",
 	}
 
 	ssx22 := model.EbSystemRole{
-		ID:       int32(3),
+		ID:       int32(24),
 		RoleName: "123456",
 	}
 
-	r.DB.Transaction(func(tx *gorm.DB) error {
-		if err := gen.Use(tx).EbSystemRole.WithContext(ctx).Create(&ssx22); err != nil {
+	fmt.Println("1", time.Now())
+	r.Transaction(ctx, func(query *gen.Query) error {
+		if err := query.EbSystemRole.WithContext(ctx).Create(&ssx22); err != nil {
 			r.Log.Error("Create.Take [err]:%v", zap.Error(err))
 
 			return err
 		}
 
-		if err := gen.Use(tx).EbSystemRole.WithContext(ctx).Create(&ssx); err != nil {
+		if err := query.EbSystemRole.WithContext(ctx).Create(&ssx); err != nil {
 			r.Log.Error("Create.Take [err]:%v", zap.Error(err))
 
 			return err
@@ -54,7 +56,7 @@ func (r *EbUserRepository) GetRealName(ctx context.Context, userId uint64) (data
 
 		return nil
 	})
-
+	fmt.Println("2", time.Now())
 	fmt.Println(take)
 
 	var userInfoModel model.EbUser

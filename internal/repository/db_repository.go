@@ -2,10 +2,12 @@ package repository
 
 import (
 	"context"
+	"crmeb_go/internal/repository/gen"
 	"errors"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
+	"sync"
 )
 
 // DBRepository 表示数据访问对象【mysql】
@@ -18,25 +20,21 @@ type DBRepository struct {
 	Name    string
 	locked  int
 	IsMyCat bool
+	Gen     *gen.Query
 }
 
-// NewDBRepository 创建一个数据访问对象
-//func NewDBRepository(model model.DBModelImpl, log *zap.Logger) *DBRepository {
-//	return &DBRepository{Model: model, Log: log, Name: "test"}
-//}
-
-//func NewDBRepository(model model.DBModelImpl, log *zap.Logger) *DBRepository {
-//	return &DBRepository{Model: model, Log: log, Name: "test"}
-//}
+func newRepository(r *DBRepository, txm map[string]*gorm.DB) *DBRepository {
+	return &DBRepository{DB: r.DB, Log: r.Log, tx: txm}
+}
 
 func NewRepository(db *gorm.DB, log *zap.Logger) *DBRepository {
-	return &DBRepository{DB: db, Log: log}
+	return &DBRepository{DB: db, Log: log, Gen: gen.Use(db)}
 }
 
-//func (r *DBRepository) NewDB(txm map[string]*gorm.DB) *DBRepository {
-//	r.isNew = true
-//	return newRepository(r, txm)
-//}
+func (r *DBRepository) NewDB(txm map[string]*gorm.DB) *DBRepository {
+	r.isNew = true
+	return newRepository(r, txm)
+}
 
 // LockForUpdate 更新锁 其他的都不能读写，只能lockForUpdate 更新完再读写。
 func (r *DBRepository) LockForUpdate() *DBRepository {
@@ -222,3 +220,45 @@ func (r *DBRepository) ScanStruct(ctx context.Context, dest interface{}, sql str
 //	table := r.Model.Table()
 //	return fmt.Sprintf("%s.%s", conn, table)
 //}
+
+func (r *DBRepository) Transaction(ctx context.Context, fn func(query *gen.Query) error) (err error) {
+	return r.db().WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		var (
+			flag error
+			wg   sync.WaitGroup
+		)
+
+		done := make(chan struct{})
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			flag = fn(gen.Use(tx))
+		}()
+
+		go func() {
+			defer close(done)
+			wg.Wait()
+		}()
+
+		select {
+		case <-ctx.Done():
+			r.Log.Error("Transaction Rollback due to timeout", zap.Error(ctx.Err()))
+
+			return ctx.Err()
+		case <-done:
+			return flag
+		}
+	})
+}
+
+func (r *DBRepository) Transaction2(ctx context.Context, fn func(query *gen.Query) error) (err error) {
+	return r.db().WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		select {
+		case <-ctx.Done():
+			r.Log.Error("Transaction Rollback due to timeout", zap.Error(ctx.Err()))
+			return ctx.Err()
+		default:
+			return fn(gen.Use(tx))
+		}
+	})
+}
