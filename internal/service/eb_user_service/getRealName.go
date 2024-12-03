@@ -28,7 +28,7 @@ func (s GetRealNameService) GetRealName(params service_data.GetRealNameParams) (
 	}
 
 	data.RealName = userInfoModel.RealName
-	data.UserId = userInfoModel.UID
+	data.UserId = uint64(userInfoModel.UID)
 
 	return
 }

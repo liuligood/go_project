@@ -3,11 +3,10 @@ package eb_system_config_service
 import (
 	"crmeb_go/internal/data/redis_data"
 	service_data "crmeb_go/internal/data/sevice_data"
-	"crmeb_go/internal/model/eb_system_config_model"
+	"crmeb_go/internal/model"
 	"crmeb_go/internal/server"
 	"errors"
 	"github.com/redis/go-redis/v9"
-	"github.com/samber/lo"
 	"go.uber.org/zap"
 )
 
@@ -26,16 +25,16 @@ func NewGetSystemConfigInfoService(svc *server.SvcContext) *GetSystemConfigInfoS
 
 func (g GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.GetSystemConfigParams) (data service_data.GetSystemConfigResult, err error) {
 	var (
-		model     eb_system_config_model.EbSystemConfigModel
-		modelList []eb_system_config_model.EbSystemConfigModel
+		ebSystemConfig model.EbSystemConfig
+		//ebSystemConfigList []model.EbSystemConfig
 	)
 
 	// 如果同步配置没有开启
 	if !g.svc.Conf.System.AsyncConfig {
 
-		data.Name = model.Name
-		data.Value = model.Value
-		data.CreateTime = model.CreateTime
+		data.Name = ebSystemConfig.Name
+		data.Value = ebSystemConfig.Value
+		data.CreateTime = ebSystemConfig.CreateTime
 
 		return data, nil
 	}
@@ -50,19 +49,19 @@ func (g GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.GetS
 
 	if exists != 1 {
 		// 将配置设置到redis中
-		err = g.svc.Repo.EbSystemConfigRepository.QueryAll(params.Ctx, "", []any{}, &modelList)
-		if err != nil {
-			g.svc.Logger.Error("EbSystemConfigRepository.QueryAll [err]:%v", zap.Error(err))
-
-			return data, err
-		}
-
-		lo.ForEach(modelList, func(item eb_system_config_model.EbSystemConfigModel, index int) {
-			err := g.svc.RedisClient.HMSet(params.Ctx, redis_data.ConfigList, item.Name, item.Value).Err()
-			if err != nil {
-				g.svc.Logger.Error("RedisClient.HMSet [err]:%v", zap.Error(err))
-			}
-		})
+		//err = g.svc.Repo.EbSystemConfigRepository.QueryAll(params.Ctx, "", []any{}, &modelList)
+		//if err != nil {
+		//	g.svc.Logger.Error("EbSystemConfigRepository.QueryAll [err]:%v", zap.Error(err))
+		//
+		//	return data, err
+		//}
+		//
+		//lo.ForEach(modelList, func(item eb_system_config_model.EbSystemConfigModel, index int) {
+		//	err := g.svc.RedisClient.HMSet(params.Ctx, redis_data.ConfigList, item.Name, item.Value).Err()
+		//	if err != nil {
+		//		g.svc.Logger.Error("RedisClient.HMSet [err]:%v", zap.Error(err))
+		//	}
+		//})
 	}
 
 	value, err := g.svc.RedisClient.HMGet(params.Ctx, redis_data.ConfigList, params.Name).Result()

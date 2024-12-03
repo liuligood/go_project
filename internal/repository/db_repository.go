@@ -2,9 +2,7 @@ package repository
 
 import (
 	"context"
-	"crmeb_go/internal/model"
 	"errors"
-	"fmt"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -12,7 +10,8 @@ import (
 
 // DBRepository 表示数据访问对象【mysql】
 type DBRepository struct {
-	Model   model.DBModelImpl
+	//Model   model.DBModelImpl
+	DB      *gorm.DB
 	Log     *zap.Logger
 	tx      map[string]*gorm.DB
 	isNew   bool
@@ -22,18 +21,22 @@ type DBRepository struct {
 }
 
 // NewDBRepository 创建一个数据访问对象
-func NewDBRepository(model model.DBModelImpl, log *zap.Logger) *DBRepository {
-	return &DBRepository{Model: model, Log: log, Name: "test"}
+//func NewDBRepository(model model.DBModelImpl, log *zap.Logger) *DBRepository {
+//	return &DBRepository{Model: model, Log: log, Name: "test"}
+//}
+
+//func NewDBRepository(model model.DBModelImpl, log *zap.Logger) *DBRepository {
+//	return &DBRepository{Model: model, Log: log, Name: "test"}
+//}
+
+func NewRepository(db *gorm.DB, log *zap.Logger) *DBRepository {
+	return &DBRepository{DB: db, Log: log}
 }
 
-func newRepository(r *DBRepository, txm map[string]*gorm.DB) *DBRepository {
-	return &DBRepository{Model: r.Model, Log: r.Log, tx: txm}
-}
-
-func (r *DBRepository) NewDB(txm map[string]*gorm.DB) *DBRepository {
-	r.isNew = true
-	return newRepository(r, txm)
-}
+//func (r *DBRepository) NewDB(txm map[string]*gorm.DB) *DBRepository {
+//	r.isNew = true
+//	return newRepository(r, txm)
+//}
 
 // LockForUpdate 更新锁 其他的都不能读写，只能lockForUpdate 更新完再读写。
 func (r *DBRepository) LockForUpdate() *DBRepository {
@@ -48,10 +51,10 @@ func (r *DBRepository) SharedLock() *DBRepository {
 }
 
 func (r *DBRepository) db() *gorm.DB {
-	if r.tx != nil && r.tx[r.Model.Connection()] != nil {
-		return r.tx[r.Model.Connection()].Table(r.Model.Table())
-	}
-	return r.Model.Model()
+	//if r.tx != nil && r.tx[r.Model.Connection()] != nil {
+	//	return r.tx[r.Model.Connection()].Table(r.Model.Table())
+	//}
+	return r.DB
 }
 
 // QueryAll 查询多条数据
@@ -210,12 +213,12 @@ func (r *DBRepository) ScanStruct(ctx context.Context, dest interface{}, sql str
 }
 
 // GetFullTableName 获取数据表全称，用于跨库连接查询
-func (r *DBRepository) GetFullTableName() string {
-	conn := r.Model.Connection()
-	// default 转换为 zulin
-	if conn == "default" {
-		conn = "zulin"
-	}
-	table := r.Model.Table()
-	return fmt.Sprintf("%s.%s", conn, table)
-}
+//func (r *DBRepository) GetFullTableName() string {
+//	conn := r.Model.Connection()
+//	// default 转换为 zulin
+//	if conn == "default" {
+//		conn = "zulin"
+//	}
+//	table := r.Model.Table()
+//	return fmt.Sprintf("%s.%s", conn, table)
+//}

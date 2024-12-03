@@ -9,10 +9,11 @@ import (
 )
 
 type SvcContext struct {
-	RedisClient redis.UniversalClient
-	Logger      *zap.Logger
-	Repo        *repository.Container
-	Conf        config.Conf
-	Gorm        *gorm.DB
+	RedisClient     redis.UniversalClient
+	Logger          *zap.Logger
+	Repo            *repository.Container
+	Conf            config.Conf
+	Gorm            *gorm.DB
+	RedisClientList map[string]redis.UniversalClient
 	//MQClient *rocketmq.Client
 }
