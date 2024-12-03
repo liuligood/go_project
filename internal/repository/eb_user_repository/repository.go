@@ -29,6 +29,32 @@ func (r *EbUserRepository) GetRealName(ctx context.Context, userId uint64) (data
 		return
 	}
 
+	ssx := model.EbSystemRole{
+		ID:       int32(1),
+		RoleName: "123456",
+	}
+
+	ssx22 := model.EbSystemRole{
+		ID:       int32(3),
+		RoleName: "123456",
+	}
+
+	r.DB.Transaction(func(tx *gorm.DB) error {
+		if err := gen.Use(tx).EbSystemRole.WithContext(ctx).Create(&ssx22); err != nil {
+			r.Log.Error("Create.Take [err]:%v", zap.Error(err))
+
+			return err
+		}
+
+		if err := gen.Use(tx).EbSystemRole.WithContext(ctx).Create(&ssx); err != nil {
+			r.Log.Error("Create.Take [err]:%v", zap.Error(err))
+
+			return err
+		}
+
+		return nil
+	})
+
 	fmt.Println(take)
 
 	var userInfoModel model.EbUser
