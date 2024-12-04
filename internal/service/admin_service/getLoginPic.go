@@ -28,6 +28,7 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	systemConfigParam.BaseServiceParams = params.BaseServiceParams
 	systemConfigParam.Name = service_data.CONFIG_KEY_ADMIN_LOGIN_BACKGROUND_IMAGE
 	backgroundImage, err := eb_system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
+
 	if err != nil {
 		a.svc.Logger.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_BACKGROUND_IMAGE), zap.Error(err))
 
@@ -39,6 +40,7 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	// logo
 	systemConfigParam.Name = service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LEFT_TOP
 	logo, err := eb_system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
+
 	if err != nil {
 		a.svc.Logger.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LEFT_TOP), zap.Error(err))
 
@@ -50,6 +52,7 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	// loginLogo
 	systemConfigParam.Name = service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LOGIN
 	loginLogo, err := eb_system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
+
 	if err != nil {
 		a.svc.Logger.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LOGIN), zap.Error(err))
 
@@ -59,8 +62,6 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	result["loginLogo"] = loginLogo.Value
 
 	// todo 轮播图
-
 	data.Map = result
-
 	return data, nil
 }

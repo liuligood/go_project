@@ -7,6 +7,7 @@ import (
 	"crmeb_go/internal/server"
 	"errors"
 	"github.com/redis/go-redis/v9"
+	"github.com/samber/lo"
 	"go.uber.org/zap"
 )
 
@@ -24,14 +25,14 @@ func NewGetSystemConfigInfoService(svc *server.SvcContext) *GetSystemConfigInfoS
 }
 
 func (g GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.GetSystemConfigParams) (data service_data.GetSystemConfigResult, err error) {
-	var (
-		ebSystemConfig model.EbSystemConfig
-		//ebSystemConfigList []model.EbSystemConfig
-	)
-
 	// 如果同步配置没有开启
 	if !g.svc.Conf.System.AsyncConfig {
+		ebSystemConfig, err := g.svc.Repo.EbSystemConfigRepository.QueryByName(params.Ctx, params.Name)
+		if err != nil {
+			g.svc.Logger.Error("EbSystemConfigRepository.QueryOne [err]:%v", zap.Error(err))
 
+			return data, err
+		}
 		data.Name = ebSystemConfig.Name
 		data.Value = ebSystemConfig.Value
 		data.CreateTime = ebSystemConfig.CreateTime
@@ -39,7 +40,7 @@ func (g GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.GetS
 		return data, nil
 	}
 
-	//检测redis是否为空
+	// 检测redis是否为空
 	exists, err := g.svc.RedisClient.Exists(params.Ctx, redis_data.ConfigList).Result()
 	if err != nil && !errors.Is(err, redis.Nil) {
 		g.svc.Logger.Error("g.svc.RedisClient.HMGet [err]:%v", zap.Error(err))
@@ -49,19 +50,19 @@ func (g GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.GetS
 
 	if exists != 1 {
 		// 将配置设置到redis中
-		//err = g.svc.Repo.EbSystemConfigRepository.QueryAll(params.Ctx, "", []any{}, &modelList)
-		//if err != nil {
-		//	g.svc.Logger.Error("EbSystemConfigRepository.QueryAll [err]:%v", zap.Error(err))
-		//
-		//	return data, err
-		//}
-		//
-		//lo.ForEach(modelList, func(item eb_system_config_model.EbSystemConfigModel, index int) {
-		//	err := g.svc.RedisClient.HMSet(params.Ctx, redis_data.ConfigList, item.Name, item.Value).Err()
-		//	if err != nil {
-		//		g.svc.Logger.Error("RedisClient.HMSet [err]:%v", zap.Error(err))
-		//	}
-		//})
+		systemConfigs, err := g.svc.Repo.EbSystemConfigRepository.All(params.Ctx)
+		if err != nil {
+			g.svc.Logger.Error("EbSystemConfigRepository.QueryAll [err]:%v", zap.Error(err))
+
+			return data, err
+		}
+
+		lo.ForEach(systemConfigs, func(item *model.EbSystemConfig, index int) {
+			err := g.svc.RedisClient.HMSet(params.Ctx, redis_data.ConfigList, item.Name, item.Value).Err()
+			if err != nil {
+				g.svc.Logger.Error("RedisClient.HMSet [err]:%v", zap.Error(err))
+			}
+		})
 	}
 
 	value, err := g.svc.RedisClient.HMGet(params.Ctx, redis_data.ConfigList, params.Name).Result()
@@ -72,6 +73,5 @@ func (g GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.GetS
 	}
 
 	data.Value = value[0].(string)
-
 	return data, nil
 }

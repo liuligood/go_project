@@ -5,7 +5,6 @@ import (
 	"crmeb_go/internal/model"
 	"crmeb_go/internal/repository"
 	"crmeb_go/internal/repository/gen"
-	"fmt"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
@@ -27,14 +26,5 @@ func (r *EbUserRepository) GetRealName(ctx context.Context, userId uint64) (data
 	}
 
 	data = *ebUser
-
-	result, count, err := r.Gen.EbSystemRole.WithContext(ctx).Where(r.Gen.EbSystemRole.Level.Eq(int32(userId))).FindByPage(1, 4)
-	if err != nil {
-		return data, err
-	}
-
-	fmt.Println(result, count)
-	data = *ebUser
-
 	return data, err
 }
