@@ -27,8 +27,8 @@ func newRepository(r *DBRepository, txm map[string]*gorm.DB) *DBRepository {
 	return &DBRepository{DB: r.DB, Log: r.Log, tx: txm}
 }
 
-func NewRepository(db *gorm.DB, log *zap.Logger) *DBRepository {
-	return &DBRepository{DB: db, Log: log, Gen: gen.Use(db)}
+func NewRepository(db *gorm.DB, log *zap.Logger, gen *gen.Query) *DBRepository {
+	return &DBRepository{DB: db, Log: log, Gen: gen}
 }
 
 func (r *DBRepository) NewDB(txm map[string]*gorm.DB) *DBRepository {
@@ -247,18 +247,6 @@ func (r *DBRepository) Transaction(ctx context.Context, fn func(query *gen.Query
 			return ctx.Err()
 		case <-done:
 			return flag
-		}
-	})
-}
-
-func (r *DBRepository) Transaction2(ctx context.Context, fn func(query *gen.Query) error) (err error) {
-	return r.db().WithContext(ctx).Transaction(func(tx *gorm.DB) error {
-		select {
-		case <-ctx.Done():
-			r.Log.Error("Transaction Rollback due to timeout", zap.Error(ctx.Err()))
-			return ctx.Err()
-		default:
-			return fn(gen.Use(tx))
 		}
 	})
 }

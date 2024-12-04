@@ -4,6 +4,7 @@ import (
 	"context"
 	"crmeb_go/config"
 	"crmeb_go/internal/container/repository"
+	"crmeb_go/internal/repository/gen"
 	"crmeb_go/utils/igorm"
 	iredis "crmeb_go/utils/iredis"
 	"github.com/redis/go-redis/v9"
@@ -19,6 +20,7 @@ type SvcContext struct {
 	Repo            *repository.Container
 	RedisClient     redis.UniversalClient
 	RedisClientList map[string]redis.UniversalClient
+	Gen             *gen.Query
 }
 
 func NewSvcContext(c config.Conf, logger *zap.Logger) *SvcContext {
@@ -30,7 +32,8 @@ func NewSvcContext(c config.Conf, logger *zap.Logger) *SvcContext {
 
 	db := igorm.NewDB(c)
 	svc.Gorm = igorm.Gorm(db)
-	svc.Repo = repository.Register(svc.Gorm, svc.Logger)
+	svc.Gen = gen.Use(svc.Gorm)
+	svc.Repo = repository.Register(svc.Gorm, svc.Logger, svc.Gen)
 
 	if c.System.UseRedis {
 		// 初始化redis服务
