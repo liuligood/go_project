@@ -48,7 +48,7 @@ func main() {
 	tableName := os.Args[1]
 
 	if tableName != "all" {
-		// 也可以手动指定需要生成代码的数据表
+		// 也可以手动指定需要生成代码的数据表 无法增量
 		models := []interface{}{
 			g.GenerateModel(tableName),
 		}
@@ -61,5 +61,4 @@ func main() {
 
 	// 执行并生成代码
 	g.Execute()
-
 }

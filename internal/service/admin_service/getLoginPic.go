@@ -22,9 +22,9 @@ func NewGetLoginPicService(svc *server.SvcContext) *GetLoginPicService {
 
 func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (data admin_data.GetLoginPicResp, err error) {
 	result := make(map[string]any)
+	var systemConfigParam service_data.GetSystemConfigParams
 
 	//背景图
-	var systemConfigParam service_data.GetSystemConfigParams
 	systemConfigParam.BaseServiceParams = params.BaseServiceParams
 	systemConfigParam.Name = service_data.CONFIG_KEY_ADMIN_LOGIN_BACKGROUND_IMAGE
 	backgroundImage, err := eb_system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
@@ -62,6 +62,7 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	result["loginLogo"] = loginLogo.Value
 
 	// todo 轮播图
+	result["banner"] = []string{"1", "2", "3"}
 	data.Map = result
 	return data, nil
 }
