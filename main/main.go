@@ -48,7 +48,7 @@ func (p *program) Start() error {
 	flag.Parse()
 
 	var c config.Conf
-	*confFile = "config/config.yaml"
+	*confFile = "config/local_config.yaml"
 	iconfig.New(&c, *confFile)
 
 	// 初始化zap日志库

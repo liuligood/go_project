@@ -10,6 +10,15 @@ type Conf struct {
 	Cors      CORS    `json:"cors"`       // 跨域配置
 	Redis     Redis   `json:"redis"`      // redis
 	RedisList []Redis `json:"redis_list"` // redisList
+	// oss
+	Local        Local        `json:"local"`       // 本地
+	Qiniu        Qiniu        `json:"qiniu"`       // 七牛云
+	AliyunOSS    AliyunOSS    `json:"aliyun-oss"`  // 啊里云
+	HuaWeiObs    HuaWeiObs    `json:"hua-wei-obs"` // 华为云
+	TencentCOS   TencentCOS   `json:"tencent-cos"` // 腾讯云
+	AwsS3        AwsS3        `json:"aws-s3"`
+	CloudflareR2 CloudflareR2 `json:"cloudflare-r2"`
+	Minio        Minio        `json:"minio"` // minio
 }
 
 type App struct {
