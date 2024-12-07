@@ -9,7 +9,9 @@ import (
 	"os"
 )
 
-func NewZap(z config.Zap) *zap.Logger {
+var Log *zap.Logger
+
+func NewZap(z config.Zap) {
 	// 判断是否有Director文件夹 没有就创建
 	if ok, _ := utils.PathExists(z.Director); !ok {
 		fmt.Printf("create %v directory\n", z.Director)
@@ -31,5 +33,5 @@ func NewZap(z config.Zap) *zap.Logger {
 		logger = logger.WithOptions(zap.AddCaller())
 	}
 
-	return logger
+	Log = logger
 }

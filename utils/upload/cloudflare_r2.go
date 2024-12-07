@@ -1,6 +1,7 @@
 package upload
 
 import (
+	"crmeb_go/utils/izap"
 	"errors"
 	"fmt"
 	"mime/multipart"
@@ -26,7 +27,7 @@ func (c *CloudflareR2) UploadFile(file *multipart.FileHeader) (fileUrl string, f
 	fileName = fmt.Sprintf("%s/%s", c.baseOss.Conf.CloudflareR2.Path, fileKey)
 	f, openError := file.Open()
 	if openError != nil {
-		c.baseOss.Logger.Error("function file.Open() failed", zap.Any("err", openError.Error()))
+		izap.Log.Error("function file.Open() failed", zap.Any("err", openError.Error()))
 		return "", "", errors.New("function file.Open() failed, err:" + openError.Error())
 	}
 	defer f.Close() // 创建文件 defer 关闭
@@ -39,7 +40,7 @@ func (c *CloudflareR2) UploadFile(file *multipart.FileHeader) (fileUrl string, f
 
 	_, err = client.Upload(input)
 	if err != nil {
-		c.baseOss.Logger.Error("function uploader.Upload() failed", zap.Any("err", err.Error()))
+		izap.Log.Error("function uploader.Upload() failed", zap.Any("err", err.Error()))
 		return "", "", err
 	}
 
@@ -60,7 +61,7 @@ func (c *CloudflareR2) DeleteFile(key string) error {
 		Key:    aws.String(filename),
 	})
 	if err != nil {
-		c.baseOss.Logger.Error("function svc.DeleteObject() failed", zap.Any("err", err.Error()))
+		izap.Log.Error("function svc.DeleteObject() failed", zap.Any("err", err.Error()))
 		return errors.New("function svc.DeleteObject() failed, err:" + err.Error())
 	}
 

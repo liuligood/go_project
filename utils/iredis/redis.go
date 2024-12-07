@@ -3,11 +3,12 @@ package initialize
 import (
 	"context"
 	"crmeb_go/config"
+	"crmeb_go/utils/izap"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 )
 
-func initRedisClient(logger *zap.Logger, redisCfg config.Redis) (redis.UniversalClient, error) {
+func initRedisClient(redisCfg config.Redis) (redis.UniversalClient, error) {
 	var client redis.UniversalClient
 	// 使用集群模式
 	if redisCfg.UseCluster {
@@ -25,17 +26,17 @@ func initRedisClient(logger *zap.Logger, redisCfg config.Redis) (redis.Universal
 	}
 	pong, err := client.Ping(context.Background()).Result()
 	if err != nil {
-		logger.Error("redis connect ping failed, err:", zap.String("name", redisCfg.Name), zap.Error(err))
+		izap.Log.Error("redis connect ping failed, err:", zap.String("name", redisCfg.Name), zap.Error(err))
 
 		return nil, err
 	}
 
-	logger.Info("redis connect ping response:", zap.String("name", redisCfg.Name), zap.String("pong", pong))
+	izap.Log.Info("redis connect ping response:", zap.String("name", redisCfg.Name), zap.String("pong", pong))
 	return client, nil
 }
 
-func Redis(config config.Conf, logger *zap.Logger) redis.UniversalClient {
-	redisClient, err := initRedisClient(logger, config.Redis)
+func Redis(config config.Conf) redis.UniversalClient {
+	redisClient, err := initRedisClient(config.Redis)
 	if err != nil {
 		panic(err)
 	}
@@ -43,11 +44,11 @@ func Redis(config config.Conf, logger *zap.Logger) redis.UniversalClient {
 	return redisClient
 }
 
-func RedisList(config config.Conf, logger *zap.Logger) map[string]redis.UniversalClient {
+func RedisList(config config.Conf) map[string]redis.UniversalClient {
 	redisMap := make(map[string]redis.UniversalClient)
 
 	for _, redisCfg := range config.RedisList {
-		client, err := initRedisClient(logger, redisCfg)
+		client, err := initRedisClient(redisCfg)
 		if err != nil {
 			panic(err)
 		}

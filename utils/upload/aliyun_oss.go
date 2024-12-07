@@ -1,6 +1,7 @@
 package upload
 
 import (
+	"crmeb_go/utils/izap"
 	"errors"
 	"mime/multipart"
 	"time"
@@ -16,14 +17,14 @@ type AliyunOSS struct {
 func (a *AliyunOSS) UploadFile(file *multipart.FileHeader) (string, string, error) {
 	bucket, err := a.newBucket()
 	if err != nil {
-		a.baseOss.Logger.Error("function AliyunOSS.NewBucket() Failed", zap.Any("err", err.Error()))
+		izap.Log.Error("function AliyunOSS.NewBucket() Failed", zap.Any("err", err.Error()))
 		return "", "", errors.New("function AliyunOSS.NewBucket() Failed, err:" + err.Error())
 	}
 
 	// 读取本地文件。
 	f, openError := file.Open()
 	if openError != nil {
-		a.baseOss.Logger.Error("function file.Open() Failed", zap.Any("err", openError.Error()))
+		izap.Log.Error("function file.Open() Failed", zap.Any("err", openError.Error()))
 		return "", "", errors.New("function file.Open() Failed, err:" + openError.Error())
 	}
 
@@ -35,7 +36,7 @@ func (a *AliyunOSS) UploadFile(file *multipart.FileHeader) (string, string, erro
 	// 上传文件流。
 	err = bucket.PutObject(yunFileTmpPath, f)
 	if err != nil {
-		a.baseOss.Logger.Error("function formUploader.Put() Failed", zap.Any("err", err.Error()))
+		izap.Log.Error("function formUploader.Put() Failed", zap.Any("err", err.Error()))
 		return "", "", errors.New("function formUploader.Put() Failed, err:" + err.Error())
 	}
 
@@ -45,7 +46,7 @@ func (a *AliyunOSS) UploadFile(file *multipart.FileHeader) (string, string, erro
 func (a *AliyunOSS) DeleteFile(key string) error {
 	bucket, err := a.newBucket()
 	if err != nil {
-		a.baseOss.Logger.Error("function AliyunOSS.NewBucket() Failed", zap.Any("err", err.Error()))
+		izap.Log.Error("function AliyunOSS.NewBucket() Failed", zap.Any("err", err.Error()))
 		return errors.New("function AliyunOSS.NewBucket() Failed, err:" + err.Error())
 	}
 
@@ -53,7 +54,7 @@ func (a *AliyunOSS) DeleteFile(key string) error {
 	// 如需删除文件夹，请将objectName设置为对应的文件夹名称。如果文件夹非空，则需要将文件夹下的所有object删除后才能删除该文件夹。
 	err = bucket.DeleteObject(key)
 	if err != nil {
-		a.baseOss.Logger.Error("function bucketManager.Delete() failed", zap.Any("err", err.Error()))
+		izap.Log.Error("function bucketManager.Delete() failed", zap.Any("err", err.Error()))
 		return errors.New("function bucketManager.Delete() failed, err:" + err.Error())
 	}
 

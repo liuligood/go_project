@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"crmeb_go/internal/repository/gen"
+	"crmeb_go/utils/izap"
 	"errors"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -14,7 +15,6 @@ import (
 type DBRepository struct {
 	//Model   model.DBModelImpl
 	DB      *gorm.DB
-	Log     *zap.Logger
 	tx      map[string]*gorm.DB
 	isNew   bool
 	Name    string
@@ -24,11 +24,11 @@ type DBRepository struct {
 }
 
 func newRepository(r *DBRepository, txm map[string]*gorm.DB) *DBRepository {
-	return &DBRepository{DB: r.DB, Log: r.Log, tx: txm}
+	return &DBRepository{DB: r.DB, tx: txm}
 }
 
-func NewRepository(db *gorm.DB, log *zap.Logger, gen *gen.Query) *DBRepository {
-	return &DBRepository{DB: db, Log: log, Gen: gen}
+func NewRepository(db *gorm.DB, gen *gen.Query) *DBRepository {
+	return &DBRepository{DB: db, Gen: gen}
 }
 
 func (r *DBRepository) NewDB(txm map[string]*gorm.DB) *DBRepository {
@@ -242,7 +242,7 @@ func (r *DBRepository) Transaction(ctx context.Context, fn func(query *gen.Query
 
 		select {
 		case <-ctx.Done():
-			r.Log.Error("Transaction Rollback due to timeout", zap.Error(ctx.Err()))
+			izap.Log.Error("Transaction Rollback due to timeout", zap.Error(ctx.Err()))
 
 			return ctx.Err()
 		case <-done:

@@ -5,7 +5,6 @@ import (
 	"crmeb_go/internal/model"
 	"crmeb_go/internal/repository"
 	"crmeb_go/internal/repository/gen"
-	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
@@ -15,8 +14,8 @@ type EbSystemConfigRepository struct {
 }
 
 // NewEbUserRepository 配置表 模型仓库实例
-func NewEbSystemConfigRepository(db *gorm.DB, log *zap.Logger, gen *gen.Query) *EbSystemConfigRepository {
-	return &EbSystemConfigRepository{repository.NewRepository(db, log, gen)}
+func NewEbSystemConfigRepository(db *gorm.DB, gen *gen.Query) *EbSystemConfigRepository {
+	return &EbSystemConfigRepository{repository.NewRepository(db, gen)}
 }
 
 func (r *EbSystemConfigRepository) All(ctx context.Context) (data []*model.EbSystemConfig, err error) {

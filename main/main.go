@@ -52,9 +52,9 @@ func (p *program) Start() error {
 	iconfig.New(&c, *confFile)
 
 	// 初始化zap日志库
-	logger := izap.NewZap(c.Log)
+	izap.NewZap(c.Log)
 
-	p.svcContext = server.NewSvcContext(c, logger)
+	p.svcContext = server.NewSvcContext(c)
 
 	appCxt := internal.Register(p.svcContext)
 

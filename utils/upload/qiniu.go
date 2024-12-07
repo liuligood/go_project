@@ -2,6 +2,7 @@ package upload
 
 import (
 	"context"
+	"crmeb_go/utils/izap"
 	"errors"
 	"fmt"
 	"mime/multipart"
@@ -29,7 +30,7 @@ func (q *Qiniu) UploadFile(file *multipart.FileHeader) (string, string, error) {
 
 	f, openError := file.Open()
 	if openError != nil {
-		q.baseOss.Logger.Error("function file.Open() failed", zap.Any("err", openError.Error()))
+		izap.Log.Error("function file.Open() failed", zap.Any("err", openError.Error()))
 
 		return "", "", errors.New("function file.Open() failed, err:" + openError.Error())
 	}
@@ -39,7 +40,7 @@ func (q *Qiniu) UploadFile(file *multipart.FileHeader) (string, string, error) {
 	putErr := formUploader.Put(context.Background(), &ret, upToken, fileKey, f, file.Size, &putExtra)
 
 	if putErr != nil {
-		q.baseOss.Logger.Error("function formUploader.Put() failed", zap.Any("err", putErr.Error()))
+		izap.Log.Error("function formUploader.Put() failed", zap.Any("err", putErr.Error()))
 		return "", "", errors.New("function formUploader.Put() failed, err:" + putErr.Error())
 	}
 
@@ -52,7 +53,7 @@ func (q *Qiniu) DeleteFile(key string) error {
 	bucketManager := storage.NewBucketManager(mac, cfg)
 
 	if err := bucketManager.Delete(q.baseOss.Conf.Qiniu.Bucket, key); err != nil {
-		q.baseOss.Logger.Error("function bucketManager.Delete() failed", zap.Any("err", err.Error()))
+		izap.Log.Error("function bucketManager.Delete() failed", zap.Any("err", err.Error()))
 		return errors.New("function bucketManager.Delete() failed, err:" + err.Error())
 	}
 	return nil

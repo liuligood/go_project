@@ -2,6 +2,7 @@ package upload
 
 import (
 	"context"
+	"crmeb_go/utils/izap"
 	"errors"
 	"fmt"
 	"github.com/tencentyun/cos-go-sdk-v5"
@@ -23,7 +24,7 @@ func (t *TencentCOS) UploadFile(file *multipart.FileHeader) (string, string, err
 
 	f, openError := file.Open()
 	if openError != nil {
-		t.baseOss.Logger.Error("function file.Open() failed", zap.Any("err", openError.Error()))
+		izap.Log.Error("function file.Open() failed", zap.Any("err", openError.Error()))
 		return "", "", errors.New("function file.Open() failed, err:" + openError.Error())
 	}
 
@@ -45,7 +46,7 @@ func (t *TencentCOS) DeleteFile(key string) error {
 	name := t.baseOss.Conf.TencentCOS.PathPrefix + "/" + key
 	_, err := client.Object.Delete(context.Background(), name)
 	if err != nil {
-		t.baseOss.Logger.Error("function bucketManager.Delete() failed", zap.Any("err", err.Error()))
+		izap.Log.Error("function bucketManager.Delete() failed", zap.Any("err", err.Error()))
 		return errors.New("function bucketManager.Delete() failed, err:" + err.Error())
 	}
 

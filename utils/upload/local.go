@@ -1,6 +1,7 @@
 package upload
 
 import (
+	"crmeb_go/utils/izap"
 	"crmeb_go/utils/md5"
 	"errors"
 	"io"
@@ -31,7 +32,7 @@ func (l *Local) UploadFile(file *multipart.FileHeader) (string, string, error) {
 	// 尝试创建此路径
 	mkdirErr := os.MkdirAll(l.baseOss.Conf.Local.StorePath, os.ModePerm)
 	if mkdirErr != nil {
-		l.baseOss.Logger.Error("function os.MkdirAll() failed", zap.Any("err", mkdirErr.Error()))
+		izap.Log.Error("function os.MkdirAll() failed", zap.Any("err", mkdirErr.Error()))
 		return "", "", errors.New("function os.MkdirAll() failed, err:" + mkdirErr.Error())
 	}
 	// 拼接路径和文件名
@@ -40,7 +41,7 @@ func (l *Local) UploadFile(file *multipart.FileHeader) (string, string, error) {
 
 	f, openError := file.Open() // 读取文件
 	if openError != nil {
-		l.baseOss.Logger.Error("function file.Open() failed", zap.Any("err", openError.Error()))
+		izap.Log.Error("function file.Open() failed", zap.Any("err", openError.Error()))
 
 		return "", "", errors.New("function file.Open() failed, err:" + openError.Error())
 	}
@@ -48,7 +49,7 @@ func (l *Local) UploadFile(file *multipart.FileHeader) (string, string, error) {
 
 	out, createErr := os.Create(p)
 	if createErr != nil {
-		l.baseOss.Logger.Error("function os.Create() failed", zap.Any("err", createErr.Error()))
+		izap.Log.Error("function os.Create() failed", zap.Any("err", createErr.Error()))
 
 		return "", "", errors.New("function os.Create() failed, err:" + createErr.Error())
 	}
@@ -56,7 +57,7 @@ func (l *Local) UploadFile(file *multipart.FileHeader) (string, string, error) {
 
 	_, copyErr := io.Copy(out, f) // 传输（拷贝）文件
 	if copyErr != nil {
-		l.baseOss.Logger.Error("function io.Copy() failed", zap.Any("err", copyErr.Error()))
+		izap.Log.Error("function io.Copy() failed", zap.Any("err", copyErr.Error()))
 
 		return "", "", errors.New("function io.Copy() failed, err:" + copyErr.Error())
 	}

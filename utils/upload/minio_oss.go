@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crmeb_go/config"
+	"crmeb_go/utils/izap"
 	"crmeb_go/utils/md5"
 	"errors"
 	"github.com/minio/minio-go/v7"
@@ -25,7 +26,7 @@ type Minio struct {
 	baseOss BaseOss
 }
 
-func GetMinio(conf config.Conf, logger *zap.Logger) (*Minio, error) {
+func GetMinio(conf config.Conf) (*Minio, error) {
 	if MinioClient != nil {
 		return MinioClient, nil
 	}
@@ -52,7 +53,7 @@ func GetMinio(conf config.Conf, logger *zap.Logger) (*Minio, error) {
 		}
 	}
 
-	MinioClient = &Minio{Client: minioClient, bucket: conf.Minio.BucketName, baseOss: BaseOss{Conf: conf, Logger: logger}}
+	MinioClient = &Minio{Client: minioClient, bucket: conf.Minio.BucketName, baseOss: BaseOss{Conf: conf}}
 
 	return MinioClient, nil
 }
@@ -61,7 +62,7 @@ func (m *Minio) UploadFile(file *multipart.FileHeader) (filePathres, key string,
 	f, openError := file.Open()
 	// mutipart.File to os.File
 	if openError != nil {
-		m.baseOss.Logger.Error("function file.Open() Failed", zap.Any("err", openError.Error()))
+		izap.Log.Error("function file.Open() Failed", zap.Any("err", openError.Error()))
 		return "", "", errors.New("function file.Open() Failed, err:" + openError.Error())
 	}
 
@@ -69,7 +70,7 @@ func (m *Minio) UploadFile(file *multipart.FileHeader) (filePathres, key string,
 
 	_, err := io.Copy(&filecontent, f)
 	if err != nil {
-		m.baseOss.Logger.Error("读取文件失败", zap.Any("err", err.Error()))
+		izap.Log.Error("读取文件失败", zap.Any("err", err.Error()))
 		return "", "", errors.New("读取文件失败, err:" + err.Error())
 	}
 	f.Close() // 创建文件 defer 关闭
@@ -91,7 +92,7 @@ func (m *Minio) UploadFile(file *multipart.FileHeader) (filePathres, key string,
 	// Upload the file with PutObject   大文件自动切换为分片上传
 	info, err := m.Client.PutObject(ctx, m.baseOss.Conf.Minio.BucketName, filePathres, &filecontent, file.Size, minio.PutObjectOptions{ContentType: "application/octet-stream"})
 	if err != nil {
-		m.baseOss.Logger.Error("上传文件到minio失败", zap.Any("err", err.Error()))
+		izap.Log.Error("上传文件到minio失败", zap.Any("err", err.Error()))
 		return "", "", errors.New("上传文件到minio失败, err:" + err.Error())
 	}
 	return m.baseOss.Conf.Minio.BucketUrl + "/" + info.Key, filePathres, nil

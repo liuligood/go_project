@@ -5,7 +5,6 @@ import (
 	"crmeb_go/internal/model"
 	"crmeb_go/internal/repository"
 	"crmeb_go/internal/repository/gen"
-	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
@@ -15,8 +14,8 @@ type EbUserRepository struct {
 }
 
 // NewEbUserRepository 新用户表 模型仓库实例
-func NewEbUserRepository(db *gorm.DB, log *zap.Logger, gen *gen.Query) *EbUserRepository {
-	return &EbUserRepository{repository.NewRepository(db, log, gen)}
+func NewEbUserRepository(db *gorm.DB, gen *gen.Query) *EbUserRepository {
+	return &EbUserRepository{repository.NewRepository(db, gen)}
 }
 
 func (r *EbUserRepository) GetRealName(ctx context.Context, userId uint64) (data model.EbUser, err error) {

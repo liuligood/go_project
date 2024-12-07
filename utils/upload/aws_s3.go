@@ -1,6 +1,7 @@
 package upload
 
 import (
+	"crmeb_go/utils/izap"
 	"errors"
 	"fmt"
 	"mime/multipart"
@@ -26,7 +27,7 @@ func (a *AwsS3) UploadFile(file *multipart.FileHeader) (string, string, error) {
 	filename := a.baseOss.Conf.AwsS3.PathPrefix + "/" + fileKey
 	f, openError := file.Open()
 	if openError != nil {
-		a.baseOss.Logger.Error("function file.Open() failed", zap.Any("err", openError.Error()))
+		izap.Log.Error("function file.Open() failed", zap.Any("err", openError.Error()))
 		return "", "", errors.New("function file.Open() failed, err:" + openError.Error())
 	}
 	defer f.Close() // 创建文件 defer 关闭
@@ -37,7 +38,7 @@ func (a *AwsS3) UploadFile(file *multipart.FileHeader) (string, string, error) {
 		Body:   f,
 	})
 	if err != nil {
-		a.baseOss.Logger.Error("function uploader.Upload() failed", zap.Any("err", err.Error()))
+		izap.Log.Error("function uploader.Upload() failed", zap.Any("err", err.Error()))
 		return "", "", err
 	}
 
@@ -55,7 +56,7 @@ func (a *AwsS3) DeleteFile(key string) error {
 		Key:    aws.String(filename),
 	})
 	if err != nil {
-		a.baseOss.Logger.Error("function svc.DeleteObject() failed", zap.Any("err", err.Error()))
+		izap.Log.Error("function svc.DeleteObject() failed", zap.Any("err", err.Error()))
 		return errors.New("function svc.DeleteObject() failed, err:" + err.Error())
 	}
 
