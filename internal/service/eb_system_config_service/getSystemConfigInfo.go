@@ -5,6 +5,7 @@ import (
 	service_data "crmeb_go/internal/data/sevice_data"
 	"crmeb_go/internal/model"
 	"crmeb_go/internal/server"
+	"crmeb_go/utils/izap"
 	"errors"
 	"github.com/redis/go-redis/v9"
 	"github.com/samber/lo"
@@ -29,7 +30,7 @@ func (g GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.GetS
 	if !g.svc.Conf.System.AsyncConfig {
 		ebSystemConfig, err := g.svc.Repo.EbSystemConfigRepository.QueryByName(params.Ctx, params.Name)
 		if err != nil {
-			g.svc.Logger.Error("EbSystemConfigRepository.QueryOne [err]:%v", zap.Error(err))
+			izap.Log.Error("EbSystemConfigRepository.QueryOne [err]:%v", zap.Error(err))
 
 			return data, err
 		}
@@ -43,7 +44,7 @@ func (g GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.GetS
 	// 检测redis是否为空
 	exists, err := g.svc.RedisClient.Exists(params.Ctx, redis_data.ConfigList).Result()
 	if err != nil && !errors.Is(err, redis.Nil) {
-		g.svc.Logger.Error("g.svc.RedisClient.HMGet [err]:%v", zap.Error(err))
+		izap.Log.Error("g.svc.RedisClient.HMGet [err]:%v", zap.Error(err))
 
 		return data, err
 	}
@@ -52,7 +53,7 @@ func (g GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.GetS
 		// 将配置设置到redis中
 		systemConfigs, err := g.svc.Repo.EbSystemConfigRepository.All(params.Ctx)
 		if err != nil {
-			g.svc.Logger.Error("EbSystemConfigRepository.QueryAll [err]:%v", zap.Error(err))
+			izap.Log.Error("EbSystemConfigRepository.QueryAll [err]:%v", zap.Error(err))
 
 			return data, err
 		}
@@ -60,14 +61,14 @@ func (g GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.GetS
 		lo.ForEach(systemConfigs, func(item *model.EbSystemConfig, index int) {
 			err := g.svc.RedisClient.HMSet(params.Ctx, redis_data.ConfigList, item.Name, item.Value).Err()
 			if err != nil {
-				g.svc.Logger.Error("RedisClient.HMSet [err]:%v", zap.Error(err))
+				izap.Log.Error("RedisClient.HMSet [err]:%v", zap.Error(err))
 			}
 		})
 	}
 
 	value, err := g.svc.RedisClient.HMGet(params.Ctx, redis_data.ConfigList, params.Name).Result()
 	if err != nil {
-		g.svc.Logger.Error("EbSystemConfigRepository.QueryAll [err]:%v", zap.Error(err))
+		izap.Log.Error("EbSystemConfigRepository.QueryAll [err]:%v", zap.Error(err))
 
 		return data, err
 	}

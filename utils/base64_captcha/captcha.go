@@ -2,6 +2,7 @@ package base64_captcha
 
 import (
 	"context"
+	"crmeb_go/utils/izap"
 	"github.com/mojocn/base64Captcha"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
@@ -16,7 +17,7 @@ GCLimitNumber = 10240
 Expiration = 10 * time.Minute
 */
 
-func GetCaptcha(RedisClient redis.UniversalClient, logger *zap.Logger, ctx context.Context) (error, string, string) {
+func GetCaptcha(RedisClient redis.UniversalClient, ctx context.Context) (error, string, string) {
 	var store = NewRedisStore(RedisClient, ctx)
 
 	driverStringConfig := &base64Captcha.DriverString{
@@ -54,14 +55,14 @@ func GetCaptcha(RedisClient redis.UniversalClient, logger *zap.Logger, ctx conte
 	// 生成图片
 	item, err := cap.Driver.DrawCaptcha(content)
 	if err != nil {
-		logger.Error(" cap.Driver.DrawCaptcha:", zap.Error(err))
+		izap.Log.Error(" cap.Driver.DrawCaptcha:", zap.Error(err))
 
 		return err, "", ""
 	}
 
 	err = store.Set(id, answer)
 	if err != nil {
-		logger.Error("设置验证码密码错误:", zap.String("id为", id), zap.Error(err))
+		izap.Log.Error("设置验证码密码错误:", zap.String("id为", id), zap.Error(err))
 
 		return err, "", ""
 	}

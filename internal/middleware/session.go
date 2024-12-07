@@ -12,7 +12,6 @@ func SessionMiddleware(svc *server.SvcContext) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 存放登录信息到上下文
 		sessionContext := session_context.New(c, &session_context_data.SvcContext{
-			Logger:          svc.Logger,
 			Repo:            svc.Repo,
 			Conf:            svc.Conf,
 			Gorm:            svc.Gorm,

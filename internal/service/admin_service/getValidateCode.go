@@ -5,6 +5,7 @@ import (
 	"crmeb_go/internal/data/admin_data"
 	"crmeb_go/internal/server"
 	"crmeb_go/utils/base64_captcha"
+	"crmeb_go/utils/izap"
 	"go.uber.org/zap"
 )
 
@@ -23,9 +24,9 @@ func NewGetValidateCodeService(svc *server.SvcContext) *GetValidateCodeService {
 func (a GetValidateCodeService) GetValidateCode() (admin_data.ValidateCodeData, error) {
 	var data admin_data.ValidateCodeData
 
-	err, code, id := base64_captcha.GetCaptcha(a.svc.RedisClient, a.svc.Logger, a.svc.Ctx)
+	err, code, id := base64_captcha.GetCaptcha(a.svc.RedisClient, a.svc.Ctx)
 	if err != nil {
-		a.svc.Logger.Error("生成验证码错误err:", zap.Error(err))
+		izap.Log.Error("生成验证码错误err:", zap.Error(err))
 
 		return data, err
 	}

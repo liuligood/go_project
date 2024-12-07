@@ -9,6 +9,7 @@ import (
 	iredis "crmeb_go/utils/iredis"
 	"crmeb_go/utils/upload"
 	"github.com/go-redsync/redsync/v4"
+	"github.com/go-redsync/redsync/v4/redis/goredis/v9"
 	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
 )
@@ -41,7 +42,7 @@ func NewSvcContext(c config.Conf) *SvcContext {
 		// 初始化redis服务
 		svc.RedisClient = iredis.Redis(c)
 		svc.RedisClientList = iredis.RedisList(c)
-		svc.Redsync = iredis.NewRedsync(svc.RedisClient)
+		svc.Redsync = redsync.New(goredis.NewPool(svc.RedisClient))
 	}
 
 	return svc

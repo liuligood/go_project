@@ -46,6 +46,7 @@ func (n *Config) Load() (map[string]interface{}, error) {
 	var err error
 
 	n.nacos = new(ConfigNacos)
+	// 读取环境变量
 	if err := env.Parse(n.nacos); err != nil {
 		panic(err)
 	}

@@ -5,6 +5,7 @@ import (
 	service_data "crmeb_go/internal/data/sevice_data"
 	"crmeb_go/internal/server"
 	"crmeb_go/internal/service/eb_system_config_service"
+	"crmeb_go/utils/izap"
 	"go.uber.org/zap"
 )
 
@@ -30,7 +31,7 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	backgroundImage, err := eb_system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
 
 	if err != nil {
-		a.svc.Logger.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_BACKGROUND_IMAGE), zap.Error(err))
+		izap.Log.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_BACKGROUND_IMAGE), zap.Error(err))
 
 		return data, err
 	}
@@ -42,7 +43,7 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	logo, err := eb_system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
 
 	if err != nil {
-		a.svc.Logger.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LEFT_TOP), zap.Error(err))
+		izap.Log.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LEFT_TOP), zap.Error(err))
 
 		return data, err
 	}
@@ -54,7 +55,7 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	loginLogo, err := eb_system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
 
 	if err != nil {
-		a.svc.Logger.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LOGIN), zap.Error(err))
+		izap.Log.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LOGIN), zap.Error(err))
 
 		return data, err
 	}

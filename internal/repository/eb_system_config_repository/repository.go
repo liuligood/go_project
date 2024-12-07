@@ -30,7 +30,7 @@ func (r *EbSystemConfigRepository) All(ctx context.Context) (data []*model.EbSys
 }
 
 func (r *EbSystemConfigRepository) QueryByName(ctx context.Context, name string) (data *model.EbSystemConfig, err error) {
-	ebSystemConfig, err := r.Gen.EbSystemConfig.WithContext(ctx).Where(r.Gen.EbSystemConfig.Name.Eq("name")).First()
+	ebSystemConfig, err := r.Gen.EbSystemConfig.WithContext(ctx).Where(r.Gen.EbSystemConfig.Name.Eq(name)).First()
 	if err != nil {
 		return data, err
 	}

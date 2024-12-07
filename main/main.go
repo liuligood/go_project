@@ -7,44 +7,51 @@ import (
 	"crmeb_go/internal/router"
 	"crmeb_go/internal/server"
 	"crmeb_go/utils/binder"
-	iconfig "crmeb_go/utils/iconfig"
+	"crmeb_go/utils/iconfig"
 	"crmeb_go/utils/izap"
 	"flag"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/judwhite/go-svc"
+	"github.com/kardianos/service"
+	"log"
 	"os"
-	"path/filepath"
+	"os/signal"
 	"sync"
 	"syscall"
+	"time"
 )
 
 var confFile = flag.String("file", "", "input file path")
 
+// 定义程序结构体
 type program struct {
+	server     *gin.Engine
+	svc        service.Service
 	once       sync.Once
+	clearFunc  func()
 	svcContext *server.SvcContext
 }
 
-func main() {
-	p := &program{}
-	if err := svc.Run(p, syscall.SIGINT, syscall.SIGTERM, syscall.SIGKILL); err != nil {
-		fmt.Println(err)
-	}
-}
-
-// Init 利于go-svc 帮助管理程序生命周期 程序初始化
-func (p *program) Init(env svc.Environment) error {
-	if env.IsWindowsService() {
-		dir := filepath.Dir(os.Args[0])
-		return os.Chdir(dir)
-	}
+// Start 方法在服务启动时调用
+func (p *program) Start(s service.Service) error {
+	// 在一个新的 goroutine 中启动服务
+	go p.run()
 	return nil
 }
 
-// Start 程序启动
-func (p *program) Start() error {
+// Stop 方法在服务停止时调用
+func (p *program) Stop(s service.Service) error {
+	// 这里可以添加清理资源的代码
+	p.once.Do(func() {
+		if p.clearFunc != nil {
+			p.clearFunc()
+		}
+	})
+	return nil
+}
+
+// 运行 Gin 服务器
+func (p *program) run() {
 	flag.Parse()
 
 	var c config.Conf
@@ -61,8 +68,50 @@ func (p *program) Start() error {
 	go func() {
 		newApp(c, appCxt)
 	}()
+}
 
-	return nil
+func main() {
+	// 定义服务配置
+	svcConfig := &service.Config{
+		Name:        "crmeb_gp",
+		DisplayName: "personal mall project",
+		Description: "a fully functional mall project is worth learning",
+	}
+
+	prg := &program{}
+	s, err := service.New(prg, svcConfig)
+	if err != nil {
+		log.Fatal(err)
+	}
+	prg.svc = s
+
+	// 设置日志
+	errs := make(chan error)
+	logger, err := s.Logger(errs)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// 启动服务
+	if err := s.Run(); err != nil {
+		logger.Error(err)
+	}
+
+	// 处理错误
+	go func() {
+		for {
+			select {
+			case err := <-errs:
+				log.Println("Error:", err)
+			}
+		}
+	}()
+
+	// 等待中断信号以优雅关闭
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+	<-sigs
+	log.Println("Shutting down... time:", time.Now())
 }
 
 func newApp(c config.Conf, appCxt *internal.AppContent) {
@@ -76,20 +125,11 @@ func newApp(c config.Conf, appCxt *internal.AppContent) {
 
 	router.Register(r, appCxt)
 
-	appCxt.Svc.Logger.Info("use middleware cors")
+	izap.Log.Info("use middleware cors")
 
 	err := r.Run(c.Server.Http.Addr)
 
 	if err != nil {
 		panic(err)
 	}
-}
-
-// Stop 程序停止
-func (p *program) Stop() error {
-	p.once.Do(func() {
-		//defer p.svcContext.RedisClient.Close()
-		//defer p.svcContext.DBEngine.Close()
-	})
-	return nil
 }
