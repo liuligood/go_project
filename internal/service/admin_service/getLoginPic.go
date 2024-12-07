@@ -65,5 +65,6 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	// todo 轮播图
 	result["banner"] = []string{"1", "2", "3"}
 	data.Map = result
+	panic("错误")
 	return data, nil
 }

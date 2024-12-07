@@ -119,7 +119,7 @@ func newApp(c config.Conf, appCxt *internal.AppContent) {
 	r := gin.New()
 
 	// CorsByRules 按照配置的规则放行跨域请求
-	r.Use(gin.Recovery(), middleware.CorsByRules(c))
+	r.Use(middleware.CorsByRules(c))
 
 	binding.Validator = new(binder.Validator)
 
