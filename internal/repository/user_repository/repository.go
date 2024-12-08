@@ -1,4 +1,4 @@
-package eb_user_repository
+package user_repository
 
 import (
 	"context"

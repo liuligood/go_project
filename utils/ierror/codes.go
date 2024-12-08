@@ -1,4 +1,4 @@
-package xerror
+package ierror
 
 import (
 	"google.golang.org/grpc/codes"

@@ -1,7 +1,7 @@
-package xerror
+package ierror
 
 import (
-	"crmeb_go/utils/xerror/errdetails"
+	"crmeb_go/utils/ierror/errdetails"
 	"errors"
 	"fmt"
 	"google.golang.org/grpc/status"

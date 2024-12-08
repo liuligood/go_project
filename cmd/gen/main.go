@@ -1,11 +1,12 @@
 package main
 
 import (
+	"crmeb_go/internal/repository/user_repository"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gen"
 	"gorm.io/gorm"
-	"os"
+	"strings"
 )
 
 const MySQLDSN = "root:dazhou520@tcp(127.0.0.1:3306)/crmeb?charset=utf8mb4&parseTime=True"
@@ -33,31 +34,52 @@ func main() {
 		// gen.WithDefaultQuery：生成一个全局Query对象Q
 		// gen.WithQueryInterface：生成Query接口
 		Mode: gen.WithDefaultQuery | gen.WithQueryInterface,
+		// 表字段可为 null 值时, 对应结体字段使用指针类型
+		FieldNullable: false, // generate pointer when field is nullable
+		// 表字段默认值与模型结构体字段零值不一致的字段, 在插入数据时需要赋值该字段值为零值的, 结构体字段须是指针类型才能成功, 即`FieldCoverable:true`配置下生成的结构体字段.
+		// 因为在插入时遇到字段为零值的会被GORM赋予默认值. 如字段`age`表默认值为10, 即使你显式设置为0最后也会被GORM设为10提交.
+		// 如果该字段没有上面提到的插入时赋零值的特殊需要, 则字段为非指针类型使用起来会比较方便.
+		FieldCoverable: false, // generate pointer when field has default value, to fix problem zero value cannot be assign: https://gorm.io/docs/create.html#Default-Values
+
+		// 模型结构体字段的数字类型的符号表示是否与表字段的一致, `false`指示都用有符号类型
+		FieldSignable: false, // detect integer field's unsigned type, adjust generated data type
+		// 生成 gorm 标签的字段索引属性
+		FieldWithIndexTag: false, // generate with gorm index tag
+		// 生成 gorm 标签的字段类型属性
+		FieldWithTypeTag: true, // generate with gorm column type tag
 	})
 
 	// 通常复用项目中已有的SQL连接配置db(*gorm.DB)
 	// 非必需，但如果需要复用连接时的gorm.Config或需要连接数据库同步表信息则必须设置
 	g.UseDB(connectDB(MySQLDSN))
 
-	if len(os.Args) < 2 {
-		fmt.Println("Please provide a table name.")
-
-		os.Exit(1)
+	// 统一数字类型为int64,兼容protobuf和thrift
+	dataMap := map[string]func(detailType gorm.ColumnType) (dataType string){
+		"tinyint":   func(detailType gorm.ColumnType) (dataType string) { return "int64" },
+		"smallint":  func(detailType gorm.ColumnType) (dataType string) { return "int64" },
+		"mediumint": func(detailType gorm.ColumnType) (dataType string) { return "int64" },
+		"bigint":    func(detailType gorm.ColumnType) (dataType string) { return "int64" },
+		"int":       func(detailType gorm.ColumnType) (dataType string) { return "int64" },
+		"decimal":   func(detailType gorm.ColumnType) (dataType string) { return "decimal.Decimal" }, // 金额类型全部转换为第三方库,github.com/shopspring/decimal
 	}
 
-	tableName := os.Args[1]
+	// 要先于`ApplyBasic`执行
+	g.WithDataTypeMap(dataMap)
 
-	if tableName != "all" {
-		// 也可以手动指定需要生成代码的数据表 无法增量
-		models := []interface{}{
-			g.GenerateModel(tableName),
+	jsonField := gen.FieldJSONTagWithNS(func(columnName string) (tagContent string) {
+		toStringField := `deleted_at`
+		if strings.Contains(toStringField, columnName) {
+			return "-"
 		}
+		return columnName
+	})
+	softDeleteField := gen.FieldType("deleted_at", "soft_delete.DeletedAt")
+	// 模型自定义选项组
+	fieldOpts := []gen.ModelOpt{jsonField, softDeleteField}
 
-		g.ApplyBasic(models...)
-	} else {
-		// 从连接的数据库为所有表生成Model结构体和CRUD代码
-		g.ApplyBasic(g.GenerateAllTable()...)
-	}
+	g.ApplyInterface(func() {}, g.GenerateAllTable(fieldOpts...)...)
+	g.ApplyInterface(func(user_repository.Querier) {}, g.GenerateModel("users", fieldOpts...))
+	g.WithImportPkgPath("github.com/shopspring/decimal")
 
 	// 执行并生成代码
 	g.Execute()

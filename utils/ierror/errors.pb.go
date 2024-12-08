@@ -4,7 +4,7 @@
 // 	protoc        v3.21.12
 // source: errors.proto
 
-package xerror
+package ierror
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"

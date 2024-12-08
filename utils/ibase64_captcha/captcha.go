@@ -1,4 +1,4 @@
-package base64_captcha
+package ibase64_captcha
 
 import (
 	"context"

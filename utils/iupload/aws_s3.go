@@ -1,4 +1,4 @@
-package upload
+package iupload
 
 import (
 	"crmeb_go/utils/izap"

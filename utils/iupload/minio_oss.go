@@ -1,11 +1,11 @@
-package upload
+package iupload
 
 import (
 	"bytes"
 	"context"
 	"crmeb_go/config"
+	"crmeb_go/utils/imd5"
 	"crmeb_go/utils/izap"
-	"crmeb_go/utils/md5"
 	"errors"
 	"github.com/minio/minio-go/v7"
 	"io"
@@ -77,7 +77,7 @@ func (m *Minio) UploadFile(file *multipart.FileHeader) (filePathres, key string,
 
 	// 对文件名进行加密存储
 	ext := filepath.Ext(file.Filename)
-	filename := md5.MD5V([]byte(strings.TrimSuffix(file.Filename, ext))) + ext
+	filename := imd5.MD5V([]byte(strings.TrimSuffix(file.Filename, ext))) + ext
 
 	if m.baseOss.Conf.Minio.BasePath == "" {
 		filePathres = "uploads" + "/" + time.Now().Format("2006-01-02") + "/" + filename

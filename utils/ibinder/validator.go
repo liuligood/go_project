@@ -1,4 +1,4 @@
-package binder
+package ibinder
 
 import (
 	"errors"

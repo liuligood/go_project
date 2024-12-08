@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"crmeb_go/utils/xerror"
+	"crmeb_go/utils/ierror"
 	"encoding/json"
 	"errors"
 	"github.com/google/uuid"
@@ -198,7 +198,7 @@ func CustomRecoveryWithZap(logger ZapLogger, stack bool, recovery gin.RecoveryFu
 					)
 				}
 
-				unmarshalError := xerror.UnmarshalError(errors.New("internal server error, please try again later"))
+				unmarshalError := ierror.UnmarshalError(errors.New("internal server error, please try again later"))
 				buf, err := json.Marshal(unmarshalError)
 				if err != nil {
 					panic(err)

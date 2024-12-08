@@ -1,8 +1,8 @@
-package upload
+package iupload
 
 import (
+	"crmeb_go/utils/imd5"
 	"crmeb_go/utils/izap"
-	"crmeb_go/utils/md5"
 	"errors"
 	"io"
 	"mime/multipart"
@@ -26,7 +26,7 @@ func (l *Local) UploadFile(file *multipart.FileHeader) (string, string, error) {
 	ext := filepath.Ext(file.Filename)
 	// 读取文件名并加密
 	name := strings.TrimSuffix(file.Filename, ext)
-	name = md5.MD5V([]byte(name))
+	name = imd5.MD5V([]byte(name))
 	// 拼接新文件名
 	filename := name + "_" + time.Now().Format("20060102150405") + ext
 	// 尝试创建此路径

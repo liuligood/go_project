@@ -6,7 +6,7 @@ import (
 	"crmeb_go/internal/middleware"
 	"crmeb_go/internal/router"
 	"crmeb_go/internal/server"
-	"crmeb_go/utils/binder"
+	"crmeb_go/utils/ibinder"
 	"crmeb_go/utils/iconfig"
 	"crmeb_go/utils/izap"
 	"flag"
@@ -121,7 +121,7 @@ func newApp(c config.Conf, appCxt *internal.AppContent) {
 	// CorsByRules 按照配置的规则放行跨域请求
 	r.Use(middleware.CorsByRules(c))
 
-	binding.Validator = new(binder.Validator)
+	binding.Validator = new(ibinder.Validator)
 
 	router.Register(r, appCxt)
 

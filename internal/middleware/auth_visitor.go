@@ -13,14 +13,14 @@ func ApiAuthVisitorMiddleWare(svc *server.SvcContext) gin.HandlerFunc {
 		//var param validation.AuthMiddlewareParams
 		//var err error
 		//if err = c.ShouldBindHeader(&param); err != nil {
-		//	c.JSON(http.StatusOK, xhttp.Error(err))
+		//	c.JSON(http.StatusOK, ihttp.Error(err))
 		//	c.Abort()
 		//	return
 		//}
 		//// token校验
 		//thirdUserId, err := svc.Tool.TokenTool.GetTokenUserId(param.Token)
 		//if err != nil {
-		//	c.JSON(http.StatusOK, xhttp.Error(err, http_code_data.StatusUnSilentAuthorized))
+		//	c.JSON(http.StatusOK, ihttp.Error(err, http_code_data.StatusUnSilentAuthorized))
 		//	c.Abort()
 		//	return
 		//}

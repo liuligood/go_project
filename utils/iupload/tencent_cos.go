@@ -1,4 +1,4 @@
-package upload
+package iupload
 
 import (
 	"context"
@@ -18,7 +18,7 @@ type TencentCOS struct {
 	baseOss BaseOss
 }
 
-// UploadFile upload file to COS
+// UploadFile iupload file to COS
 func (t *TencentCOS) UploadFile(file *multipart.FileHeader) (string, string, error) {
 	client := t.NewClient()
 

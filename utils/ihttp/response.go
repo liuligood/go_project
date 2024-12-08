@@ -1,7 +1,7 @@
-package xhttp
+package ihttp
 
 import (
-	"crmeb_go/utils/xerror"
+	"crmeb_go/utils/ierror"
 	"net/http"
 )
 
@@ -46,8 +46,8 @@ func Error(err error, status ...int) Response {
 	statusCode := http.StatusBadRequest
 	message := err.Error()
 	var data interface{}
-	if xerror.IsError(err) {
-		newError := xerror.UnmarshalError(err)
+	if ierror.IsError(err) {
+		newError := ierror.UnmarshalError(err)
 		statusCode = int(newError.Status)
 		code = int(newError.Status)
 		message = newError.Message

@@ -2,7 +2,7 @@ package izap
 
 import (
 	"crmeb_go/config"
-	"crmeb_go/utils"
+	"crmeb_go/utils/idirectory"
 	"fmt"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -13,7 +13,7 @@ var Log *zap.Logger
 
 func NewZap(z config.Zap) {
 	// 判断是否有Director文件夹 没有就创建
-	if ok, _ := utils.PathExists(z.Director); !ok {
+	if ok, _ := idirectory.PathExists(z.Director); !ok {
 		fmt.Printf("create %v directory\n", z.Director)
 		_ = os.Mkdir(z.Director, os.ModePerm)
 	}
