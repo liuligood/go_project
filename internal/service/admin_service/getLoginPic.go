@@ -4,7 +4,7 @@ import (
 	"crmeb_go/internal/data/admin_data"
 	service_data "crmeb_go/internal/data/sevice_data"
 	"crmeb_go/internal/server"
-	"crmeb_go/internal/service/eb_system_config_service"
+	"crmeb_go/internal/service/system_config_service"
 	"crmeb_go/utils/izap"
 	"go.uber.org/zap"
 )
@@ -28,7 +28,7 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	//背景图
 	systemConfigParam.BaseServiceParams = params.BaseServiceParams
 	systemConfigParam.Name = service_data.CONFIG_KEY_ADMIN_LOGIN_BACKGROUND_IMAGE
-	backgroundImage, err := eb_system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
+	backgroundImage, err := system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
 
 	if err != nil {
 		izap.Log.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_BACKGROUND_IMAGE), zap.Error(err))
@@ -40,7 +40,7 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 
 	// logo
 	systemConfigParam.Name = service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LEFT_TOP
-	logo, err := eb_system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
+	logo, err := system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
 
 	if err != nil {
 		izap.Log.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LEFT_TOP), zap.Error(err))
@@ -52,7 +52,7 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 
 	// loginLogo
 	systemConfigParam.Name = service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LOGIN
-	loginLogo, err := eb_system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
+	loginLogo, err := system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
 
 	if err != nil {
 		izap.Log.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LOGIN), zap.Error(err))
@@ -65,6 +65,6 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	// todo 轮播图
 	result["banner"] = []string{"1", "2", "3"}
 	data.Map = result
-	panic("错误")
+
 	return data, nil
 }

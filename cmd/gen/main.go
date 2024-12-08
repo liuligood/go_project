@@ -1,7 +1,7 @@
 package main
 
 import (
-	"crmeb_go/internal/repository/user_repository"
+	gen_repository "crmeb_go/internal/repository/gen_repository"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gen"
@@ -78,7 +78,7 @@ func main() {
 	fieldOpts := []gen.ModelOpt{jsonField, softDeleteField}
 
 	g.ApplyInterface(func() {}, g.GenerateAllTable(fieldOpts...)...)
-	g.ApplyInterface(func(user_repository.Querier) {}, g.GenerateModel("users", fieldOpts...))
+	g.ApplyInterface(func(gen_repository.Querier) {}, g.GenerateModel("user", fieldOpts...))
 	g.WithImportPkgPath("github.com/shopspring/decimal")
 
 	// 执行并生成代码
