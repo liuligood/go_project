@@ -5,6 +5,7 @@ import (
 	"crmeb_go/config"
 	"crmeb_go/internal/container/repository"
 	"crmeb_go/internal/repository/gen"
+	"crmeb_go/utils/icache"
 	"crmeb_go/utils/igorm"
 	iredis "crmeb_go/utils/iredis"
 	"crmeb_go/utils/iupload"
@@ -43,6 +44,7 @@ func NewSvcContext(c config.Conf) *SvcContext {
 		svc.RedisClient = iredis.Redis(c)
 		svc.RedisClientList = iredis.RedisList(c)
 		svc.Redsync = redsync.New(goredis.NewPool(svc.RedisClient))
+		icache.InitLocalCache()
 	}
 
 	return svc
