@@ -37,14 +37,14 @@ func newStoreOrderInfo(db *gorm.DB, opts ...gen.DOOption) storeOrderInfo {
 	_storeOrderInfo.AttrValueID = field.NewInt64(tableName, "attr_value_id")
 	_storeOrderInfo.Image = field.NewString(tableName, "image")
 	_storeOrderInfo.Sku = field.NewString(tableName, "sku")
-	_storeOrderInfo.Price = field.NewField(tableName, "price")
+	_storeOrderInfo.Price = field.NewString(tableName, "price")
 	_storeOrderInfo.PayNum = field.NewInt64(tableName, "pay_num")
-	_storeOrderInfo.Weight = field.NewField(tableName, "weight")
-	_storeOrderInfo.Volume = field.NewField(tableName, "volume")
+	_storeOrderInfo.Weight = field.NewString(tableName, "weight")
+	_storeOrderInfo.Volume = field.NewString(tableName, "volume")
 	_storeOrderInfo.GiveIntegral = field.NewInt64(tableName, "give_integral")
 	_storeOrderInfo.IsReply = field.NewInt64(tableName, "is_reply")
 	_storeOrderInfo.IsSub = field.NewInt64(tableName, "is_sub")
-	_storeOrderInfo.VipPrice = field.NewField(tableName, "vip_price")
+	_storeOrderInfo.VipPrice = field.NewString(tableName, "vip_price")
 	_storeOrderInfo.ProductType = field.NewInt64(tableName, "product_type")
 	_storeOrderInfo.CreatedAt = field.NewInt64(tableName, "created_at")
 	_storeOrderInfo.UpdatedAt = field.NewInt64(tableName, "updated_at")
@@ -70,14 +70,14 @@ type storeOrderInfo struct {
 	AttrValueID  field.Int64  // 规格属性值id
 	Image        field.String // 商品图片
 	Sku          field.String // 商品sku
-	Price        field.Field  // 商品价格
+	Price        field.String // 商品价格
 	PayNum       field.Int64  // 购买数量
-	Weight       field.Field  // 重量
-	Volume       field.Field  // 体积
+	Weight       field.String // 重量
+	Volume       field.String // 体积
 	GiveIntegral field.Int64  // 赠送积分
 	IsReply      field.Int64  // 是否评价，0-未评价，1-已评价
 	IsSub        field.Int64  // 是否单独分佣,0-否，1-是
-	VipPrice     field.Field  // 会员价
+	VipPrice     field.String // 会员价
 	ProductType  field.Int64  // 商品类型:0-普通，1-秒杀，2-砍价，3-拼团，4-视频号
 	CreatedAt    field.Int64
 	UpdatedAt    field.Int64
@@ -108,14 +108,14 @@ func (s *storeOrderInfo) updateTableName(table string) *storeOrderInfo {
 	s.AttrValueID = field.NewInt64(table, "attr_value_id")
 	s.Image = field.NewString(table, "image")
 	s.Sku = field.NewString(table, "sku")
-	s.Price = field.NewField(table, "price")
+	s.Price = field.NewString(table, "price")
 	s.PayNum = field.NewInt64(table, "pay_num")
-	s.Weight = field.NewField(table, "weight")
-	s.Volume = field.NewField(table, "volume")
+	s.Weight = field.NewString(table, "weight")
+	s.Volume = field.NewString(table, "volume")
 	s.GiveIntegral = field.NewInt64(table, "give_integral")
 	s.IsReply = field.NewInt64(table, "is_reply")
 	s.IsSub = field.NewInt64(table, "is_sub")
-	s.VipPrice = field.NewField(table, "vip_price")
+	s.VipPrice = field.NewString(table, "vip_price")
 	s.ProductType = field.NewInt64(table, "product_type")
 	s.CreatedAt = field.NewInt64(table, "created_at")
 	s.UpdatedAt = field.NewInt64(table, "updated_at")

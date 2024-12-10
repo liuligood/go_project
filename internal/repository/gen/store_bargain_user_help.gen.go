@@ -31,7 +31,7 @@ func newStoreBargainUserHelp(db *gorm.DB, opts ...gen.DOOption) storeBargainUser
 	_storeBargainUserHelp.UID = field.NewInt64(tableName, "uid")
 	_storeBargainUserHelp.BargainID = field.NewInt64(tableName, "bargain_id")
 	_storeBargainUserHelp.BargainUserID = field.NewInt64(tableName, "bargain_user_id")
-	_storeBargainUserHelp.Price = field.NewField(tableName, "price")
+	_storeBargainUserHelp.Price = field.NewString(tableName, "price")
 	_storeBargainUserHelp.AddTime = field.NewInt64(tableName, "add_time")
 	_storeBargainUserHelp.CreatedAt = field.NewInt64(tableName, "created_at")
 	_storeBargainUserHelp.UpdatedAt = field.NewInt64(tableName, "updated_at")
@@ -47,12 +47,12 @@ type storeBargainUserHelp struct {
 	storeBargainUserHelpDo storeBargainUserHelpDo
 
 	ALL           field.Asterisk
-	ID            field.Int64 // 砍价用户帮助表ID
-	UID           field.Int64 // 帮助的用户id
-	BargainID     field.Int64 // 砍价商品ID
-	BargainUserID field.Int64 // 用户参与砍价表id
-	Price         field.Field // 帮助砍价多少金额
-	AddTime       field.Int64 // 添加时间
+	ID            field.Int64  // 砍价用户帮助表ID
+	UID           field.Int64  // 帮助的用户id
+	BargainID     field.Int64  // 砍价商品ID
+	BargainUserID field.Int64  // 用户参与砍价表id
+	Price         field.String // 帮助砍价多少金额
+	AddTime       field.Int64  // 添加时间
 	CreatedAt     field.Int64
 	UpdatedAt     field.Int64
 	DeletedAt     field.Field
@@ -76,7 +76,7 @@ func (s *storeBargainUserHelp) updateTableName(table string) *storeBargainUserHe
 	s.UID = field.NewInt64(table, "uid")
 	s.BargainID = field.NewInt64(table, "bargain_id")
 	s.BargainUserID = field.NewInt64(table, "bargain_user_id")
-	s.Price = field.NewField(table, "price")
+	s.Price = field.NewString(table, "price")
 	s.AddTime = field.NewInt64(table, "add_time")
 	s.CreatedAt = field.NewInt64(table, "created_at")
 	s.UpdatedAt = field.NewInt64(table, "updated_at")

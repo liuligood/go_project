@@ -3,6 +3,7 @@ package main
 import (
 	"crmeb_go/config"
 	"crmeb_go/internal"
+	"crmeb_go/internal/cron"
 	"crmeb_go/internal/middleware"
 	"crmeb_go/internal/router"
 	"crmeb_go/internal/server"
@@ -64,6 +65,9 @@ func (p *program) run() {
 	p.svcContext = server.NewSvcContext(c)
 
 	appCxt := internal.Register(p.svcContext)
+
+	// 启动定时任务
+	cron.Timer(p.svcContext)
 
 	go func() {
 		newApp(c, appCxt)

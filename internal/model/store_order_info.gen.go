@@ -4,10 +4,7 @@
 
 package model
 
-import (
-	"google.golang.org/genproto/googleapis/type/decimal"
-	"gorm.io/plugin/soft_delete"
-)
+import "gorm.io/plugin/soft_delete"
 
 const TableNameStoreOrderInfo = "store_order_info"
 
@@ -23,14 +20,14 @@ type StoreOrderInfo struct {
 	AttrValueID  int64                 `gorm:"column:attr_value_id;type:int unsigned;comment:规格属性值id" json:"attr_value_id"`                      // 规格属性值id
 	Image        string                `gorm:"column:image;type:varchar(256);not null;comment:商品图片" json:"image"`                                // 商品图片
 	Sku          string                `gorm:"column:sku;type:varchar(128);not null;comment:商品sku" json:"sku"`                                   // 商品sku
-	Price        decimal.Decimal       `gorm:"column:price;type:decimal(8,2) unsigned;not null;comment:商品价格" json:"price"`                       // 商品价格
+	Price        string                `gorm:"column:price;type:decimal(8,2) unsigned;not null;comment:商品价格" json:"price"`                       // 商品价格
 	PayNum       int64                 `gorm:"column:pay_num;type:int unsigned;not null;comment:购买数量" json:"pay_num"`                            // 购买数量
-	Weight       decimal.Decimal       `gorm:"column:weight;type:decimal(8,2) unsigned;not null;comment:重量" json:"weight"`                       // 重量
-	Volume       decimal.Decimal       `gorm:"column:volume;type:decimal(8,2) unsigned;not null;comment:体积" json:"volume"`                       // 体积
+	Weight       string                `gorm:"column:weight;type:decimal(8,2) unsigned;not null;comment:重量" json:"weight"`                       // 重量
+	Volume       string                `gorm:"column:volume;type:decimal(8,2) unsigned;not null;comment:体积" json:"volume"`                       // 体积
 	GiveIntegral int64                 `gorm:"column:give_integral;type:int unsigned;not null;comment:赠送积分" json:"give_integral"`                // 赠送积分
 	IsReply      int64                 `gorm:"column:is_reply;type:tinyint(1);not null;comment:是否评价，0-未评价，1-已评价" json:"is_reply"`                // 是否评价，0-未评价，1-已评价
 	IsSub        int64                 `gorm:"column:is_sub;type:tinyint(1);not null;comment:是否单独分佣,0-否，1-是" json:"is_sub"`                      // 是否单独分佣,0-否，1-是
-	VipPrice     decimal.Decimal       `gorm:"column:vip_price;type:decimal(8,2) unsigned;not null;comment:会员价" json:"vip_price"`                // 会员价
+	VipPrice     string                `gorm:"column:vip_price;type:decimal(8,2) unsigned;not null;comment:会员价" json:"vip_price"`                // 会员价
 	ProductType  int64                 `gorm:"column:product_type;type:int;not null;comment:商品类型:0-普通，1-秒杀，2-砍价，3-拼团，4-视频号" json:"product_type"` // 商品类型:0-普通，1-秒杀，2-砍价，3-拼团，4-视频号
 	CreatedAt    int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
 	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`

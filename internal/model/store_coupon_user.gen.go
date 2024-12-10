@@ -4,10 +4,7 @@
 
 package model
 
-import (
-	"google.golang.org/genproto/googleapis/type/decimal"
-	"gorm.io/plugin/soft_delete"
-)
+import "gorm.io/plugin/soft_delete"
 
 const TableNameStoreCouponUser = "store_coupon_user"
 
@@ -18,8 +15,8 @@ type StoreCouponUser struct {
 	Cid        int64                 `gorm:"column:cid;type:int unsigned;not null;comment:兑换的项目id" json:"cid"`                                         // 兑换的项目id
 	UID        int64                 `gorm:"column:uid;type:int unsigned;not null;comment:领取人id" json:"uid"`                                           // 领取人id
 	Name       string                `gorm:"column:name;type:varchar(32);not null;comment:优惠券名称" json:"name"`                                          // 优惠券名称
-	Money      decimal.Decimal       `gorm:"column:money;type:decimal(8,2) unsigned;not null;default:0.00;comment:优惠券的面值" json:"money"`                // 优惠券的面值
-	MinPrice   decimal.Decimal       `gorm:"column:min_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:最低消费多少金额可用优惠券" json:"min_price"` // 最低消费多少金额可用优惠券
+	Money      string                `gorm:"column:money;type:decimal(8,2) unsigned;not null;default:0.00;comment:优惠券的面值" json:"money"`                // 优惠券的面值
+	MinPrice   string                `gorm:"column:min_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:最低消费多少金额可用优惠券" json:"min_price"` // 最低消费多少金额可用优惠券
 	Type       string                `gorm:"column:type;type:varchar(32);not null;default:send;comment:获取方式，send后台发放, 用户领取 get" json:"type"`           // 获取方式，send后台发放, 用户领取 get
 	Status     int64                 `gorm:"column:status;type:tinyint(1);not null;comment:状态（0：未使用，1：已使用, 2:已失效）" json:"status"`                      // 状态（0：未使用，1：已使用, 2:已失效）
 	StartTime  int64                 `gorm:"column:start_time;type:bigint" json:"start_time"`

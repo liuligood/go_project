@@ -43,7 +43,9 @@ func NewSvcContext(c config.Conf) *SvcContext {
 		// 初始化redis服务
 		svc.RedisClient = iredis.Redis(c)
 		svc.RedisClientList = iredis.RedisList(c)
+		// 初始化分布式锁
 		svc.Redsync = redsync.New(goredis.NewPool(svc.RedisClient))
+		// 初始化本地缓存
 		icache.InitLocalCache()
 	}
 

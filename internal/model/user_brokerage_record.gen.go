@@ -4,10 +4,7 @@
 
 package model
 
-import (
-	"google.golang.org/genproto/googleapis/type/decimal"
-	"gorm.io/plugin/soft_delete"
-)
+import "gorm.io/plugin/soft_delete"
 
 const TableNameUserBrokerageRecord = "user_brokerage_record"
 
@@ -19,8 +16,8 @@ type UserBrokerageRecord struct {
 	LinkType       string                `gorm:"column:link_type;type:varchar(32);not null;default:0;comment:关联类型（order,extract，yue）" json:"link_type"`         // 关联类型（order,extract，yue）
 	Type           int64                 `gorm:"column:type;type:int;not null;default:1;comment:类型：1-增加，2-扣减（提现）" json:"type"`                                  // 类型：1-增加，2-扣减（提现）
 	Title          string                `gorm:"column:title;type:varchar(64);not null;comment:标题" json:"title"`                                                // 标题
-	Price          decimal.Decimal       `gorm:"column:price;type:decimal(8,2);not null;default:0.00;comment:金额" json:"price"`                                  // 金额
-	Balance        decimal.Decimal       `gorm:"column:balance;type:decimal(16,2);not null;default:0.00;comment:剩余" json:"balance"`                             // 剩余
+	Price          string                `gorm:"column:price;type:decimal(8,2);not null;default:0.00;comment:金额" json:"price"`                                  // 金额
+	Balance        string                `gorm:"column:balance;type:decimal(16,2);not null;default:0.00;comment:剩余" json:"balance"`                             // 剩余
 	Mark           string                `gorm:"column:mark;type:varchar(512);not null;comment:备注" json:"mark"`                                                 // 备注
 	Status         int64                 `gorm:"column:status;type:tinyint(1);not null;default:1;comment:状态：1-订单创建，2-冻结期，3-完成，4-失效（订单退款），5-提现申请" json:"status"` // 状态：1-订单创建，2-冻结期，3-完成，4-失效（订单退款），5-提现申请
 	FrozenTime     int64                 `gorm:"column:frozen_time;type:int;not null;comment:冻结期时间（天）" json:"frozen_time"`                                      // 冻结期时间（天）

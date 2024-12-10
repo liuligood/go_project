@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+// LocalCache 不能存储超过总容量1/1024大小的缓存
 var LocalCache *freecache.Cache
 
 type StatusInfo struct {
@@ -194,7 +195,7 @@ func GetCacheOrElse(ctx context.Context, key string, ttl time.Duration, fetcher 
 	return value, nil
 }
 
-// SetLocal 设置本地缓存值
+// SetLocal 设置本地缓存值 freecache不能存储超过总容量1/1024大小的缓存
 func SetLocal(key, value string, ttl time.Duration) error {
 	if len(key) == 0 {
 		return errors.New("key is empty")
@@ -205,8 +206,9 @@ func SetLocal(key, value string, ttl time.Duration) error {
 	}
 
 	err := LocalCache.Set([]byte(key), []byte(value), int(ttl.Seconds()))
-	if err != nil {
+	if err != nil && !errors.Is(err, freecache.ErrLargeEntry) {
 		izap.Log.Error("cache set err:", zap.Error(err))
+
 		return errors.New("cache set err")
 	}
 

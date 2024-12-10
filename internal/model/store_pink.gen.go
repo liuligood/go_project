@@ -4,10 +4,7 @@
 
 package model
 
-import (
-	"google.golang.org/genproto/googleapis/type/decimal"
-	"gorm.io/plugin/soft_delete"
-)
+import "gorm.io/plugin/soft_delete"
 
 const TableNameStorePink = "store_pink"
 
@@ -18,11 +15,11 @@ type StorePink struct {
 	OrderID    string                `gorm:"column:order_id;type:varchar(32);not null;comment:订单id 生成" json:"order_id"`                   // 订单id 生成
 	OrderIDKey int64                 `gorm:"column:order_id_key;type:int unsigned;not null;comment:订单id  数据库" json:"order_id_key"`        // 订单id  数据库
 	TotalNum   int64                 `gorm:"column:total_num;type:int unsigned;not null;comment:购买商品个数" json:"total_num"`                 // 购买商品个数
-	TotalPrice decimal.Decimal       `gorm:"column:total_price;type:decimal(10,2) unsigned;not null;comment:购买总金额" json:"total_price"`    // 购买总金额
+	TotalPrice string                `gorm:"column:total_price;type:decimal(10,2) unsigned;not null;comment:购买总金额" json:"total_price"`    // 购买总金额
 	Cid        int64                 `gorm:"column:cid;type:int unsigned;not null;comment:拼团商品id" json:"cid"`                             // 拼团商品id
 	Pid        int64                 `gorm:"column:pid;type:int unsigned;not null;comment:商品id" json:"pid"`                               // 商品id
 	People     int64                 `gorm:"column:people;type:int unsigned;not null;comment:拼图总人数" json:"people"`                        // 拼图总人数
-	Price      decimal.Decimal       `gorm:"column:price;type:decimal(10,2) unsigned;not null;comment:拼团商品单价" json:"price"`               // 拼团商品单价
+	Price      string                `gorm:"column:price;type:decimal(10,2) unsigned;not null;comment:拼团商品单价" json:"price"`               // 拼团商品单价
 	AddTime    int64                 `gorm:"column:add_time;type:bigint;not null;comment:开始时间" json:"add_time"`                           // 开始时间
 	StopTime   int64                 `gorm:"column:stop_time;type:bigint;not null;comment:结束时间" json:"stop_time"`                         // 结束时间
 	KID        int64                 `gorm:"column:k_id;type:int unsigned;not null;comment:团长id 0为团长" json:"k_id"`                        // 团长id 0为团长

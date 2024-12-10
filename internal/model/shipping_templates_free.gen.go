@@ -4,10 +4,7 @@
 
 package model
 
-import (
-	"google.golang.org/genproto/googleapis/type/decimal"
-	"gorm.io/plugin/soft_delete"
-)
+import "gorm.io/plugin/soft_delete"
 
 const TableNameShippingTemplatesFree = "shipping_templates_free"
 
@@ -17,8 +14,8 @@ type ShippingTemplatesFree struct {
 	TempID    int64                 `gorm:"column:temp_id;type:int;not null;comment:模板ID" json:"temp_id"`                      // 模板ID
 	CityID    int64                 `gorm:"column:city_id;type:int;not null;comment:城市ID" json:"city_id"`                      // 城市ID
 	Title     string                `gorm:"column:title;type:text;comment:描述" json:"title"`                                    // 描述
-	Number    decimal.Decimal       `gorm:"column:number;type:decimal(10,2);not null;default:0.00;comment:包邮件数" json:"number"` // 包邮件数
-	Price     decimal.Decimal       `gorm:"column:price;type:decimal(10,2);not null;default:0.00;comment:包邮金额" json:"price"`   // 包邮金额
+	Number    string                `gorm:"column:number;type:decimal(10,2);not null;default:0.00;comment:包邮件数" json:"number"` // 包邮件数
+	Price     string                `gorm:"column:price;type:decimal(10,2);not null;default:0.00;comment:包邮金额" json:"price"`   // 包邮金额
 	Type      int64                 `gorm:"column:type;type:tinyint(1);not null;default:1;comment:计费方式" json:"type"`           // 计费方式
 	Uniqid    string                `gorm:"column:uniqid;type:varchar(32);not null;comment:分组唯一值" json:"uniqid"`               // 分组唯一值
 	Status    int64                 `gorm:"column:status;type:tinyint(1);comment:是否无效" json:"status"`                          // 是否无效

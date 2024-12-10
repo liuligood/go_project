@@ -30,12 +30,12 @@ func newUserRecharge(db *gorm.DB, opts ...gen.DOOption) userRecharge {
 	_userRecharge.ID = field.NewInt64(tableName, "id")
 	_userRecharge.UID = field.NewInt64(tableName, "uid")
 	_userRecharge.OrderID = field.NewString(tableName, "order_id")
-	_userRecharge.Price = field.NewField(tableName, "price")
-	_userRecharge.GivePrice = field.NewField(tableName, "give_price")
+	_userRecharge.Price = field.NewString(tableName, "price")
+	_userRecharge.GivePrice = field.NewString(tableName, "give_price")
 	_userRecharge.RechargeType = field.NewString(tableName, "recharge_type")
 	_userRecharge.Paid = field.NewInt64(tableName, "paid")
 	_userRecharge.PayTime = field.NewInt64(tableName, "pay_time")
-	_userRecharge.RefundPrice = field.NewField(tableName, "refund_price")
+	_userRecharge.RefundPrice = field.NewString(tableName, "refund_price")
 	_userRecharge.CreatedAt = field.NewInt64(tableName, "created_at")
 	_userRecharge.UpdatedAt = field.NewInt64(tableName, "updated_at")
 	_userRecharge.DeletedAt = field.NewField(tableName, "deleted_at")
@@ -53,12 +53,12 @@ type userRecharge struct {
 	ID           field.Int64
 	UID          field.Int64  // 充值用户UID
 	OrderID      field.String // 订单号
-	Price        field.Field  // 充值金额
-	GivePrice    field.Field  // 购买赠送金额
+	Price        field.String // 充值金额
+	GivePrice    field.String // 购买赠送金额
 	RechargeType field.String // 充值类型
 	Paid         field.Int64  // 是否充值
 	PayTime      field.Int64
-	RefundPrice  field.Field // 退款金额
+	RefundPrice  field.String // 退款金额
 	CreatedAt    field.Int64
 	UpdatedAt    field.Int64
 	DeletedAt    field.Field
@@ -81,12 +81,12 @@ func (u *userRecharge) updateTableName(table string) *userRecharge {
 	u.ID = field.NewInt64(table, "id")
 	u.UID = field.NewInt64(table, "uid")
 	u.OrderID = field.NewString(table, "order_id")
-	u.Price = field.NewField(table, "price")
-	u.GivePrice = field.NewField(table, "give_price")
+	u.Price = field.NewString(table, "price")
+	u.GivePrice = field.NewString(table, "give_price")
 	u.RechargeType = field.NewString(table, "recharge_type")
 	u.Paid = field.NewInt64(table, "paid")
 	u.PayTime = field.NewInt64(table, "pay_time")
-	u.RefundPrice = field.NewField(table, "refund_price")
+	u.RefundPrice = field.NewString(table, "refund_price")
 	u.CreatedAt = field.NewInt64(table, "created_at")
 	u.UpdatedAt = field.NewInt64(table, "updated_at")
 	u.DeletedAt = field.NewField(table, "deleted_at")

@@ -46,8 +46,8 @@ func newUser(db *gorm.DB, opts ...gen.DOOption) user {
 	_user.Phone = field.NewString(tableName, "phone")
 	_user.AddIP = field.NewString(tableName, "add_ip")
 	_user.LastIP = field.NewString(tableName, "last_ip")
-	_user.NowMoney = field.NewField(tableName, "now_money")
-	_user.BrokeragePrice = field.NewField(tableName, "brokerage_price")
+	_user.NowMoney = field.NewString(tableName, "now_money")
+	_user.BrokeragePrice = field.NewString(tableName, "brokerage_price")
 	_user.Integral = field.NewInt64(tableName, "integral")
 	_user.Experience = field.NewInt64(tableName, "experience")
 	_user.SignNum = field.NewInt64(tableName, "sign_num")
@@ -99,8 +99,8 @@ type user struct {
 	Phone          field.String // 手机号码
 	AddIP          field.String // 添加ip
 	LastIP         field.String // 最后一次登录ip
-	NowMoney       field.Field  // 用户余额
-	BrokeragePrice field.Field  // 佣金金额
+	NowMoney       field.String // 用户余额
+	BrokeragePrice field.String // 佣金金额
 	Integral       field.Int64  // 用户剩余积分
 	Experience     field.Int64  // 用户剩余经验
 	SignNum        field.Int64  // 连续签到天数
@@ -157,8 +157,8 @@ func (u *user) updateTableName(table string) *user {
 	u.Phone = field.NewString(table, "phone")
 	u.AddIP = field.NewString(table, "add_ip")
 	u.LastIP = field.NewString(table, "last_ip")
-	u.NowMoney = field.NewField(table, "now_money")
-	u.BrokeragePrice = field.NewField(table, "brokerage_price")
+	u.NowMoney = field.NewString(table, "now_money")
+	u.BrokeragePrice = field.NewString(table, "brokerage_price")
 	u.Integral = field.NewInt64(table, "integral")
 	u.Experience = field.NewInt64(table, "experience")
 	u.SignNum = field.NewInt64(table, "sign_num")

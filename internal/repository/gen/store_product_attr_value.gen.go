@@ -32,16 +32,16 @@ func newStoreProductAttrValue(db *gorm.DB, opts ...gen.DOOption) storeProductAtt
 	_storeProductAttrValue.Suk = field.NewString(tableName, "suk")
 	_storeProductAttrValue.Stock = field.NewInt64(tableName, "stock")
 	_storeProductAttrValue.Sales = field.NewInt64(tableName, "sales")
-	_storeProductAttrValue.Price = field.NewField(tableName, "price")
+	_storeProductAttrValue.Price = field.NewString(tableName, "price")
 	_storeProductAttrValue.Image = field.NewString(tableName, "image")
 	_storeProductAttrValue.Unique = field.NewString(tableName, "unique")
-	_storeProductAttrValue.Cost = field.NewField(tableName, "cost")
+	_storeProductAttrValue.Cost = field.NewString(tableName, "cost")
 	_storeProductAttrValue.BarCode = field.NewString(tableName, "bar_code")
-	_storeProductAttrValue.OtPrice = field.NewField(tableName, "ot_price")
-	_storeProductAttrValue.Weight = field.NewField(tableName, "weight")
-	_storeProductAttrValue.Volume = field.NewField(tableName, "volume")
-	_storeProductAttrValue.Brokerage = field.NewField(tableName, "brokerage")
-	_storeProductAttrValue.BrokerageTwo = field.NewField(tableName, "brokerage_two")
+	_storeProductAttrValue.OtPrice = field.NewString(tableName, "ot_price")
+	_storeProductAttrValue.Weight = field.NewString(tableName, "weight")
+	_storeProductAttrValue.Volume = field.NewString(tableName, "volume")
+	_storeProductAttrValue.Brokerage = field.NewString(tableName, "brokerage")
+	_storeProductAttrValue.BrokerageTwo = field.NewString(tableName, "brokerage_two")
 	_storeProductAttrValue.Type = field.NewInt64(tableName, "type")
 	_storeProductAttrValue.Quota = field.NewInt64(tableName, "quota")
 	_storeProductAttrValue.QuotaShow = field.NewInt64(tableName, "quota_show")
@@ -66,16 +66,16 @@ type storeProductAttrValue struct {
 	Suk          field.String // 商品属性索引值 (attr_value|attr_value[|....])
 	Stock        field.Int64  // 属性对应的库存
 	Sales        field.Int64  // 销量
-	Price        field.Field  // 属性金额
+	Price        field.String // 属性金额
 	Image        field.String // 图片
 	Unique       field.String // 唯一值
-	Cost         field.Field  // 成本价
+	Cost         field.String // 成本价
 	BarCode      field.String // 商品条码
-	OtPrice      field.Field  // 原价
-	Weight       field.Field  // 重量
-	Volume       field.Field  // 体积
-	Brokerage    field.Field  // 一级返佣
-	BrokerageTwo field.Field  // 二级返佣
+	OtPrice      field.String // 原价
+	Weight       field.String // 重量
+	Volume       field.String // 体积
+	Brokerage    field.String // 一级返佣
+	BrokerageTwo field.String // 二级返佣
 	Type         field.Int64  // 活动类型 0=商品，1=秒杀，2=砍价，3=拼团
 	Quota        field.Int64  // 活动限购数量
 	QuotaShow    field.Int64  // 活动限购数量显示
@@ -105,16 +105,16 @@ func (s *storeProductAttrValue) updateTableName(table string) *storeProductAttrV
 	s.Suk = field.NewString(table, "suk")
 	s.Stock = field.NewInt64(table, "stock")
 	s.Sales = field.NewInt64(table, "sales")
-	s.Price = field.NewField(table, "price")
+	s.Price = field.NewString(table, "price")
 	s.Image = field.NewString(table, "image")
 	s.Unique = field.NewString(table, "unique")
-	s.Cost = field.NewField(table, "cost")
+	s.Cost = field.NewString(table, "cost")
 	s.BarCode = field.NewString(table, "bar_code")
-	s.OtPrice = field.NewField(table, "ot_price")
-	s.Weight = field.NewField(table, "weight")
-	s.Volume = field.NewField(table, "volume")
-	s.Brokerage = field.NewField(table, "brokerage")
-	s.BrokerageTwo = field.NewField(table, "brokerage_two")
+	s.OtPrice = field.NewString(table, "ot_price")
+	s.Weight = field.NewString(table, "weight")
+	s.Volume = field.NewString(table, "volume")
+	s.Brokerage = field.NewString(table, "brokerage")
+	s.BrokerageTwo = field.NewString(table, "brokerage_two")
 	s.Type = field.NewInt64(table, "type")
 	s.Quota = field.NewInt64(table, "quota")
 	s.QuotaShow = field.NewInt64(table, "quota_show")

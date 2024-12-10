@@ -33,8 +33,8 @@ func newUserBrokerageRecord(db *gorm.DB, opts ...gen.DOOption) userBrokerageReco
 	_userBrokerageRecord.LinkType = field.NewString(tableName, "link_type")
 	_userBrokerageRecord.Type = field.NewInt64(tableName, "type")
 	_userBrokerageRecord.Title = field.NewString(tableName, "title")
-	_userBrokerageRecord.Price = field.NewField(tableName, "price")
-	_userBrokerageRecord.Balance = field.NewField(tableName, "balance")
+	_userBrokerageRecord.Price = field.NewString(tableName, "price")
+	_userBrokerageRecord.Balance = field.NewString(tableName, "balance")
 	_userBrokerageRecord.Mark = field.NewString(tableName, "mark")
 	_userBrokerageRecord.Status = field.NewInt64(tableName, "status")
 	_userBrokerageRecord.FrozenTime = field.NewInt64(tableName, "frozen_time")
@@ -60,8 +60,8 @@ type userBrokerageRecord struct {
 	LinkType       field.String // 关联类型（order,extract，yue）
 	Type           field.Int64  // 类型：1-增加，2-扣减（提现）
 	Title          field.String // 标题
-	Price          field.Field  // 金额
-	Balance        field.Field  // 剩余
+	Price          field.String // 金额
+	Balance        field.String // 剩余
 	Mark           field.String // 备注
 	Status         field.Int64  // 状态：1-订单创建，2-冻结期，3-完成，4-失效（订单退款），5-提现申请
 	FrozenTime     field.Int64  // 冻结期时间（天）
@@ -92,8 +92,8 @@ func (u *userBrokerageRecord) updateTableName(table string) *userBrokerageRecord
 	u.LinkType = field.NewString(table, "link_type")
 	u.Type = field.NewInt64(table, "type")
 	u.Title = field.NewString(table, "title")
-	u.Price = field.NewField(table, "price")
-	u.Balance = field.NewField(table, "balance")
+	u.Price = field.NewString(table, "price")
+	u.Balance = field.NewString(table, "balance")
 	u.Mark = field.NewString(table, "mark")
 	u.Status = field.NewInt64(table, "status")
 	u.FrozenTime = field.NewInt64(table, "frozen_time")

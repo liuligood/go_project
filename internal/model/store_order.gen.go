@@ -4,10 +4,7 @@
 
 package model
 
-import (
-	"google.golang.org/genproto/googleapis/type/decimal"
-	"gorm.io/plugin/soft_delete"
-)
+import "gorm.io/plugin/soft_delete"
 
 const TableNameStoreOrder = "store_order"
 
@@ -19,15 +16,15 @@ type StoreOrder struct {
 	RealName               string                `gorm:"column:real_name;type:varchar(32);not null;comment:用户姓名" json:"real_name"`                                    // 用户姓名
 	UserPhone              string                `gorm:"column:user_phone;type:varchar(18);not null;comment:用户电话" json:"user_phone"`                                  // 用户电话
 	UserAddress            string                `gorm:"column:user_address;type:varchar(100);not null;comment:详细地址" json:"user_address"`                             // 详细地址
-	FreightPrice           decimal.Decimal       `gorm:"column:freight_price;type:decimal(8,2);not null;default:0.00;comment:运费金额" json:"freight_price"`              // 运费金额
+	FreightPrice           string                `gorm:"column:freight_price;type:decimal(8,2);not null;default:0.00;comment:运费金额" json:"freight_price"`              // 运费金额
 	TotalNum               int64                 `gorm:"column:total_num;type:int unsigned;not null;comment:订单商品总数" json:"total_num"`                                 // 订单商品总数
-	TotalPrice             decimal.Decimal       `gorm:"column:total_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:订单总价" json:"total_price"`         // 订单总价
-	TotalPostage           decimal.Decimal       `gorm:"column:total_postage;type:decimal(8,2) unsigned;not null;default:0.00;comment:邮费" json:"total_postage"`       // 邮费
-	PayPrice               decimal.Decimal       `gorm:"column:pay_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:实际支付金额" json:"pay_price"`           // 实际支付金额
-	PayPostage             decimal.Decimal       `gorm:"column:pay_postage;type:decimal(8,2) unsigned;not null;default:0.00;comment:支付邮费" json:"pay_postage"`         // 支付邮费
-	DeductionPrice         decimal.Decimal       `gorm:"column:deduction_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:抵扣金额" json:"deduction_price"` // 抵扣金额
+	TotalPrice             string                `gorm:"column:total_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:订单总价" json:"total_price"`         // 订单总价
+	TotalPostage           string                `gorm:"column:total_postage;type:decimal(8,2) unsigned;not null;default:0.00;comment:邮费" json:"total_postage"`       // 邮费
+	PayPrice               string                `gorm:"column:pay_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:实际支付金额" json:"pay_price"`           // 实际支付金额
+	PayPostage             string                `gorm:"column:pay_postage;type:decimal(8,2) unsigned;not null;default:0.00;comment:支付邮费" json:"pay_postage"`         // 支付邮费
+	DeductionPrice         string                `gorm:"column:deduction_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:抵扣金额" json:"deduction_price"` // 抵扣金额
 	CouponID               int64                 `gorm:"column:coupon_id;type:int unsigned;not null;comment:优惠券id" json:"coupon_id"`                                  // 优惠券id
-	CouponPrice            decimal.Decimal       `gorm:"column:coupon_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:优惠券金额" json:"coupon_price"`      // 优惠券金额
+	CouponPrice            string                `gorm:"column:coupon_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:优惠券金额" json:"coupon_price"`      // 优惠券金额
 	Paid                   int64                 `gorm:"column:paid;type:tinyint unsigned;not null;comment:支付状态" json:"paid"`                                         // 支付状态
 	PayTime                int64                 `gorm:"column:pay_time;type:bigint" json:"pay_time"`
 	PayType                string                `gorm:"column:pay_type;type:varchar(32);not null;comment:支付方式" json:"pay_type"`                                   // 支付方式
@@ -38,7 +35,7 @@ type StoreOrder struct {
 	RefundReasonWap        string                `gorm:"column:refund_reason_wap;type:varchar(255);comment:前台退款原因" json:"refund_reason_wap"`                       // 前台退款原因
 	RefundReason           string                `gorm:"column:refund_reason;type:varchar(255);comment:不退款的理由" json:"refund_reason"`                               // 不退款的理由
 	RefundReasonTime       int64                 `gorm:"column:refund_reason_time;type:bigint" json:"refund_reason_time"`
-	RefundPrice            decimal.Decimal       `gorm:"column:refund_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:退款金额" json:"refund_price"` // 退款金额
+	RefundPrice            string                `gorm:"column:refund_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:退款金额" json:"refund_price"` // 退款金额
 	DeliveryName           string                `gorm:"column:delivery_name;type:varchar(64);comment:快递名称/送货人姓名" json:"delivery_name"`                         // 快递名称/送货人姓名
 	DeliveryType           string                `gorm:"column:delivery_type;type:varchar(32);comment:发货类型" json:"delivery_type"`                               // 发货类型
 	DeliveryID             string                `gorm:"column:delivery_id;type:varchar(64);comment:快递单号/手机号" json:"delivery_id"`                               // 快递单号/手机号
@@ -52,7 +49,7 @@ type StoreOrder struct {
 	IsMerCheck             int64                 `gorm:"column:is_mer_check;type:tinyint unsigned;not null" json:"is_mer_check"`
 	CombinationID          int64                 `gorm:"column:combination_id;type:int unsigned;comment:拼团商品id0一般商品" json:"combination_id"`                                // 拼团商品id0一般商品
 	PinkID                 int64                 `gorm:"column:pink_id;type:int unsigned;not null;comment:拼团id 0没有拼团" json:"pink_id"`                                      // 拼团id 0没有拼团
-	Cost                   decimal.Decimal       `gorm:"column:cost;type:decimal(8,2) unsigned;not null;comment:成本价" json:"cost"`                                          // 成本价
+	Cost                   string                `gorm:"column:cost;type:decimal(8,2) unsigned;not null;comment:成本价" json:"cost"`                                          // 成本价
 	SeckillID              int64                 `gorm:"column:seckill_id;type:int unsigned;not null;comment:秒杀商品ID" json:"seckill_id"`                                    // 秒杀商品ID
 	BargainID              int64                 `gorm:"column:bargain_id;type:int unsigned;comment:砍价id" json:"bargain_id"`                                               // 砍价id
 	VerifyCode             string                `gorm:"column:verify_code;type:varchar(12);not null;comment:核销码" json:"verify_code"`                                      // 核销码
@@ -65,8 +62,8 @@ type StoreOrder struct {
 	DeliveryCode           string                `gorm:"column:delivery_code;type:varchar(50);comment:快递公司简称" json:"delivery_code"`                                        // 快递公司简称
 	BargainUserID          int64                 `gorm:"column:bargain_user_id;type:int unsigned;not null;comment:用户拼团活动id 0没有" json:"bargain_user_id"`                    // 用户拼团活动id 0没有
 	Type                   int64                 `gorm:"column:type;type:int;not null;comment:订单类型:0-普通订单，1-视频号订单" json:"type"`                                            // 订单类型:0-普通订单，1-视频号订单
-	ProTotalPrice          decimal.Decimal       `gorm:"column:pro_total_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:商品总价" json:"pro_total_price"`      // 商品总价
-	BeforePayPrice         decimal.Decimal       `gorm:"column:before_pay_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:改价前支付金额" json:"before_pay_price"` // 改价前支付金额
+	ProTotalPrice          string                `gorm:"column:pro_total_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:商品总价" json:"pro_total_price"`      // 商品总价
+	BeforePayPrice         string                `gorm:"column:before_pay_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:改价前支付金额" json:"before_pay_price"` // 改价前支付金额
 	IsAlterPrice           int64                 `gorm:"column:is_alter_price;type:tinyint(1);not null;comment:是否改价,0-否，1-是" json:"is_alter_price"`                        // 是否改价,0-否，1-是
 	OutTradeNo             string                `gorm:"column:out_trade_no;type:varchar(32);comment:商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号" json:"out_trade_no"`             // 商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
 	CreatedAt              int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`

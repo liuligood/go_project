@@ -29,13 +29,13 @@ func newStoreCoupon(db *gorm.DB, opts ...gen.DOOption) storeCoupon {
 	_storeCoupon.ALL = field.NewAsterisk(tableName)
 	_storeCoupon.ID = field.NewInt64(tableName, "id")
 	_storeCoupon.Name = field.NewString(tableName, "name")
-	_storeCoupon.Money = field.NewField(tableName, "money")
+	_storeCoupon.Money = field.NewString(tableName, "money")
 	_storeCoupon.IsLimited = field.NewInt64(tableName, "is_limited")
 	_storeCoupon.Total = field.NewInt64(tableName, "total")
 	_storeCoupon.LastTotal = field.NewInt64(tableName, "last_total")
 	_storeCoupon.UseType = field.NewInt64(tableName, "use_type")
 	_storeCoupon.PrimaryKey = field.NewString(tableName, "primary_key")
-	_storeCoupon.MinPrice = field.NewField(tableName, "min_price")
+	_storeCoupon.MinPrice = field.NewString(tableName, "min_price")
 	_storeCoupon.ReceiveStartTime = field.NewInt64(tableName, "receive_start_time")
 	_storeCoupon.ReceiveEndTime = field.NewInt64(tableName, "receive_end_time")
 	_storeCoupon.IsFixedTime = field.NewInt64(tableName, "is_fixed_time")
@@ -62,13 +62,13 @@ type storeCoupon struct {
 	ALL              field.Asterisk
 	ID               field.Int64  // 优惠券表ID
 	Name             field.String // 优惠券名称
-	Money            field.Field  // 兑换的优惠券面值
+	Money            field.String // 兑换的优惠券面值
 	IsLimited        field.Int64  // 是否限量, 默认0 不限量， 1限量
 	Total            field.Int64  // 发放总数
 	LastTotal        field.Int64  // 剩余数量
 	UseType          field.Int64  // 使用类型 1 全场通用, 2 商品券, 3 品类券
 	PrimaryKey       field.String // 所属商品id / 分类id
-	MinPrice         field.Field  // 最低消费，0代表不限制
+	MinPrice         field.String // 最低消费，0代表不限制
 	ReceiveStartTime field.Int64
 	ReceiveEndTime   field.Int64
 	IsFixedTime      field.Int64 // 是否固定使用时间, 默认0 否， 1是
@@ -100,13 +100,13 @@ func (s *storeCoupon) updateTableName(table string) *storeCoupon {
 	s.ALL = field.NewAsterisk(table)
 	s.ID = field.NewInt64(table, "id")
 	s.Name = field.NewString(table, "name")
-	s.Money = field.NewField(table, "money")
+	s.Money = field.NewString(table, "money")
 	s.IsLimited = field.NewInt64(table, "is_limited")
 	s.Total = field.NewInt64(table, "total")
 	s.LastTotal = field.NewInt64(table, "last_total")
 	s.UseType = field.NewInt64(table, "use_type")
 	s.PrimaryKey = field.NewString(table, "primary_key")
-	s.MinPrice = field.NewField(table, "min_price")
+	s.MinPrice = field.NewString(table, "min_price")
 	s.ReceiveStartTime = field.NewInt64(table, "receive_start_time")
 	s.ReceiveEndTime = field.NewInt64(table, "receive_end_time")
 	s.IsFixedTime = field.NewInt64(table, "is_fixed_time")

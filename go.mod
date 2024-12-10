@@ -88,6 +88,7 @@ require (
 	github.com/mozillazg/go-httpheader v0.4.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
 	github.com/prometheus/procfs v0.0.0-20190425082905-87a4384529e0 // indirect
+	github.com/robfig/cron/v3 v3.0.1 // indirect
 	github.com/rs/xid v1.6.0 // indirect
 	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect

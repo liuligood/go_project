@@ -4,10 +4,7 @@
 
 package model
 
-import (
-	"google.golang.org/genproto/googleapis/type/decimal"
-	"gorm.io/plugin/soft_delete"
-)
+import "gorm.io/plugin/soft_delete"
 
 const TableNameStoreBargainUserHelp = "store_bargain_user_help"
 
@@ -17,7 +14,7 @@ type StoreBargainUserHelp struct {
 	UID           int64                 `gorm:"column:uid;type:int unsigned;comment:帮助的用户id" json:"uid"`                               // 帮助的用户id
 	BargainID     int64                 `gorm:"column:bargain_id;type:int unsigned;comment:砍价商品ID" json:"bargain_id"`                  // 砍价商品ID
 	BargainUserID int64                 `gorm:"column:bargain_user_id;type:int unsigned;comment:用户参与砍价表id" json:"bargain_user_id"`     // 用户参与砍价表id
-	Price         decimal.Decimal       `gorm:"column:price;type:decimal(8,2) unsigned;comment:帮助砍价多少金额" json:"price"`                 // 帮助砍价多少金额
+	Price         string                `gorm:"column:price;type:decimal(8,2) unsigned;comment:帮助砍价多少金额" json:"price"`                 // 帮助砍价多少金额
 	AddTime       int64                 `gorm:"column:add_time;type:bigint unsigned;comment:添加时间" json:"add_time"`                     // 添加时间
 	CreatedAt     int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
 	UpdatedAt     int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
