@@ -35,11 +35,11 @@ func newStoreProductLog(db *gorm.DB, opts ...gen.DOOption) storeProductLog {
 	_storeProductLog.CartNum = field.NewInt64(tableName, "cart_num")
 	_storeProductLog.OrderNum = field.NewInt64(tableName, "order_num")
 	_storeProductLog.PayNum = field.NewInt64(tableName, "pay_num")
-	_storeProductLog.PayPrice = field.NewString(tableName, "pay_price")
-	_storeProductLog.CostPrice = field.NewString(tableName, "cost_price")
+	_storeProductLog.PayPrice = field.NewField(tableName, "pay_price")
+	_storeProductLog.CostPrice = field.NewField(tableName, "cost_price")
 	_storeProductLog.PayUID = field.NewInt64(tableName, "pay_uid")
 	_storeProductLog.RefundNum = field.NewInt64(tableName, "refund_num")
-	_storeProductLog.RefundPrice = field.NewString(tableName, "refund_price")
+	_storeProductLog.RefundPrice = field.NewField(tableName, "refund_price")
 	_storeProductLog.CollectNum = field.NewInt64(tableName, "collect_num")
 	_storeProductLog.AddTime = field.NewInt64(tableName, "add_time")
 	_storeProductLog.CreatedAt = field.NewInt64(tableName, "created_at")
@@ -64,11 +64,11 @@ type storeProductLog struct {
 	CartNum     field.Int64  // 加入购物车数量
 	OrderNum    field.Int64  // 下单数量
 	PayNum      field.Int64  // 支付数量
-	PayPrice    field.String // 支付金额
-	CostPrice   field.String // 商品成本价
+	PayPrice    field.Field  // 支付金额
+	CostPrice   field.Field  // 商品成本价
 	PayUID      field.Int64  // 支付用户ID
 	RefundNum   field.Int64  // 退款数量
-	RefundPrice field.String // 退款金额
+	RefundPrice field.Field  // 退款金额
 	CollectNum  field.Int64  // 收藏
 	AddTime     field.Int64  // 添加时间
 	CreatedAt   field.Int64
@@ -98,11 +98,11 @@ func (s *storeProductLog) updateTableName(table string) *storeProductLog {
 	s.CartNum = field.NewInt64(table, "cart_num")
 	s.OrderNum = field.NewInt64(table, "order_num")
 	s.PayNum = field.NewInt64(table, "pay_num")
-	s.PayPrice = field.NewString(table, "pay_price")
-	s.CostPrice = field.NewString(table, "cost_price")
+	s.PayPrice = field.NewField(table, "pay_price")
+	s.CostPrice = field.NewField(table, "cost_price")
 	s.PayUID = field.NewInt64(table, "pay_uid")
 	s.RefundNum = field.NewInt64(table, "refund_num")
-	s.RefundPrice = field.NewString(table, "refund_price")
+	s.RefundPrice = field.NewField(table, "refund_price")
 	s.CollectNum = field.NewInt64(table, "collect_num")
 	s.AddTime = field.NewInt64(table, "add_time")
 	s.CreatedAt = field.NewInt64(table, "created_at")

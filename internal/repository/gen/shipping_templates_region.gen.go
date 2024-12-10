@@ -31,10 +31,10 @@ func newShippingTemplatesRegion(db *gorm.DB, opts ...gen.DOOption) shippingTempl
 	_shippingTemplatesRegion.TempID = field.NewInt64(tableName, "temp_id")
 	_shippingTemplatesRegion.CityID = field.NewInt64(tableName, "city_id")
 	_shippingTemplatesRegion.Title = field.NewString(tableName, "title")
-	_shippingTemplatesRegion.First = field.NewString(tableName, "first")
-	_shippingTemplatesRegion.FirstPrice = field.NewString(tableName, "first_price")
-	_shippingTemplatesRegion.Renewal = field.NewString(tableName, "renewal")
-	_shippingTemplatesRegion.RenewalPrice = field.NewString(tableName, "renewal_price")
+	_shippingTemplatesRegion.First = field.NewField(tableName, "first")
+	_shippingTemplatesRegion.FirstPrice = field.NewField(tableName, "first_price")
+	_shippingTemplatesRegion.Renewal = field.NewField(tableName, "renewal")
+	_shippingTemplatesRegion.RenewalPrice = field.NewField(tableName, "renewal_price")
 	_shippingTemplatesRegion.Type = field.NewInt64(tableName, "type")
 	_shippingTemplatesRegion.Uniqid = field.NewString(tableName, "uniqid")
 	_shippingTemplatesRegion.Status = field.NewInt64(tableName, "status")
@@ -56,10 +56,10 @@ type shippingTemplatesRegion struct {
 	TempID       field.Int64  // 模板ID
 	CityID       field.Int64  // 城市ID
 	Title        field.String // 描述
-	First        field.String // 首件
-	FirstPrice   field.String // 首件运费
-	Renewal      field.String // 续件
-	RenewalPrice field.String // 续件运费
+	First        field.Field  // 首件
+	FirstPrice   field.Field  // 首件运费
+	Renewal      field.Field  // 续件
+	RenewalPrice field.Field  // 续件运费
 	Type         field.Int64  // 计费方式 1按件数 2按重量 3按体积
 	Uniqid       field.String // 分组唯一值
 	Status       field.Int64  // 是否无效
@@ -86,10 +86,10 @@ func (s *shippingTemplatesRegion) updateTableName(table string) *shippingTemplat
 	s.TempID = field.NewInt64(table, "temp_id")
 	s.CityID = field.NewInt64(table, "city_id")
 	s.Title = field.NewString(table, "title")
-	s.First = field.NewString(table, "first")
-	s.FirstPrice = field.NewString(table, "first_price")
-	s.Renewal = field.NewString(table, "renewal")
-	s.RenewalPrice = field.NewString(table, "renewal_price")
+	s.First = field.NewField(table, "first")
+	s.FirstPrice = field.NewField(table, "first_price")
+	s.Renewal = field.NewField(table, "renewal")
+	s.RenewalPrice = field.NewField(table, "renewal_price")
 	s.Type = field.NewInt64(table, "type")
 	s.Uniqid = field.NewString(table, "uniqid")
 	s.Status = field.NewInt64(table, "status")

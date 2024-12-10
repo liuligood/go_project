@@ -4,7 +4,10 @@
 
 package model
 
-import "gorm.io/plugin/soft_delete"
+import (
+	"github.com/shopspring/decimal"
+	"gorm.io/plugin/soft_delete"
+)
 
 const TableNameStoreProduct = "store_product"
 
@@ -19,10 +22,10 @@ type StoreProduct struct {
 	Keyword      string                `gorm:"column:keyword;type:varchar(256);not null;comment:关键字" json:"keyword"`                            // 关键字
 	BarCode      string                `gorm:"column:bar_code;type:varchar(15);not null;comment:商品条码（一维码）" json:"bar_code"`                     // 商品条码（一维码）
 	CateID       string                `gorm:"column:cate_id;type:varchar(64);not null;comment:分类id" json:"cate_id"`                            // 分类id
-	Price        string                `gorm:"column:price;type:decimal(8,2) unsigned;not null;default:0.00;comment:商品价格" json:"price"`         // 商品价格
-	VipPrice     string                `gorm:"column:vip_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:会员价格" json:"vip_price"` // 会员价格
-	OtPrice      string                `gorm:"column:ot_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:市场价" json:"ot_price"`    // 市场价
-	Postage      string                `gorm:"column:postage;type:decimal(8,2) unsigned;not null;default:0.00;comment:邮费" json:"postage"`       // 邮费
+	Price        decimal.Decimal       `gorm:"column:price;type:decimal(8,2) unsigned;not null;default:0.00;comment:商品价格" json:"price"`         // 商品价格
+	VipPrice     decimal.Decimal       `gorm:"column:vip_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:会员价格" json:"vip_price"` // 会员价格
+	OtPrice      decimal.Decimal       `gorm:"column:ot_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:市场价" json:"ot_price"`    // 市场价
+	Postage      decimal.Decimal       `gorm:"column:postage;type:decimal(8,2) unsigned;not null;default:0.00;comment:邮费" json:"postage"`       // 邮费
 	UnitName     string                `gorm:"column:unit_name;type:varchar(32);not null;comment:单位名" json:"unit_name"`                         // 单位名
 	Sort         int64                 `gorm:"column:sort;type:smallint;not null;comment:排序" json:"sort"`                                       // 排序
 	Sales        int64                 `gorm:"column:sales;type:mediumint unsigned;not null;comment:销量" json:"sales"`                           // 销量
@@ -37,7 +40,7 @@ type StoreProduct struct {
 	IsDel        int64                 `gorm:"column:is_del;type:tinyint unsigned;not null;comment:是否删除" json:"is_del"`                         // 是否删除
 	MerUse       int64                 `gorm:"column:mer_use;type:tinyint unsigned;not null;comment:商户是否代理 0不可代理1可代理" json:"mer_use"`           // 商户是否代理 0不可代理1可代理
 	GiveIntegral int64                 `gorm:"column:give_integral;type:int;comment:获得积分" json:"give_integral"`                                 // 获得积分
-	Cost         string                `gorm:"column:cost;type:decimal(8,2) unsigned;not null;default:0.00;comment:成本价" json:"cost"`            // 成本价
+	Cost         decimal.Decimal       `gorm:"column:cost;type:decimal(8,2) unsigned;not null;default:0.00;comment:成本价" json:"cost"`            // 成本价
 	IsSeckill    int64                 `gorm:"column:is_seckill;type:tinyint unsigned;not null;comment:秒杀状态 0 未开启 1已开启" json:"is_seckill"`      // 秒杀状态 0 未开启 1已开启
 	IsBargain    int64                 `gorm:"column:is_bargain;type:tinyint unsigned;comment:砍价状态 0未开启 1开启" json:"is_bargain"`                 // 砍价状态 0未开启 1开启
 	IsGood       int64                 `gorm:"column:is_good;type:tinyint(1);not null;comment:是否优品推荐" json:"is_good"`                           // 是否优品推荐

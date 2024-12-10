@@ -7,4 +7,6 @@ type AliyunOSS struct {
 	BucketName      string `json:"bucket-name"`
 	BucketUrl       string `json:"bucket-url"`
 	BasePath        string `json:"base-path"`
+	Region          string `json:"region"`
+	RoleArn         string `json:"role-arn"`
 }

@@ -9,6 +9,7 @@ import (
 type AdminServiceImpl interface {
 	GetValidateCode() (data admin_data.ValidateCodeData, err error)
 	GetLoginPic(params service_data.GetLoginPicParams) (data admin_data.GetLoginPicResp, err error)
+	Upload(params service_data.UploadParams) (data admin_data.UploadResp, err error)
 }
 
 type AdminService struct {
@@ -25,4 +26,8 @@ func (a AdminService) GetValidateCode() (data admin_data.ValidateCodeData, err e
 
 func (a AdminService) GetLoginPic(params service_data.GetLoginPicParams) (data admin_data.GetLoginPicResp, err error) {
 	return NewGetLoginPicService(a.svc).GetLoginPic(params)
+}
+
+func (a AdminService) Upload(params service_data.UploadParams) (data admin_data.UploadResp, err error) {
+	return NewUploadService(a.svc).Upload(params)
 }

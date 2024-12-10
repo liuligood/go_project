@@ -36,10 +36,10 @@ func newStoreProduct(db *gorm.DB, opts ...gen.DOOption) storeProduct {
 	_storeProduct.Keyword = field.NewString(tableName, "keyword")
 	_storeProduct.BarCode = field.NewString(tableName, "bar_code")
 	_storeProduct.CateID = field.NewString(tableName, "cate_id")
-	_storeProduct.Price = field.NewString(tableName, "price")
-	_storeProduct.VipPrice = field.NewString(tableName, "vip_price")
-	_storeProduct.OtPrice = field.NewString(tableName, "ot_price")
-	_storeProduct.Postage = field.NewString(tableName, "postage")
+	_storeProduct.Price = field.NewField(tableName, "price")
+	_storeProduct.VipPrice = field.NewField(tableName, "vip_price")
+	_storeProduct.OtPrice = field.NewField(tableName, "ot_price")
+	_storeProduct.Postage = field.NewField(tableName, "postage")
 	_storeProduct.UnitName = field.NewString(tableName, "unit_name")
 	_storeProduct.Sort = field.NewInt64(tableName, "sort")
 	_storeProduct.Sales = field.NewInt64(tableName, "sales")
@@ -54,7 +54,7 @@ func newStoreProduct(db *gorm.DB, opts ...gen.DOOption) storeProduct {
 	_storeProduct.IsDel = field.NewInt64(tableName, "is_del")
 	_storeProduct.MerUse = field.NewInt64(tableName, "mer_use")
 	_storeProduct.GiveIntegral = field.NewInt64(tableName, "give_integral")
-	_storeProduct.Cost = field.NewString(tableName, "cost")
+	_storeProduct.Cost = field.NewField(tableName, "cost")
 	_storeProduct.IsSeckill = field.NewInt64(tableName, "is_seckill")
 	_storeProduct.IsBargain = field.NewInt64(tableName, "is_bargain")
 	_storeProduct.IsGood = field.NewInt64(tableName, "is_good")
@@ -92,10 +92,10 @@ type storeProduct struct {
 	Keyword      field.String // 关键字
 	BarCode      field.String // 商品条码（一维码）
 	CateID       field.String // 分类id
-	Price        field.String // 商品价格
-	VipPrice     field.String // 会员价格
-	OtPrice      field.String // 市场价
-	Postage      field.String // 邮费
+	Price        field.Field  // 商品价格
+	VipPrice     field.Field  // 会员价格
+	OtPrice      field.Field  // 市场价
+	Postage      field.Field  // 邮费
 	UnitName     field.String // 单位名
 	Sort         field.Int64  // 排序
 	Sales        field.Int64  // 销量
@@ -110,7 +110,7 @@ type storeProduct struct {
 	IsDel        field.Int64  // 是否删除
 	MerUse       field.Int64  // 商户是否代理 0不可代理1可代理
 	GiveIntegral field.Int64  // 获得积分
-	Cost         field.String // 成本价
+	Cost         field.Field  // 成本价
 	IsSeckill    field.Int64  // 秒杀状态 0 未开启 1已开启
 	IsBargain    field.Int64  // 砍价状态 0未开启 1开启
 	IsGood       field.Int64  // 是否优品推荐
@@ -153,10 +153,10 @@ func (s *storeProduct) updateTableName(table string) *storeProduct {
 	s.Keyword = field.NewString(table, "keyword")
 	s.BarCode = field.NewString(table, "bar_code")
 	s.CateID = field.NewString(table, "cate_id")
-	s.Price = field.NewString(table, "price")
-	s.VipPrice = field.NewString(table, "vip_price")
-	s.OtPrice = field.NewString(table, "ot_price")
-	s.Postage = field.NewString(table, "postage")
+	s.Price = field.NewField(table, "price")
+	s.VipPrice = field.NewField(table, "vip_price")
+	s.OtPrice = field.NewField(table, "ot_price")
+	s.Postage = field.NewField(table, "postage")
 	s.UnitName = field.NewString(table, "unit_name")
 	s.Sort = field.NewInt64(table, "sort")
 	s.Sales = field.NewInt64(table, "sales")
@@ -171,7 +171,7 @@ func (s *storeProduct) updateTableName(table string) *storeProduct {
 	s.IsDel = field.NewInt64(table, "is_del")
 	s.MerUse = field.NewInt64(table, "mer_use")
 	s.GiveIntegral = field.NewInt64(table, "give_integral")
-	s.Cost = field.NewString(table, "cost")
+	s.Cost = field.NewField(table, "cost")
 	s.IsSeckill = field.NewInt64(table, "is_seckill")
 	s.IsBargain = field.NewInt64(table, "is_bargain")
 	s.IsGood = field.NewInt64(table, "is_good")

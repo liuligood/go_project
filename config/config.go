@@ -11,14 +11,8 @@ type Conf struct {
 	Redis     Redis   `json:"redis"`      // redis
 	RedisList []Redis `json:"redis_list"` // redisList
 	// oss
-	Local        Local        `json:"local"`       // 本地
-	Qiniu        Qiniu        `json:"qiniu"`       // 七牛云
-	AliyunOSS    AliyunOSS    `json:"aliyun-oss"`  // 啊里云
-	HuaWeiObs    HuaWeiObs    `json:"hua-wei-obs"` // 华为云
-	TencentCOS   TencentCOS   `json:"tencent-cos"` // 腾讯云
-	AwsS3        AwsS3        `json:"aws-s3"`
-	CloudflareR2 CloudflareR2 `json:"cloudflare-r2"`
-	Minio        Minio        `json:"minio"` // minio
+	QiniuyunOSS Qiniu     `json:"qiniu-oss"`  // 七牛云
+	AliyunOSS   AliyunOSS `json:"aliyun-oss"` // 啊里云
 }
 
 type App struct {
@@ -39,12 +33,13 @@ type Network struct {
 }
 
 type System struct {
-	DbType        string `mapstructure:"db-type" json:"db-type" yaml:"db-type"`    // 数据库类型:mysql(默认)|sqlite|sqlserver|postgresql
-	OssType       string `mapstructure:"oss-type" json:"oss-type" yaml:"oss-type"` // Oss类型
+	DbType        string `mapstructure:"db-type" json:"db-type" yaml:"db-type"`       // 数据库类型:mysql(默认)|sqlite|sqlserver|postgresql
+	OssType       string `mapstructure:"oss-type" json:"oss-type" yaml:"oss-type"`    // Oss类型
+	FileSize      int64  `mapstructure:"file-size" json:"file-size" yaml:"file-size"` // 是否同步config表数据到redis
 	RouterPrefix  string `mapstructure:"router-prefix" json:"router-prefix" yaml:"router-prefix"`
-	Addr          int    `mapstructure:"addr" json:"addr" yaml:"addr"` // 端口值
-	LimitCountIP  int    `mapstructure:"iplimit-count" json:"iplimit-count" yaml:"iplimit-count"`
-	LimitTimeIP   int    `mapstructure:"iplimit-time" json:"iplimit-time" yaml:"iplimit-time"`
+	Addr          int64  `mapstructure:"addr" json:"addr" yaml:"addr"` // 端口值
+	LimitCountIP  int64  `mapstructure:"iplimit-count" json:"iplimit-count" yaml:"iplimit-count"`
+	LimitTimeIP   int64  `mapstructure:"iplimit-time" json:"iplimit-time" yaml:"iplimit-time"`
 	UseMultipoint bool   `mapstructure:"use-multipoint" json:"use-multipoint" yaml:"use-multipoint"`    // 多点登录拦截
 	UseRedis      bool   `mapstructure:"use-redis" json:"use-redis" yaml:"use-redis"`                   // 使用redis
 	UseMongo      bool   `mapstructure:"use-mongo" json:"use-mongo" yaml:"use-mongo"`                   // 使用mongo

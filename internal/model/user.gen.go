@@ -4,7 +4,10 @@
 
 package model
 
-import "gorm.io/plugin/soft_delete"
+import (
+	"github.com/shopspring/decimal"
+	"gorm.io/plugin/soft_delete"
+)
 
 const TableNameUser = "user"
 
@@ -25,8 +28,8 @@ type User struct {
 	Phone          string                `gorm:"column:phone;type:char(15);not null;comment:手机号码" json:"phone"`                                               // 手机号码
 	AddIP          string                `gorm:"column:add_ip;type:varchar(16);not null;comment:添加ip" json:"add_ip"`                                          // 添加ip
 	LastIP         string                `gorm:"column:last_ip;type:varchar(16);not null;comment:最后一次登录ip" json:"last_ip"`                                    // 最后一次登录ip
-	NowMoney       string                `gorm:"column:now_money;type:decimal(16,2) unsigned;not null;default:0.00;comment:用户余额" json:"now_money"`            // 用户余额
-	BrokeragePrice string                `gorm:"column:brokerage_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:佣金金额" json:"brokerage_price"` // 佣金金额
+	NowMoney       decimal.Decimal       `gorm:"column:now_money;type:decimal(16,2) unsigned;not null;default:0.00;comment:用户余额" json:"now_money"`            // 用户余额
+	BrokeragePrice decimal.Decimal       `gorm:"column:brokerage_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:佣金金额" json:"brokerage_price"` // 佣金金额
 	Integral       int64                 `gorm:"column:integral;type:int unsigned;not null;comment:用户剩余积分" json:"integral"`                                   // 用户剩余积分
 	Experience     int64                 `gorm:"column:experience;type:int unsigned;not null;comment:用户剩余经验" json:"experience"`                               // 用户剩余经验
 	SignNum        int64                 `gorm:"column:sign_num;type:int unsigned;not null;comment:连续签到天数" json:"sign_num"`                                   // 连续签到天数

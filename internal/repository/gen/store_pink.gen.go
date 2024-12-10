@@ -32,11 +32,11 @@ func newStorePink(db *gorm.DB, opts ...gen.DOOption) storePink {
 	_storePink.OrderID = field.NewString(tableName, "order_id")
 	_storePink.OrderIDKey = field.NewInt64(tableName, "order_id_key")
 	_storePink.TotalNum = field.NewInt64(tableName, "total_num")
-	_storePink.TotalPrice = field.NewString(tableName, "total_price")
+	_storePink.TotalPrice = field.NewField(tableName, "total_price")
 	_storePink.Cid = field.NewInt64(tableName, "cid")
 	_storePink.Pid = field.NewInt64(tableName, "pid")
 	_storePink.People = field.NewInt64(tableName, "people")
-	_storePink.Price = field.NewString(tableName, "price")
+	_storePink.Price = field.NewField(tableName, "price")
 	_storePink.AddTime = field.NewInt64(tableName, "add_time")
 	_storePink.StopTime = field.NewInt64(tableName, "stop_time")
 	_storePink.KID = field.NewInt64(tableName, "k_id")
@@ -65,11 +65,11 @@ type storePink struct {
 	OrderID    field.String // 订单id 生成
 	OrderIDKey field.Int64  // 订单id  数据库
 	TotalNum   field.Int64  // 购买商品个数
-	TotalPrice field.String // 购买总金额
+	TotalPrice field.Field  // 购买总金额
 	Cid        field.Int64  // 拼团商品id
 	Pid        field.Int64  // 商品id
 	People     field.Int64  // 拼图总人数
-	Price      field.String // 拼团商品单价
+	Price      field.Field  // 拼团商品单价
 	AddTime    field.Int64  // 开始时间
 	StopTime   field.Int64  // 结束时间
 	KID        field.Int64  // 团长id 0为团长
@@ -103,11 +103,11 @@ func (s *storePink) updateTableName(table string) *storePink {
 	s.OrderID = field.NewString(table, "order_id")
 	s.OrderIDKey = field.NewInt64(table, "order_id_key")
 	s.TotalNum = field.NewInt64(table, "total_num")
-	s.TotalPrice = field.NewString(table, "total_price")
+	s.TotalPrice = field.NewField(table, "total_price")
 	s.Cid = field.NewInt64(table, "cid")
 	s.Pid = field.NewInt64(table, "pid")
 	s.People = field.NewInt64(table, "people")
-	s.Price = field.NewString(table, "price")
+	s.Price = field.NewField(table, "price")
 	s.AddTime = field.NewInt64(table, "add_time")
 	s.StopTime = field.NewInt64(table, "stop_time")
 	s.KID = field.NewInt64(table, "k_id")

@@ -8,3 +8,7 @@ type ValidateCodeData struct {
 type GetLoginPicResp struct {
 	Map map[string]any `json:"map"`
 }
+
+type UploadResp struct {
+	Url string `json:"url"`
+}

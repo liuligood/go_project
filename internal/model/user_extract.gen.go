@@ -4,7 +4,10 @@
 
 package model
 
-import "gorm.io/plugin/soft_delete"
+import (
+	"github.com/shopspring/decimal"
+	"gorm.io/plugin/soft_delete"
+)
 
 const TableNameUserExtract = "user_extract"
 
@@ -17,9 +20,9 @@ type UserExtract struct {
 	BankCode     string                `gorm:"column:bank_code;type:varchar(32);comment:银行卡" json:"bank_code"`                                                  // 银行卡
 	BankAddress  string                `gorm:"column:bank_address;type:varchar(256);comment:开户地址" json:"bank_address"`                                          // 开户地址
 	AlipayCode   string                `gorm:"column:alipay_code;type:varchar(64);comment:支付宝账号" json:"alipay_code"`                                            // 支付宝账号
-	ExtractPrice string                `gorm:"column:extract_price;type:decimal(8,2) unsigned;default:0.00;comment:提现金额" json:"extract_price"`                  // 提现金额
+	ExtractPrice decimal.Decimal       `gorm:"column:extract_price;type:decimal(8,2) unsigned;default:0.00;comment:提现金额" json:"extract_price"`                  // 提现金额
 	Mark         string                `gorm:"column:mark;type:varchar(512)" json:"mark"`
-	Balance      string                `gorm:"column:balance;type:decimal(8,2) unsigned;default:0.00" json:"balance"`
+	Balance      decimal.Decimal       `gorm:"column:balance;type:decimal(8,2) unsigned;default:0.00" json:"balance"`
 	FailMsg      string                `gorm:"column:fail_msg;type:varchar(128);comment:无效原因" json:"fail_msg"`        // 无效原因
 	Status       int64                 `gorm:"column:status;type:tinyint;comment:-1 未通过 0 审核中 1 已提现" json:"status"`   // -1 未通过 0 审核中 1 已提现
 	Wechat       string                `gorm:"column:wechat;type:varchar(15);comment:微信号" json:"wechat"`              // 微信号

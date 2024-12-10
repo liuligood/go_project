@@ -32,8 +32,8 @@ func newStoreCouponUser(db *gorm.DB, opts ...gen.DOOption) storeCouponUser {
 	_storeCouponUser.Cid = field.NewInt64(tableName, "cid")
 	_storeCouponUser.UID = field.NewInt64(tableName, "uid")
 	_storeCouponUser.Name = field.NewString(tableName, "name")
-	_storeCouponUser.Money = field.NewString(tableName, "money")
-	_storeCouponUser.MinPrice = field.NewString(tableName, "min_price")
+	_storeCouponUser.Money = field.NewField(tableName, "money")
+	_storeCouponUser.MinPrice = field.NewField(tableName, "min_price")
 	_storeCouponUser.Type = field.NewString(tableName, "type")
 	_storeCouponUser.Status = field.NewInt64(tableName, "status")
 	_storeCouponUser.StartTime = field.NewInt64(tableName, "start_time")
@@ -60,8 +60,8 @@ type storeCouponUser struct {
 	Cid        field.Int64  // 兑换的项目id
 	UID        field.Int64  // 领取人id
 	Name       field.String // 优惠券名称
-	Money      field.String // 优惠券的面值
-	MinPrice   field.String // 最低消费多少金额可用优惠券
+	Money      field.Field  // 优惠券的面值
+	MinPrice   field.Field  // 最低消费多少金额可用优惠券
 	Type       field.String // 获取方式，send后台发放, 用户领取 get
 	Status     field.Int64  // 状态（0：未使用，1：已使用, 2:已失效）
 	StartTime  field.Int64
@@ -93,8 +93,8 @@ func (s *storeCouponUser) updateTableName(table string) *storeCouponUser {
 	s.Cid = field.NewInt64(table, "cid")
 	s.UID = field.NewInt64(table, "uid")
 	s.Name = field.NewString(table, "name")
-	s.Money = field.NewString(table, "money")
-	s.MinPrice = field.NewString(table, "min_price")
+	s.Money = field.NewField(table, "money")
+	s.MinPrice = field.NewField(table, "min_price")
 	s.Type = field.NewString(table, "type")
 	s.Status = field.NewInt64(table, "status")
 	s.StartTime = field.NewInt64(table, "start_time")

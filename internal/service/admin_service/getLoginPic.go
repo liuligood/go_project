@@ -1,6 +1,7 @@
 package admin_service
 
 import (
+	"crmeb_go/define"
 	"crmeb_go/internal/data/admin_data"
 	service_data "crmeb_go/internal/data/sevice_data"
 	"crmeb_go/internal/server"
@@ -27,11 +28,11 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 
 	//背景图
 	systemConfigParam.BaseServiceParams = params.BaseServiceParams
-	systemConfigParam.Name = service_data.CONFIG_KEY_ADMIN_LOGIN_BACKGROUND_IMAGE
+	systemConfigParam.Name = define.CONFIG_KEY_ADMIN_LOGIN_BACKGROUND_IMAGE
 	backgroundImage, err := system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
 
 	if err != nil {
-		izap.Log.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_BACKGROUND_IMAGE), zap.Error(err))
+		izap.Log.Error("查询系统配置错误:", zap.String("name", define.CONFIG_KEY_ADMIN_LOGIN_BACKGROUND_IMAGE), zap.Error(err))
 
 		return data, err
 	}
@@ -39,11 +40,11 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	result["backgroundImage"] = backgroundImage.Value
 
 	// logo
-	systemConfigParam.Name = service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LEFT_TOP
+	systemConfigParam.Name = define.CONFIG_KEY_ADMIN_LOGIN_LOGO_LEFT_TOP
 	logo, err := system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
 
 	if err != nil {
-		izap.Log.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LEFT_TOP), zap.Error(err))
+		izap.Log.Error("查询系统配置错误:", zap.String("name", define.CONFIG_KEY_ADMIN_LOGIN_LOGO_LEFT_TOP), zap.Error(err))
 
 		return data, err
 	}
@@ -51,11 +52,11 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	result["logo"] = logo.Value
 
 	// loginLogo
-	systemConfigParam.Name = service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LOGIN
+	systemConfigParam.Name = define.CONFIG_KEY_ADMIN_LOGIN_LOGO_LOGIN
 	loginLogo, err := system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
 
 	if err != nil {
-		izap.Log.Error("查询系统配置错误:", zap.String("name", service_data.CONFIG_KEY_ADMIN_LOGIN_LOGO_LOGIN), zap.Error(err))
+		izap.Log.Error("查询系统配置错误:", zap.String("name", define.CONFIG_KEY_ADMIN_LOGIN_LOGO_LOGIN), zap.Error(err))
 
 		return data, err
 	}

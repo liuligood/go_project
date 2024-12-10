@@ -7,8 +7,8 @@ import (
 	"crmeb_go/internal/repository/gen"
 	"crmeb_go/utils/icache"
 	"crmeb_go/utils/igorm"
+	oss "crmeb_go/utils/ioss"
 	iredis "crmeb_go/utils/iredis"
-	"crmeb_go/utils/iupload"
 	"github.com/go-redsync/redsync/v4"
 	"github.com/go-redsync/redsync/v4/redis/goredis/v9"
 	"github.com/redis/go-redis/v9"
@@ -24,7 +24,6 @@ type SvcContext struct {
 	RedisClientList map[string]redis.UniversalClient
 	Redsync         *redsync.Redsync
 	Gen             *gen.Query
-	Oss             iupload.OSS
 }
 
 func NewSvcContext(c config.Conf) *SvcContext {
@@ -37,7 +36,6 @@ func NewSvcContext(c config.Conf) *SvcContext {
 	svc.Gorm = igorm.Gorm(db)
 	svc.Gen = gen.Use(svc.Gorm)
 	svc.Repo = repository.Register(svc.Gorm, svc.Gen)
-	svc.Oss = iupload.NewOss(c)
 
 	if c.System.UseRedis {
 		// 初始化redis服务
@@ -47,6 +45,10 @@ func NewSvcContext(c config.Conf) *SvcContext {
 		svc.Redsync = redsync.New(goredis.NewPool(svc.RedisClient))
 		// 初始化本地缓存
 		icache.InitLocalCache()
+		// 使用stsToken 上传
+		oss.InitOSS(svc.RedisClient, c)
+		// 初始化oss
+		oss.GetOssClient(c)
 	}
 
 	return svc

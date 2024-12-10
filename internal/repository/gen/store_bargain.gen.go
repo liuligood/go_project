@@ -38,28 +38,28 @@ func newStoreBargain(db *gorm.DB, opts ...gen.DOOption) storeBargain {
 	_storeBargain.StartTime = field.NewInt64(tableName, "start_time")
 	_storeBargain.StopTime = field.NewInt64(tableName, "stop_time")
 	_storeBargain.StoreName = field.NewString(tableName, "store_name")
-	_storeBargain.Price = field.NewString(tableName, "price")
-	_storeBargain.MinPrice = field.NewString(tableName, "min_price")
+	_storeBargain.Price = field.NewField(tableName, "price")
+	_storeBargain.MinPrice = field.NewField(tableName, "min_price")
 	_storeBargain.Num = field.NewInt64(tableName, "num")
-	_storeBargain.BargainMaxPrice = field.NewString(tableName, "bargain_max_price")
-	_storeBargain.BargainMinPrice = field.NewString(tableName, "bargain_min_price")
+	_storeBargain.BargainMaxPrice = field.NewField(tableName, "bargain_max_price")
+	_storeBargain.BargainMinPrice = field.NewField(tableName, "bargain_min_price")
 	_storeBargain.BargainNum = field.NewInt64(tableName, "bargain_num")
 	_storeBargain.Status = field.NewInt64(tableName, "status")
 	_storeBargain.GiveIntegral = field.NewInt64(tableName, "give_integral")
 	_storeBargain.Info = field.NewString(tableName, "info")
-	_storeBargain.Cost = field.NewString(tableName, "cost")
+	_storeBargain.Cost = field.NewField(tableName, "cost")
 	_storeBargain.Sort = field.NewInt64(tableName, "sort")
 	_storeBargain.IsHot = field.NewInt64(tableName, "is_hot")
 	_storeBargain.IsDel = field.NewInt64(tableName, "is_del")
 	_storeBargain.AddTime = field.NewInt64(tableName, "add_time")
 	_storeBargain.IsPostage = field.NewInt64(tableName, "is_postage")
-	_storeBargain.Postage = field.NewString(tableName, "postage")
+	_storeBargain.Postage = field.NewField(tableName, "postage")
 	_storeBargain.Rule = field.NewString(tableName, "rule")
 	_storeBargain.Look = field.NewInt64(tableName, "look")
 	_storeBargain.Share = field.NewInt64(tableName, "share")
 	_storeBargain.TempID = field.NewInt64(tableName, "temp_id")
-	_storeBargain.Weight = field.NewString(tableName, "weight")
-	_storeBargain.Volume = field.NewString(tableName, "volume")
+	_storeBargain.Weight = field.NewField(tableName, "weight")
+	_storeBargain.Volume = field.NewField(tableName, "volume")
 	_storeBargain.Quota = field.NewInt64(tableName, "quota")
 	_storeBargain.QuotaShow = field.NewInt64(tableName, "quota_show")
 	_storeBargain.PeopleNum = field.NewInt64(tableName, "people_num")
@@ -88,28 +88,28 @@ type storeBargain struct {
 	StartTime       field.Int64  // 砍价开启时间
 	StopTime        field.Int64  // 砍价结束时间
 	StoreName       field.String // 砍价商品名称
-	Price           field.String // 砍价金额
-	MinPrice        field.String // 砍价商品最低价
+	Price           field.Field  // 砍价金额
+	MinPrice        field.Field  // 砍价商品最低价
 	Num             field.Int64  // 购买数量限制——单个活动每个用户发起砍价次数限制
-	BargainMaxPrice field.String // 用户每次砍价的最大金额
-	BargainMinPrice field.String // 用户每次砍价的最小金额
+	BargainMaxPrice field.Field  // 用户每次砍价的最大金额
+	BargainMinPrice field.Field  // 用户每次砍价的最小金额
 	BargainNum      field.Int64  // 帮砍次数——单个商品用户可以帮砍的次数
 	Status          field.Int64  // 砍价状态 0(到砍价时间不自动开启)  1(到砍价时间自动开启时间)
 	GiveIntegral    field.Int64  // 反多少积分
 	Info            field.String // 砍价活动简介
-	Cost            field.String // 成本价
+	Cost            field.Field  // 成本价
 	Sort            field.Int64  // 排序
 	IsHot           field.Int64  // 是否推荐0不推荐1推荐
 	IsDel           field.Int64  // 是否删除 0未删除 1删除
 	AddTime         field.Int64  // 添加时间
 	IsPostage       field.Int64  // 是否包邮 0不包邮 1包邮
-	Postage         field.String // 邮费
+	Postage         field.Field  // 邮费
 	Rule            field.String // 砍价规则
 	Look            field.Int64  // 砍价商品浏览量
 	Share           field.Int64  // 砍价商品分享量
 	TempID          field.Int64  // 运费模板ID
-	Weight          field.String // 重量
-	Volume          field.String // 体积
+	Weight          field.Field  // 重量
+	Volume          field.Field  // 体积
 	Quota           field.Int64  // 限购总数
 	QuotaShow       field.Int64  // 限量总数显示
 	PeopleNum       field.Int64  // 砍价人数——需要多少人砍价成功
@@ -143,28 +143,28 @@ func (s *storeBargain) updateTableName(table string) *storeBargain {
 	s.StartTime = field.NewInt64(table, "start_time")
 	s.StopTime = field.NewInt64(table, "stop_time")
 	s.StoreName = field.NewString(table, "store_name")
-	s.Price = field.NewString(table, "price")
-	s.MinPrice = field.NewString(table, "min_price")
+	s.Price = field.NewField(table, "price")
+	s.MinPrice = field.NewField(table, "min_price")
 	s.Num = field.NewInt64(table, "num")
-	s.BargainMaxPrice = field.NewString(table, "bargain_max_price")
-	s.BargainMinPrice = field.NewString(table, "bargain_min_price")
+	s.BargainMaxPrice = field.NewField(table, "bargain_max_price")
+	s.BargainMinPrice = field.NewField(table, "bargain_min_price")
 	s.BargainNum = field.NewInt64(table, "bargain_num")
 	s.Status = field.NewInt64(table, "status")
 	s.GiveIntegral = field.NewInt64(table, "give_integral")
 	s.Info = field.NewString(table, "info")
-	s.Cost = field.NewString(table, "cost")
+	s.Cost = field.NewField(table, "cost")
 	s.Sort = field.NewInt64(table, "sort")
 	s.IsHot = field.NewInt64(table, "is_hot")
 	s.IsDel = field.NewInt64(table, "is_del")
 	s.AddTime = field.NewInt64(table, "add_time")
 	s.IsPostage = field.NewInt64(table, "is_postage")
-	s.Postage = field.NewString(table, "postage")
+	s.Postage = field.NewField(table, "postage")
 	s.Rule = field.NewString(table, "rule")
 	s.Look = field.NewInt64(table, "look")
 	s.Share = field.NewInt64(table, "share")
 	s.TempID = field.NewInt64(table, "temp_id")
-	s.Weight = field.NewString(table, "weight")
-	s.Volume = field.NewString(table, "volume")
+	s.Weight = field.NewField(table, "weight")
+	s.Volume = field.NewField(table, "volume")
 	s.Quota = field.NewInt64(table, "quota")
 	s.QuotaShow = field.NewInt64(table, "quota_show")
 	s.PeopleNum = field.NewInt64(table, "people_num")

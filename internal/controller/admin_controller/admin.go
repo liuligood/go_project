@@ -33,3 +33,36 @@ func GetLoginPic(svc *service.Container) gin.HandlerFunc {
 		c.JSON(http.StatusOK, ihttp.Data(res))
 	}
 }
+
+func Upload(svc *service.Container) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		file, fileHear, err := c.Request.FormFile("file")
+		if err != nil {
+			c.JSON(http.StatusOK, ihttp.Error(err))
+		}
+
+		key := c.Request.FormValue("key")            // 完整文件路径以及名称
+		pathName := c.Request.FormValue("path_name") // 路径名
+		fileType := c.Request.FormValue("type")      // 路径类型
+		contentLength := c.Request.ContentLength
+
+		params := service_data.UploadParams{
+			File:          file,
+			FileHeader:    fileHear,
+			FileKey:       key,
+			PathName:      pathName,
+			FileType:      fileType,
+			ContentLength: contentLength,
+		}
+
+		params.SetSessionContext(c)
+
+		res, err := svc.AdminService.Upload(params)
+		if err != nil {
+			c.JSON(http.StatusOK, ihttp.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusOK, ihttp.Data(res))
+	}
+}

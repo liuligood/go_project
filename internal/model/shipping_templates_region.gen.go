@@ -4,7 +4,10 @@
 
 package model
 
-import "gorm.io/plugin/soft_delete"
+import (
+	"github.com/shopspring/decimal"
+	"gorm.io/plugin/soft_delete"
+)
 
 const TableNameShippingTemplatesRegion = "shipping_templates_region"
 
@@ -14,10 +17,10 @@ type ShippingTemplatesRegion struct {
 	TempID       int64                 `gorm:"column:temp_id;type:int;not null;comment:模板ID" json:"temp_id"`                                    // 模板ID
 	CityID       int64                 `gorm:"column:city_id;type:int;not null;comment:城市ID" json:"city_id"`                                    // 城市ID
 	Title        string                `gorm:"column:title;type:text;comment:描述" json:"title"`                                                  // 描述
-	First        string                `gorm:"column:first;type:decimal(10,2);not null;default:0.00;comment:首件" json:"first"`                   // 首件
-	FirstPrice   string                `gorm:"column:first_price;type:decimal(10,2);not null;default:0.00;comment:首件运费" json:"first_price"`     // 首件运费
-	Renewal      string                `gorm:"column:renewal;type:decimal(10,2);not null;default:0.00;comment:续件" json:"renewal"`               // 续件
-	RenewalPrice string                `gorm:"column:renewal_price;type:decimal(10,2);not null;default:0.00;comment:续件运费" json:"renewal_price"` // 续件运费
+	First        decimal.Decimal       `gorm:"column:first;type:decimal(10,2);not null;default:0.00;comment:首件" json:"first"`                   // 首件
+	FirstPrice   decimal.Decimal       `gorm:"column:first_price;type:decimal(10,2);not null;default:0.00;comment:首件运费" json:"first_price"`     // 首件运费
+	Renewal      decimal.Decimal       `gorm:"column:renewal;type:decimal(10,2);not null;default:0.00;comment:续件" json:"renewal"`               // 续件
+	RenewalPrice decimal.Decimal       `gorm:"column:renewal_price;type:decimal(10,2);not null;default:0.00;comment:续件运费" json:"renewal_price"` // 续件运费
 	Type         int64                 `gorm:"column:type;type:tinyint(1);not null;default:1;comment:计费方式 1按件数 2按重量 3按体积" json:"type"`          // 计费方式 1按件数 2按重量 3按体积
 	Uniqid       string                `gorm:"column:uniqid;type:varchar(32);not null;comment:分组唯一值" json:"uniqid"`                             // 分组唯一值
 	Status       int64                 `gorm:"column:status;type:tinyint(1);comment:是否无效" json:"status"`                                        // 是否无效

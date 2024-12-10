@@ -33,15 +33,15 @@ func newStoreSeckill(db *gorm.DB, opts ...gen.DOOption) storeSeckill {
 	_storeSeckill.Images = field.NewString(tableName, "images")
 	_storeSeckill.Title = field.NewString(tableName, "title")
 	_storeSeckill.Info = field.NewString(tableName, "info")
-	_storeSeckill.Price = field.NewString(tableName, "price")
-	_storeSeckill.Cost = field.NewString(tableName, "cost")
-	_storeSeckill.OtPrice = field.NewString(tableName, "ot_price")
-	_storeSeckill.GiveIntegral = field.NewString(tableName, "give_integral")
+	_storeSeckill.Price = field.NewField(tableName, "price")
+	_storeSeckill.Cost = field.NewField(tableName, "cost")
+	_storeSeckill.OtPrice = field.NewField(tableName, "ot_price")
+	_storeSeckill.GiveIntegral = field.NewField(tableName, "give_integral")
 	_storeSeckill.Sort = field.NewInt64(tableName, "sort")
 	_storeSeckill.Stock = field.NewInt64(tableName, "stock")
 	_storeSeckill.Sales = field.NewInt64(tableName, "sales")
 	_storeSeckill.UnitName = field.NewString(tableName, "unit_name")
-	_storeSeckill.Postage = field.NewString(tableName, "postage")
+	_storeSeckill.Postage = field.NewField(tableName, "postage")
 	_storeSeckill.Description = field.NewString(tableName, "description")
 	_storeSeckill.StartTime = field.NewTime(tableName, "start_time")
 	_storeSeckill.StopTime = field.NewTime(tableName, "stop_time")
@@ -52,8 +52,8 @@ func newStoreSeckill(db *gorm.DB, opts ...gen.DOOption) storeSeckill {
 	_storeSeckill.IsShow = field.NewInt64(tableName, "is_show")
 	_storeSeckill.TimeID = field.NewInt64(tableName, "time_id")
 	_storeSeckill.TempID = field.NewInt64(tableName, "temp_id")
-	_storeSeckill.Weight = field.NewString(tableName, "weight")
-	_storeSeckill.Volume = field.NewString(tableName, "volume")
+	_storeSeckill.Weight = field.NewField(tableName, "weight")
+	_storeSeckill.Volume = field.NewField(tableName, "volume")
 	_storeSeckill.Quota = field.NewInt64(tableName, "quota")
 	_storeSeckill.QuotaShow = field.NewInt64(tableName, "quota_show")
 	_storeSeckill.SpecType = field.NewInt64(tableName, "spec_type")
@@ -77,15 +77,15 @@ type storeSeckill struct {
 	Images       field.String // 轮播图
 	Title        field.String // 活动标题
 	Info         field.String // 简介
-	Price        field.String // 价格
-	Cost         field.String // 成本
-	OtPrice      field.String // 原价
-	GiveIntegral field.String // 返多少积分
+	Price        field.Field  // 价格
+	Cost         field.Field  // 成本
+	OtPrice      field.Field  // 原价
+	GiveIntegral field.Field  // 返多少积分
 	Sort         field.Int64  // 排序
 	Stock        field.Int64  // 库存
 	Sales        field.Int64  // 销量
 	UnitName     field.String // 单位名
-	Postage      field.String // 邮费
+	Postage      field.Field  // 邮费
 	Description  field.String // 内容
 	StartTime    field.Time   // 开始时间
 	StopTime     field.Time   // 结束时间
@@ -96,8 +96,8 @@ type storeSeckill struct {
 	IsShow       field.Int64  // 显示
 	TimeID       field.Int64  // 时间段ID
 	TempID       field.Int64  // 运费模板ID
-	Weight       field.String // 重量
-	Volume       field.String // 体积
+	Weight       field.Field  // 重量
+	Volume       field.Field  // 体积
 	Quota        field.Int64  // 限购总数,随减
 	QuotaShow    field.Int64  // 限购总数显示.不变
 	SpecType     field.Int64  // 规格 0=单 1=多
@@ -126,15 +126,15 @@ func (s *storeSeckill) updateTableName(table string) *storeSeckill {
 	s.Images = field.NewString(table, "images")
 	s.Title = field.NewString(table, "title")
 	s.Info = field.NewString(table, "info")
-	s.Price = field.NewString(table, "price")
-	s.Cost = field.NewString(table, "cost")
-	s.OtPrice = field.NewString(table, "ot_price")
-	s.GiveIntegral = field.NewString(table, "give_integral")
+	s.Price = field.NewField(table, "price")
+	s.Cost = field.NewField(table, "cost")
+	s.OtPrice = field.NewField(table, "ot_price")
+	s.GiveIntegral = field.NewField(table, "give_integral")
 	s.Sort = field.NewInt64(table, "sort")
 	s.Stock = field.NewInt64(table, "stock")
 	s.Sales = field.NewInt64(table, "sales")
 	s.UnitName = field.NewString(table, "unit_name")
-	s.Postage = field.NewString(table, "postage")
+	s.Postage = field.NewField(table, "postage")
 	s.Description = field.NewString(table, "description")
 	s.StartTime = field.NewTime(table, "start_time")
 	s.StopTime = field.NewTime(table, "stop_time")
@@ -145,8 +145,8 @@ func (s *storeSeckill) updateTableName(table string) *storeSeckill {
 	s.IsShow = field.NewInt64(table, "is_show")
 	s.TimeID = field.NewInt64(table, "time_id")
 	s.TempID = field.NewInt64(table, "temp_id")
-	s.Weight = field.NewString(table, "weight")
-	s.Volume = field.NewString(table, "volume")
+	s.Weight = field.NewField(table, "weight")
+	s.Volume = field.NewField(table, "volume")
 	s.Quota = field.NewInt64(table, "quota")
 	s.QuotaShow = field.NewInt64(table, "quota_show")
 	s.SpecType = field.NewInt64(table, "spec_type")

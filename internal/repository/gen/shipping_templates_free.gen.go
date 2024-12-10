@@ -31,8 +31,8 @@ func newShippingTemplatesFree(db *gorm.DB, opts ...gen.DOOption) shippingTemplat
 	_shippingTemplatesFree.TempID = field.NewInt64(tableName, "temp_id")
 	_shippingTemplatesFree.CityID = field.NewInt64(tableName, "city_id")
 	_shippingTemplatesFree.Title = field.NewString(tableName, "title")
-	_shippingTemplatesFree.Number = field.NewString(tableName, "number")
-	_shippingTemplatesFree.Price = field.NewString(tableName, "price")
+	_shippingTemplatesFree.Number = field.NewField(tableName, "number")
+	_shippingTemplatesFree.Price = field.NewField(tableName, "price")
 	_shippingTemplatesFree.Type = field.NewInt64(tableName, "type")
 	_shippingTemplatesFree.Uniqid = field.NewString(tableName, "uniqid")
 	_shippingTemplatesFree.Status = field.NewInt64(tableName, "status")
@@ -54,8 +54,8 @@ type shippingTemplatesFree struct {
 	TempID    field.Int64  // 模板ID
 	CityID    field.Int64  // 城市ID
 	Title     field.String // 描述
-	Number    field.String // 包邮件数
-	Price     field.String // 包邮金额
+	Number    field.Field  // 包邮件数
+	Price     field.Field  // 包邮金额
 	Type      field.Int64  // 计费方式
 	Uniqid    field.String // 分组唯一值
 	Status    field.Int64  // 是否无效
@@ -82,8 +82,8 @@ func (s *shippingTemplatesFree) updateTableName(table string) *shippingTemplates
 	s.TempID = field.NewInt64(table, "temp_id")
 	s.CityID = field.NewInt64(table, "city_id")
 	s.Title = field.NewString(table, "title")
-	s.Number = field.NewString(table, "number")
-	s.Price = field.NewString(table, "price")
+	s.Number = field.NewField(table, "number")
+	s.Price = field.NewField(table, "price")
 	s.Type = field.NewInt64(table, "type")
 	s.Uniqid = field.NewString(table, "uniqid")
 	s.Status = field.NewInt64(table, "status")

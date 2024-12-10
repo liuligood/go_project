@@ -60,7 +60,7 @@ func main() {
 		"mediumint": func(detailType gorm.ColumnType) (dataType string) { return "int64" },
 		"bigint":    func(detailType gorm.ColumnType) (dataType string) { return "int64" },
 		"int":       func(detailType gorm.ColumnType) (dataType string) { return "int64" },
-		"decimal":   func(detailType gorm.ColumnType) (dataType string) { return "string" }, // 金额类型全部转换为第三方库,github.com/shopspring/decimal
+		"decimal":   func(detailType gorm.ColumnType) (dataType string) { return "decimal.Decimal" }, // 金额类型全部转换为第三方库,github.com/shopspring/decimal
 	}
 
 	// 要先于`ApplyBasic`执行

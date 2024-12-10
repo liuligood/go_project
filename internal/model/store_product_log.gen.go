@@ -4,7 +4,10 @@
 
 package model
 
-import "gorm.io/plugin/soft_delete"
+import (
+	"github.com/shopspring/decimal"
+	"gorm.io/plugin/soft_delete"
+)
 
 const TableNameStoreProductLog = "store_product_log"
 
@@ -18,11 +21,11 @@ type StoreProductLog struct {
 	CartNum     int64                 `gorm:"column:cart_num;type:int;not null;comment:加入购物车数量" json:"cart_num"`                               // 加入购物车数量
 	OrderNum    int64                 `gorm:"column:order_num;type:int;not null;comment:下单数量" json:"order_num"`                                // 下单数量
 	PayNum      int64                 `gorm:"column:pay_num;type:int;not null;comment:支付数量" json:"pay_num"`                                    // 支付数量
-	PayPrice    string                `gorm:"column:pay_price;type:decimal(10,2);not null;default:0.00;comment:支付金额" json:"pay_price"`         // 支付金额
-	CostPrice   string                `gorm:"column:cost_price;type:decimal(10,2);not null;default:0.00;comment:商品成本价" json:"cost_price"`      // 商品成本价
+	PayPrice    decimal.Decimal       `gorm:"column:pay_price;type:decimal(10,2);not null;default:0.00;comment:支付金额" json:"pay_price"`         // 支付金额
+	CostPrice   decimal.Decimal       `gorm:"column:cost_price;type:decimal(10,2);not null;default:0.00;comment:商品成本价" json:"cost_price"`      // 商品成本价
 	PayUID      int64                 `gorm:"column:pay_uid;type:int;not null;comment:支付用户ID" json:"pay_uid"`                                  // 支付用户ID
 	RefundNum   int64                 `gorm:"column:refund_num;type:int;not null;comment:退款数量" json:"refund_num"`                              // 退款数量
-	RefundPrice string                `gorm:"column:refund_price;type:decimal(10,2);not null;default:0.00;comment:退款金额" json:"refund_price"`   // 退款金额
+	RefundPrice decimal.Decimal       `gorm:"column:refund_price;type:decimal(10,2);not null;default:0.00;comment:退款金额" json:"refund_price"`   // 退款金额
 	CollectNum  int64                 `gorm:"column:collect_num;type:tinyint(1);not null;comment:收藏" json:"collect_num"`                       // 收藏
 	AddTime     int64                 `gorm:"column:add_time;type:bigint;not null;comment:添加时间" json:"add_time"`                               // 添加时间
 	CreatedAt   int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`

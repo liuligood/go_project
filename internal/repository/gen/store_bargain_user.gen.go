@@ -30,9 +30,9 @@ func newStoreBargainUser(db *gorm.DB, opts ...gen.DOOption) storeBargainUser {
 	_storeBargainUser.ID = field.NewInt64(tableName, "id")
 	_storeBargainUser.UID = field.NewInt64(tableName, "uid")
 	_storeBargainUser.BargainID = field.NewInt64(tableName, "bargain_id")
-	_storeBargainUser.BargainPriceMin = field.NewString(tableName, "bargain_price_min")
-	_storeBargainUser.BargainPrice = field.NewString(tableName, "bargain_price")
-	_storeBargainUser.Price = field.NewString(tableName, "price")
+	_storeBargainUser.BargainPriceMin = field.NewField(tableName, "bargain_price_min")
+	_storeBargainUser.BargainPrice = field.NewField(tableName, "bargain_price")
+	_storeBargainUser.Price = field.NewField(tableName, "price")
 	_storeBargainUser.Status = field.NewInt64(tableName, "status")
 	_storeBargainUser.AddTime = field.NewInt64(tableName, "add_time")
 	_storeBargainUser.IsDel = field.NewInt64(tableName, "is_del")
@@ -50,15 +50,15 @@ type storeBargainUser struct {
 	storeBargainUserDo storeBargainUserDo
 
 	ALL             field.Asterisk
-	ID              field.Int64  // 用户参与砍价表ID
-	UID             field.Int64  // 用户ID
-	BargainID       field.Int64  // 砍价商品id
-	BargainPriceMin field.String // 砍价的最低价
-	BargainPrice    field.String // 砍价金额
-	Price           field.String // 砍掉的价格
-	Status          field.Int64  // 状态 1参与中 2 活动结束参与失败 3活动结束参与成功
-	AddTime         field.Int64  // 参与时间
-	IsDel           field.Int64  // 是否取消
+	ID              field.Int64 // 用户参与砍价表ID
+	UID             field.Int64 // 用户ID
+	BargainID       field.Int64 // 砍价商品id
+	BargainPriceMin field.Field // 砍价的最低价
+	BargainPrice    field.Field // 砍价金额
+	Price           field.Field // 砍掉的价格
+	Status          field.Int64 // 状态 1参与中 2 活动结束参与失败 3活动结束参与成功
+	AddTime         field.Int64 // 参与时间
+	IsDel           field.Int64 // 是否取消
 	CreatedAt       field.Int64
 	UpdatedAt       field.Int64
 	DeletedAt       field.Field
@@ -81,9 +81,9 @@ func (s *storeBargainUser) updateTableName(table string) *storeBargainUser {
 	s.ID = field.NewInt64(table, "id")
 	s.UID = field.NewInt64(table, "uid")
 	s.BargainID = field.NewInt64(table, "bargain_id")
-	s.BargainPriceMin = field.NewString(table, "bargain_price_min")
-	s.BargainPrice = field.NewString(table, "bargain_price")
-	s.Price = field.NewString(table, "price")
+	s.BargainPriceMin = field.NewField(table, "bargain_price_min")
+	s.BargainPrice = field.NewField(table, "bargain_price")
+	s.Price = field.NewField(table, "price")
 	s.Status = field.NewInt64(table, "status")
 	s.AddTime = field.NewInt64(table, "add_time")
 	s.IsDel = field.NewInt64(table, "is_del")

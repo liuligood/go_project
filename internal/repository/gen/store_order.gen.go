@@ -33,15 +33,15 @@ func newStoreOrder(db *gorm.DB, opts ...gen.DOOption) storeOrder {
 	_storeOrder.RealName = field.NewString(tableName, "real_name")
 	_storeOrder.UserPhone = field.NewString(tableName, "user_phone")
 	_storeOrder.UserAddress = field.NewString(tableName, "user_address")
-	_storeOrder.FreightPrice = field.NewString(tableName, "freight_price")
+	_storeOrder.FreightPrice = field.NewField(tableName, "freight_price")
 	_storeOrder.TotalNum = field.NewInt64(tableName, "total_num")
-	_storeOrder.TotalPrice = field.NewString(tableName, "total_price")
-	_storeOrder.TotalPostage = field.NewString(tableName, "total_postage")
-	_storeOrder.PayPrice = field.NewString(tableName, "pay_price")
-	_storeOrder.PayPostage = field.NewString(tableName, "pay_postage")
-	_storeOrder.DeductionPrice = field.NewString(tableName, "deduction_price")
+	_storeOrder.TotalPrice = field.NewField(tableName, "total_price")
+	_storeOrder.TotalPostage = field.NewField(tableName, "total_postage")
+	_storeOrder.PayPrice = field.NewField(tableName, "pay_price")
+	_storeOrder.PayPostage = field.NewField(tableName, "pay_postage")
+	_storeOrder.DeductionPrice = field.NewField(tableName, "deduction_price")
 	_storeOrder.CouponID = field.NewInt64(tableName, "coupon_id")
-	_storeOrder.CouponPrice = field.NewString(tableName, "coupon_price")
+	_storeOrder.CouponPrice = field.NewField(tableName, "coupon_price")
 	_storeOrder.Paid = field.NewInt64(tableName, "paid")
 	_storeOrder.PayTime = field.NewInt64(tableName, "pay_time")
 	_storeOrder.PayType = field.NewString(tableName, "pay_type")
@@ -52,7 +52,7 @@ func newStoreOrder(db *gorm.DB, opts ...gen.DOOption) storeOrder {
 	_storeOrder.RefundReasonWap = field.NewString(tableName, "refund_reason_wap")
 	_storeOrder.RefundReason = field.NewString(tableName, "refund_reason")
 	_storeOrder.RefundReasonTime = field.NewInt64(tableName, "refund_reason_time")
-	_storeOrder.RefundPrice = field.NewString(tableName, "refund_price")
+	_storeOrder.RefundPrice = field.NewField(tableName, "refund_price")
 	_storeOrder.DeliveryName = field.NewString(tableName, "delivery_name")
 	_storeOrder.DeliveryType = field.NewString(tableName, "delivery_type")
 	_storeOrder.DeliveryID = field.NewString(tableName, "delivery_id")
@@ -66,7 +66,7 @@ func newStoreOrder(db *gorm.DB, opts ...gen.DOOption) storeOrder {
 	_storeOrder.IsMerCheck = field.NewInt64(tableName, "is_mer_check")
 	_storeOrder.CombinationID = field.NewInt64(tableName, "combination_id")
 	_storeOrder.PinkID = field.NewInt64(tableName, "pink_id")
-	_storeOrder.Cost = field.NewString(tableName, "cost")
+	_storeOrder.Cost = field.NewField(tableName, "cost")
 	_storeOrder.SeckillID = field.NewInt64(tableName, "seckill_id")
 	_storeOrder.BargainID = field.NewInt64(tableName, "bargain_id")
 	_storeOrder.VerifyCode = field.NewString(tableName, "verify_code")
@@ -79,8 +79,8 @@ func newStoreOrder(db *gorm.DB, opts ...gen.DOOption) storeOrder {
 	_storeOrder.DeliveryCode = field.NewString(tableName, "delivery_code")
 	_storeOrder.BargainUserID = field.NewInt64(tableName, "bargain_user_id")
 	_storeOrder.Type = field.NewInt64(tableName, "type")
-	_storeOrder.ProTotalPrice = field.NewString(tableName, "pro_total_price")
-	_storeOrder.BeforePayPrice = field.NewString(tableName, "before_pay_price")
+	_storeOrder.ProTotalPrice = field.NewField(tableName, "pro_total_price")
+	_storeOrder.BeforePayPrice = field.NewField(tableName, "before_pay_price")
 	_storeOrder.IsAlterPrice = field.NewInt64(tableName, "is_alter_price")
 	_storeOrder.OutTradeNo = field.NewString(tableName, "out_trade_no")
 	_storeOrder.CreatedAt = field.NewInt64(tableName, "created_at")
@@ -103,15 +103,15 @@ type storeOrder struct {
 	RealName               field.String // 用户姓名
 	UserPhone              field.String // 用户电话
 	UserAddress            field.String // 详细地址
-	FreightPrice           field.String // 运费金额
+	FreightPrice           field.Field  // 运费金额
 	TotalNum               field.Int64  // 订单商品总数
-	TotalPrice             field.String // 订单总价
-	TotalPostage           field.String // 邮费
-	PayPrice               field.String // 实际支付金额
-	PayPostage             field.String // 支付邮费
-	DeductionPrice         field.String // 抵扣金额
+	TotalPrice             field.Field  // 订单总价
+	TotalPostage           field.Field  // 邮费
+	PayPrice               field.Field  // 实际支付金额
+	PayPostage             field.Field  // 支付邮费
+	DeductionPrice         field.Field  // 抵扣金额
 	CouponID               field.Int64  // 优惠券id
-	CouponPrice            field.String // 优惠券金额
+	CouponPrice            field.Field  // 优惠券金额
 	Paid                   field.Int64  // 支付状态
 	PayTime                field.Int64
 	PayType                field.String // 支付方式
@@ -122,7 +122,7 @@ type storeOrder struct {
 	RefundReasonWap        field.String // 前台退款原因
 	RefundReason           field.String // 不退款的理由
 	RefundReasonTime       field.Int64
-	RefundPrice            field.String // 退款金额
+	RefundPrice            field.Field  // 退款金额
 	DeliveryName           field.String // 快递名称/送货人姓名
 	DeliveryType           field.String // 发货类型
 	DeliveryID             field.String // 快递单号/手机号
@@ -136,7 +136,7 @@ type storeOrder struct {
 	IsMerCheck             field.Int64
 	CombinationID          field.Int64  // 拼团商品id0一般商品
 	PinkID                 field.Int64  // 拼团id 0没有拼团
-	Cost                   field.String // 成本价
+	Cost                   field.Field  // 成本价
 	SeckillID              field.Int64  // 秒杀商品ID
 	BargainID              field.Int64  // 砍价id
 	VerifyCode             field.String // 核销码
@@ -149,8 +149,8 @@ type storeOrder struct {
 	DeliveryCode           field.String // 快递公司简称
 	BargainUserID          field.Int64  // 用户拼团活动id 0没有
 	Type                   field.Int64  // 订单类型:0-普通订单，1-视频号订单
-	ProTotalPrice          field.String // 商品总价
-	BeforePayPrice         field.String // 改价前支付金额
+	ProTotalPrice          field.Field  // 商品总价
+	BeforePayPrice         field.Field  // 改价前支付金额
 	IsAlterPrice           field.Int64  // 是否改价,0-否，1-是
 	OutTradeNo             field.String // 商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
 	CreatedAt              field.Int64
@@ -178,15 +178,15 @@ func (s *storeOrder) updateTableName(table string) *storeOrder {
 	s.RealName = field.NewString(table, "real_name")
 	s.UserPhone = field.NewString(table, "user_phone")
 	s.UserAddress = field.NewString(table, "user_address")
-	s.FreightPrice = field.NewString(table, "freight_price")
+	s.FreightPrice = field.NewField(table, "freight_price")
 	s.TotalNum = field.NewInt64(table, "total_num")
-	s.TotalPrice = field.NewString(table, "total_price")
-	s.TotalPostage = field.NewString(table, "total_postage")
-	s.PayPrice = field.NewString(table, "pay_price")
-	s.PayPostage = field.NewString(table, "pay_postage")
-	s.DeductionPrice = field.NewString(table, "deduction_price")
+	s.TotalPrice = field.NewField(table, "total_price")
+	s.TotalPostage = field.NewField(table, "total_postage")
+	s.PayPrice = field.NewField(table, "pay_price")
+	s.PayPostage = field.NewField(table, "pay_postage")
+	s.DeductionPrice = field.NewField(table, "deduction_price")
 	s.CouponID = field.NewInt64(table, "coupon_id")
-	s.CouponPrice = field.NewString(table, "coupon_price")
+	s.CouponPrice = field.NewField(table, "coupon_price")
 	s.Paid = field.NewInt64(table, "paid")
 	s.PayTime = field.NewInt64(table, "pay_time")
 	s.PayType = field.NewString(table, "pay_type")
@@ -197,7 +197,7 @@ func (s *storeOrder) updateTableName(table string) *storeOrder {
 	s.RefundReasonWap = field.NewString(table, "refund_reason_wap")
 	s.RefundReason = field.NewString(table, "refund_reason")
 	s.RefundReasonTime = field.NewInt64(table, "refund_reason_time")
-	s.RefundPrice = field.NewString(table, "refund_price")
+	s.RefundPrice = field.NewField(table, "refund_price")
 	s.DeliveryName = field.NewString(table, "delivery_name")
 	s.DeliveryType = field.NewString(table, "delivery_type")
 	s.DeliveryID = field.NewString(table, "delivery_id")
@@ -211,7 +211,7 @@ func (s *storeOrder) updateTableName(table string) *storeOrder {
 	s.IsMerCheck = field.NewInt64(table, "is_mer_check")
 	s.CombinationID = field.NewInt64(table, "combination_id")
 	s.PinkID = field.NewInt64(table, "pink_id")
-	s.Cost = field.NewString(table, "cost")
+	s.Cost = field.NewField(table, "cost")
 	s.SeckillID = field.NewInt64(table, "seckill_id")
 	s.BargainID = field.NewInt64(table, "bargain_id")
 	s.VerifyCode = field.NewString(table, "verify_code")
@@ -224,8 +224,8 @@ func (s *storeOrder) updateTableName(table string) *storeOrder {
 	s.DeliveryCode = field.NewString(table, "delivery_code")
 	s.BargainUserID = field.NewInt64(table, "bargain_user_id")
 	s.Type = field.NewInt64(table, "type")
-	s.ProTotalPrice = field.NewString(table, "pro_total_price")
-	s.BeforePayPrice = field.NewString(table, "before_pay_price")
+	s.ProTotalPrice = field.NewField(table, "pro_total_price")
+	s.BeforePayPrice = field.NewField(table, "before_pay_price")
 	s.IsAlterPrice = field.NewInt64(table, "is_alter_price")
 	s.OutTradeNo = field.NewString(table, "out_trade_no")
 	s.CreatedAt = field.NewInt64(table, "created_at")

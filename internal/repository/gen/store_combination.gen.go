@@ -36,7 +36,7 @@ func newStoreCombination(db *gorm.DB, opts ...gen.DOOption) storeCombination {
 	_storeCombination.Attr = field.NewString(tableName, "attr")
 	_storeCombination.People = field.NewInt64(tableName, "people")
 	_storeCombination.Info = field.NewString(tableName, "info")
-	_storeCombination.Price = field.NewString(tableName, "price")
+	_storeCombination.Price = field.NewField(tableName, "price")
 	_storeCombination.Sort = field.NewInt64(tableName, "sort")
 	_storeCombination.Sales = field.NewInt64(tableName, "sales")
 	_storeCombination.Stock = field.NewInt64(tableName, "stock")
@@ -47,20 +47,20 @@ func newStoreCombination(db *gorm.DB, opts ...gen.DOOption) storeCombination {
 	_storeCombination.Combination = field.NewInt64(tableName, "combination")
 	_storeCombination.MerUse = field.NewInt64(tableName, "mer_use")
 	_storeCombination.IsPostage = field.NewInt64(tableName, "is_postage")
-	_storeCombination.Postage = field.NewString(tableName, "postage")
+	_storeCombination.Postage = field.NewField(tableName, "postage")
 	_storeCombination.StartTime = field.NewInt64(tableName, "start_time")
 	_storeCombination.StopTime = field.NewInt64(tableName, "stop_time")
 	_storeCombination.EffectiveTime = field.NewInt64(tableName, "effective_time")
-	_storeCombination.Cost = field.NewString(tableName, "cost")
+	_storeCombination.Cost = field.NewField(tableName, "cost")
 	_storeCombination.Browse = field.NewInt64(tableName, "browse")
 	_storeCombination.UnitName = field.NewString(tableName, "unit_name")
 	_storeCombination.TempID = field.NewInt64(tableName, "temp_id")
-	_storeCombination.Weight = field.NewString(tableName, "weight")
-	_storeCombination.Volume = field.NewString(tableName, "volume")
+	_storeCombination.Weight = field.NewField(tableName, "weight")
+	_storeCombination.Volume = field.NewField(tableName, "volume")
 	_storeCombination.Num = field.NewInt64(tableName, "num")
 	_storeCombination.Quota = field.NewInt64(tableName, "quota")
 	_storeCombination.QuotaShow = field.NewInt64(tableName, "quota_show")
-	_storeCombination.OtPrice = field.NewString(tableName, "ot_price")
+	_storeCombination.OtPrice = field.NewField(tableName, "ot_price")
 	_storeCombination.OnceNum = field.NewInt64(tableName, "once_num")
 	_storeCombination.VirtualRation = field.NewInt64(tableName, "virtual_ration")
 	_storeCombination.CreatedAt = field.NewInt64(tableName, "created_at")
@@ -86,7 +86,7 @@ type storeCombination struct {
 	Attr          field.String // 活动属性
 	People        field.Int64  // 参团人数
 	Info          field.String // 简介
-	Price         field.String // 价格
+	Price         field.Field  // 价格
 	Sort          field.Int64  // 排序
 	Sales         field.Int64  // 销量
 	Stock         field.Int64  // 库存
@@ -97,20 +97,20 @@ type storeCombination struct {
 	Combination   field.Int64
 	MerUse        field.Int64  // 商户是否可用1可用0不可用
 	IsPostage     field.Int64  // 是否包邮1是0否
-	Postage       field.String // 邮费
+	Postage       field.Field  // 邮费
 	StartTime     field.Int64  // 拼团开始时间
 	StopTime      field.Int64  // 拼团结束时间
 	EffectiveTime field.Int64  // 拼团订单有效时间(小时)
-	Cost          field.String // 拼图商品成本
+	Cost          field.Field  // 拼图商品成本
 	Browse        field.Int64  // 浏览量
 	UnitName      field.String // 单位名
 	TempID        field.Int64  // 运费模板ID
-	Weight        field.String // 重量
-	Volume        field.String // 体积
+	Weight        field.Field  // 重量
+	Volume        field.Field  // 体积
 	Num           field.Int64  // 单次购买数量
 	Quota         field.Int64  // 限购总数
 	QuotaShow     field.Int64  // 限量总数显示
-	OtPrice       field.String // 原价
+	OtPrice       field.Field  // 原价
 	OnceNum       field.Int64  // 每个订单可购买数量
 	VirtualRation field.Int64  // 虚拟成团百分比
 	CreatedAt     field.Int64
@@ -141,7 +141,7 @@ func (s *storeCombination) updateTableName(table string) *storeCombination {
 	s.Attr = field.NewString(table, "attr")
 	s.People = field.NewInt64(table, "people")
 	s.Info = field.NewString(table, "info")
-	s.Price = field.NewString(table, "price")
+	s.Price = field.NewField(table, "price")
 	s.Sort = field.NewInt64(table, "sort")
 	s.Sales = field.NewInt64(table, "sales")
 	s.Stock = field.NewInt64(table, "stock")
@@ -152,20 +152,20 @@ func (s *storeCombination) updateTableName(table string) *storeCombination {
 	s.Combination = field.NewInt64(table, "combination")
 	s.MerUse = field.NewInt64(table, "mer_use")
 	s.IsPostage = field.NewInt64(table, "is_postage")
-	s.Postage = field.NewString(table, "postage")
+	s.Postage = field.NewField(table, "postage")
 	s.StartTime = field.NewInt64(table, "start_time")
 	s.StopTime = field.NewInt64(table, "stop_time")
 	s.EffectiveTime = field.NewInt64(table, "effective_time")
-	s.Cost = field.NewString(table, "cost")
+	s.Cost = field.NewField(table, "cost")
 	s.Browse = field.NewInt64(table, "browse")
 	s.UnitName = field.NewString(table, "unit_name")
 	s.TempID = field.NewInt64(table, "temp_id")
-	s.Weight = field.NewString(table, "weight")
-	s.Volume = field.NewString(table, "volume")
+	s.Weight = field.NewField(table, "weight")
+	s.Volume = field.NewField(table, "volume")
 	s.Num = field.NewInt64(table, "num")
 	s.Quota = field.NewInt64(table, "quota")
 	s.QuotaShow = field.NewInt64(table, "quota_show")
-	s.OtPrice = field.NewString(table, "ot_price")
+	s.OtPrice = field.NewField(table, "ot_price")
 	s.OnceNum = field.NewInt64(table, "once_num")
 	s.VirtualRation = field.NewInt64(table, "virtual_ration")
 	s.CreatedAt = field.NewInt64(table, "created_at")

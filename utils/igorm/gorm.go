@@ -61,7 +61,6 @@ func (db *DB) GormMysql() *gorm.DB {
 
 		return db
 	}
-
 }
 
 // GormPgSql 初始化 Postgresql 数据库
@@ -123,9 +122,9 @@ func (db *DB) Config(prefix string, singular bool) *gorm.Config {
 
 	return &gorm.Config{
 		Logger: logger.New(NewWriter(general, log.New(os.Stdout, "\r\n", log.LstdFlags)), logger.Config{
-			SlowThreshold: 200 * time.Millisecond,
-			LogLevel:      general.LogLevel(),
-			Colorful:      true,
+			SlowThreshold: 200 * time.Millisecond, // 慢 SQL 阈值
+			LogLevel:      general.LogLevel(),     // 日志等级
+			Colorful:      true,                   // 是否彩色打印
 		}),
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix:   prefix,

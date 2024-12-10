@@ -34,9 +34,9 @@ func newUserExtract(db *gorm.DB, opts ...gen.DOOption) userExtract {
 	_userExtract.BankCode = field.NewString(tableName, "bank_code")
 	_userExtract.BankAddress = field.NewString(tableName, "bank_address")
 	_userExtract.AlipayCode = field.NewString(tableName, "alipay_code")
-	_userExtract.ExtractPrice = field.NewString(tableName, "extract_price")
+	_userExtract.ExtractPrice = field.NewField(tableName, "extract_price")
 	_userExtract.Mark = field.NewString(tableName, "mark")
-	_userExtract.Balance = field.NewString(tableName, "balance")
+	_userExtract.Balance = field.NewField(tableName, "balance")
 	_userExtract.FailMsg = field.NewString(tableName, "fail_msg")
 	_userExtract.Status = field.NewInt64(tableName, "status")
 	_userExtract.Wechat = field.NewString(tableName, "wechat")
@@ -63,9 +63,9 @@ type userExtract struct {
 	BankCode     field.String // 银行卡
 	BankAddress  field.String // 开户地址
 	AlipayCode   field.String // 支付宝账号
-	ExtractPrice field.String // 提现金额
+	ExtractPrice field.Field  // 提现金额
 	Mark         field.String
-	Balance      field.String
+	Balance      field.Field
 	FailMsg      field.String // 无效原因
 	Status       field.Int64  // -1 未通过 0 审核中 1 已提现
 	Wechat       field.String // 微信号
@@ -97,9 +97,9 @@ func (u *userExtract) updateTableName(table string) *userExtract {
 	u.BankCode = field.NewString(table, "bank_code")
 	u.BankAddress = field.NewString(table, "bank_address")
 	u.AlipayCode = field.NewString(table, "alipay_code")
-	u.ExtractPrice = field.NewString(table, "extract_price")
+	u.ExtractPrice = field.NewField(table, "extract_price")
 	u.Mark = field.NewString(table, "mark")
-	u.Balance = field.NewString(table, "balance")
+	u.Balance = field.NewField(table, "balance")
 	u.FailMsg = field.NewString(table, "fail_msg")
 	u.Status = field.NewInt64(table, "status")
 	u.Wechat = field.NewString(table, "wechat")
