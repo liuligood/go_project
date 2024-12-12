@@ -125,10 +125,10 @@ func (c *AliyunOSSClient) SignURL(ossFilePath, fileName string, expiresInSec int
 	izap.Log.Info("SignURL", zap.String("ossFilePath", ossFilePath), zap.String("fileName", fileName), zap.Int64("expiresInSec", expiresInSec), zap.Int("category", category))
 
 	options := make([]oss.Option, 0)
-	if category == define.DownloadFile {
+	if category == define.FileDownload {
 		options = append(options, oss.ResponseContentDisposition(fmt.Sprintf("attachment; filename*=utf-8''%s", url.PathEscape(fileName))))
 	}
-	if category == define.UploadFile {
+	if category == define.FileUpload {
 		objectURL, err := c.bucket.SignURL(ossFilePath, oss.HTTPPut, expiresInSec)
 		return objectURL, err
 	}

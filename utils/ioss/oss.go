@@ -52,7 +52,7 @@ func InitOSS(redisClient redis.UniversalClient, config config.Conf) error {
 	//	redisClient.Set(context.Background(), define.OSSSTSTokenKey, string(jsonData), time.Hour)
 	//}
 
-	registerFactory(define.AliyunOSS, &AliyunOSSFactory{})
+	registerFactory(define.OssAliYun, &AliyunOSSFactory{})
 
 	return nil
 }
@@ -63,7 +63,7 @@ func GetOssClient(c config.Conf) (Client, error) {
 	var flag error
 	once.Do(func() {
 		if c.System.OssType == "" {
-			c.System.OssType = define.AliyunOSS
+			c.System.OssType = define.OssAliYun
 		}
 
 		factory, ok := getFactory(c.System.OssType)
@@ -100,7 +100,7 @@ func GenerateSTSToken(config config.Conf) ([]byte, error) {
 	request.Scheme = "https"
 	request.RoleArn = config.AliyunOSS.RoleArn
 	request.RoleSessionName = uuid.NewString()
-	request.DurationSeconds = define.STSTokenDurationSeconds
+	request.DurationSeconds = define.OssStsTokenDurationSeconds
 
 	// 4. 获取临时凭证
 	response, err := client.AssumeRole(request)

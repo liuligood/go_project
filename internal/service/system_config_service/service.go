@@ -1,7 +1,7 @@
 package system_config_service
 
 import (
-	service_data "crmeb_go/internal/data/sevice_data"
+	service_data "crmeb_go/internal/data/service"
 	"crmeb_go/internal/server"
 )
 

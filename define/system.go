@@ -1,6 +1,10 @@
 package define
 
 const (
-	TimeFormat     = "2006-01-02 15:04:05"
-	TimeFormatDate = "2006-01-02"
+	SystemTimeFormat     = "2006-01-02 15:04:05"
+	SystemTimeFormatDate = "2006-01-02"
+)
+
+const (
+	SystemSessionContext = "session_context"
 )

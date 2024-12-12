@@ -1,4 +1,4 @@
-package admin_data
+package admin
 
 type ValidateCodeData struct {
 	Key  string `json:"key"`

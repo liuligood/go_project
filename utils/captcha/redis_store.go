@@ -2,7 +2,7 @@ package captcha
 
 import (
 	"context"
-	"crmeb_go/internal/data/redis_data"
+	"crmeb_go/define"
 	"github.com/redis/go-redis/v9"
 	"strings"
 	"sync"
@@ -19,7 +19,7 @@ func (r *RedisStore) Set(id string, value string) error {
 	r.mtx.Lock()
 	defer r.mtx.Unlock()
 
-	key := redis_data.CaptchaKey + id
+	key := define.RedisCaptchaKey + id
 
 	result := r.redisClient.SetNX(r.ctx, key, strings.ToLower(value), time.Second*60)
 	if result.Err() != nil {
@@ -33,7 +33,7 @@ func (r *RedisStore) Get(id string, clear bool) string {
 	r.mtx.Lock()
 	defer r.mtx.Unlock()
 
-	key := redis_data.CaptchaKey + id
+	key := define.RedisCaptchaKey + id
 	result := r.redisClient.Get(r.ctx, key)
 	if result.Err() != nil {
 		return ""
@@ -50,7 +50,7 @@ func (r *RedisStore) Verify(id, answer string, clear bool) bool {
 	r.mtx.Lock()
 	defer r.mtx.Unlock()
 
-	key := redis_data.CaptchaKey + id
+	key := define.RedisCaptchaKey + id
 	result := r.redisClient.Get(r.ctx, key)
 	if result.Err() != nil {
 		return false

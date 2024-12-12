@@ -1,4 +1,4 @@
-package session_context_data
+package session
 
 import (
 	"crmeb_go/config"

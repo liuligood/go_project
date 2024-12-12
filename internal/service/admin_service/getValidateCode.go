@@ -2,14 +2,14 @@ package admin_service
 
 import (
 	"context"
-	"crmeb_go/internal/data/admin_data"
+	"crmeb_go/internal/data/admin"
 	"crmeb_go/internal/server"
 	"crmeb_go/utils/izap"
 	"go.uber.org/zap"
 )
 
 type GetValidateCodeGetRealNameImpl interface {
-	GetValidateCode(context context.Context) (data admin_data.ValidateCodeData, err error)
+	GetValidateCode(context context.Context) (data admin.ValidateCodeData, err error)
 }
 
 type GetValidateCodeService struct {
@@ -20,7 +20,7 @@ func NewGetValidateCodeService(svc *server.SvcContext) *GetValidateCodeService {
 	return &GetValidateCodeService{svc: svc}
 }
 
-func (a *GetValidateCodeService) GetValidateCode() (data admin_data.ValidateCodeData, err error) {
+func (a *GetValidateCodeService) GetValidateCode() (data admin.ValidateCodeData, err error) {
 	err, code, id := a.svc.CaptchaClient.GetCaptcha()
 	if err != nil {
 		izap.Log.Error("生成验证码错误err:", zap.Error(err))
@@ -28,5 +28,5 @@ func (a *GetValidateCodeService) GetValidateCode() (data admin_data.ValidateCode
 		return
 	}
 
-	return admin_data.ValidateCodeData{Code: code, Key: id}, err
+	return admin.ValidateCodeData{Code: code, Key: id}, err
 }

@@ -2,8 +2,8 @@ package session_context
 
 import (
 	"context"
-	"crmeb_go/internal/data/common_data/session_context_data"
-	"crmeb_go/internal/data/ctx_key_data"
+	"crmeb_go/define"
+	"crmeb_go/internal/data/common/session"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,12 +11,12 @@ import (
 type SessionContext struct {
 	GinCtx *gin.Context
 	Ctx    context.Context
-	Svc    *session_context_data.SvcContext
+	Svc    *session.SvcContext
 	//LoginUserInfo *session_data.LoginUserInfo
 	//EnjoyMeta     *enjoy_meta_context.EnjoyMeta
 }
 
-func New(ginCtx *gin.Context, svc *session_context_data.SvcContext) *SessionContext {
+func New(ginCtx *gin.Context, svc *session.SvcContext) *SessionContext {
 	return &SessionContext{
 		GinCtx: ginCtx,
 		Ctx:    toContext(ginCtx),
@@ -65,7 +65,7 @@ func toContext(ginCtx *gin.Context) context.Context {
 
 // 获取会话上下文
 func GetSessionContext(c *gin.Context) *SessionContext {
-	sessionContextAny, _ := c.Get(ctx_key_data.SessionContext)
+	sessionContextAny, _ := c.Get(define.SystemSessionContext)
 	// 注入 request_host
 	c.Request = c.Request.WithContext(context.WithValue(c.Request.Context(), "request_host", c.Request.Host))
 	sessionContext := sessionContextAny.(*SessionContext)

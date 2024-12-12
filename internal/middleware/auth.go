@@ -1,8 +1,8 @@
 package middleware
 
 import (
+	"crmeb_go/define"
 	"crmeb_go/internal/common/session_context"
-	"crmeb_go/internal/data/ctx_key_data"
 	"crmeb_go/internal/server"
 	"github.com/gin-gonic/gin"
 )
@@ -28,7 +28,7 @@ func ApiAuthVisitorMiddleWare(svc *server.SvcContext) gin.HandlerFunc {
 
 		// 存放登录信息到会话上下文
 		sessionContext := session_context.GetSessionContext(c)
-		c.Set(ctx_key_data.SessionContext, sessionContext)
+		c.Set(define.SystemSessionContext, sessionContext)
 
 		c.Next()
 	}

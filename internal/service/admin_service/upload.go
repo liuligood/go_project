@@ -2,8 +2,8 @@ package admin_service
 
 import (
 	"crmeb_go/define"
-	"crmeb_go/internal/data/admin_data"
-	service_data "crmeb_go/internal/data/sevice_data"
+	"crmeb_go/internal/data/admin"
+	service_data "crmeb_go/internal/data/service"
 	"crmeb_go/internal/server"
 	"crmeb_go/utils/imd5"
 	oss "crmeb_go/utils/ioss"
@@ -17,7 +17,7 @@ import (
 )
 
 type UploadServiceImpl interface {
-	UploadFile(params service_data.UploadParams) (data admin_data.UploadResp, err error)
+	UploadFile(params service_data.UploadParams) (data admin.UploadResp, err error)
 }
 
 type UploadService struct {
@@ -28,7 +28,7 @@ func NewUploadService(svc *server.SvcContext) *UploadService {
 	return &UploadService{svc: svc}
 }
 
-func (u *UploadService) UploadFile(params service_data.UploadParams) (data admin_data.UploadResp, err error) {
+func (u *UploadService) UploadFile(params service_data.UploadParams) (data admin.UploadResp, err error) {
 	var uploadFileName string
 	if params.ContentLength > (u.svc.Conf.System.FileSize << 20) {
 		izap.Log.Error("UploadFile ContentLength [%v]")
@@ -85,7 +85,8 @@ func (u *UploadService) UploadFile(params service_data.UploadParams) (data admin
 		uploadFileName = imd5.MD5V(tmp) + "." + suffix
 	}
 
-	uploadFileName = u.svc.Conf.AliyunOSS.BasePath + "/" + time.Now().Format(define.TimeFormatDate) + "/" + uploadFileName
+	// 看情况修改名称
+	uploadFileName = u.svc.Conf.AliyunOSS.BasePath + "/" + time.Now().Format(define.SystemTimeFormatDate) + "/" + uploadFileName
 	checkData, err := oss.OssClient.IsExist(uploadFileName)
 
 	if err != nil {
@@ -104,7 +105,7 @@ func (u *UploadService) UploadFile(params service_data.UploadParams) (data admin
 		return data, errors.New("文件上传错误")
 	}
 
-	return admin_data.UploadResp{Url: fmt.Sprintf("https://%s.%s/%s", u.svc.Conf.AliyunOSS.BucketName, u.svc.Conf.AliyunOSS.Endpoint, uploadFileName)}, nil
+	return admin.UploadResp{Url: fmt.Sprintf("https://%s.%s/%s", u.svc.Conf.AliyunOSS.BucketName, u.svc.Conf.AliyunOSS.Endpoint, uploadFileName)}, nil
 }
 
 func (u *UploadService) getDirPath(pathName string) string {

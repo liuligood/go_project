@@ -2,7 +2,7 @@ package user_controller
 
 import (
 	"crmeb_go/internal/container/service"
-	service_data "crmeb_go/internal/data/sevice_data"
+	service_data "crmeb_go/internal/data/service"
 	"crmeb_go/internal/validation"
 	"crmeb_go/utils/ihttp"
 	"github.com/gin-gonic/gin"

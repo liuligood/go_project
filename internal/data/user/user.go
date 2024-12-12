@@ -1,4 +1,4 @@
-package eb_user_data
+package user
 
 type GetRealNameData struct {
 	UserId   uint64 `json:"user_id"`

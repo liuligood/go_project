@@ -1,4 +1,4 @@
-package redis_data
+package redis
 
 const (
 	CaptchaKey = "string:captcha:"

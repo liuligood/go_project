@@ -14,7 +14,7 @@ type SystemConfigRepository struct {
 	*base_repository.DBRepository
 }
 
-// NewUserRepository 配置表 模型仓库实例
+// NewSystemConfigRepository  配置表 模型仓库实例
 func NewSystemConfigRepository(db *gorm.DB, gen *gen.Query) *SystemConfigRepository {
 	return &SystemConfigRepository{base_repository.NewRepository(db, gen)}
 }
@@ -25,9 +25,7 @@ func (r *SystemConfigRepository) All(ctx context.Context) (data []*model.SystemC
 		return data, err
 	}
 
-	data = SystemConfigList
-
-	return data, err
+	return SystemConfigList, nil
 }
 
 func (r *SystemConfigRepository) QueryByName(ctx context.Context, name string) (data *model.SystemConfig, err error) {
@@ -36,7 +34,5 @@ func (r *SystemConfigRepository) QueryByName(ctx context.Context, name string) (
 		return data, err
 	}
 
-	data = SystemConfig
-
-	return data, err
+	return SystemConfig, nil
 }
