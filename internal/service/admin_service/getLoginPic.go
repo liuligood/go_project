@@ -28,11 +28,11 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 
 	//背景图
 	systemConfigParam.BaseServiceParams = params.BaseServiceParams
-	systemConfigParam.Name = define.CONFIG_KEY_ADMIN_LOGIN_BACKGROUND_IMAGE
+	systemConfigParam.Name = define.AdminLoginBgPic
 	backgroundImage, err := system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
 
 	if err != nil {
-		izap.Log.Error("查询系统配置错误:", zap.String("name", define.CONFIG_KEY_ADMIN_LOGIN_BACKGROUND_IMAGE), zap.Error(err))
+		izap.Log.Error("查询系统配置错误:", zap.String("name", define.AdminLoginBgPic), zap.Error(err))
 
 		return data, err
 	}
@@ -40,11 +40,11 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	result["backgroundImage"] = backgroundImage.Value
 
 	// logo
-	systemConfigParam.Name = define.CONFIG_KEY_ADMIN_LOGIN_LOGO_LEFT_TOP
+	systemConfigParam.Name = define.AdminSitLogoLeftTop
 	logo, err := system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
 
 	if err != nil {
-		izap.Log.Error("查询系统配置错误:", zap.String("name", define.CONFIG_KEY_ADMIN_LOGIN_LOGO_LEFT_TOP), zap.Error(err))
+		izap.Log.Error("查询系统配置错误:", zap.String("name", define.AdminSitLogoLeftTop), zap.Error(err))
 
 		return data, err
 	}
@@ -52,11 +52,11 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	result["logo"] = logo.Value
 
 	// loginLogo
-	systemConfigParam.Name = define.CONFIG_KEY_ADMIN_LOGIN_LOGO_LOGIN
+	systemConfigParam.Name = define.AdminSiteLogoLogin
 	loginLogo, err := system_config_service.NewGetSystemConfigInfoService(a.svc).GetSystemConfigInfo(systemConfigParam)
 
 	if err != nil {
-		izap.Log.Error("查询系统配置错误:", zap.String("name", define.CONFIG_KEY_ADMIN_LOGIN_LOGO_LOGIN), zap.Error(err))
+		izap.Log.Error("查询系统配置错误:", zap.String("name", define.AdminSiteLogoLogin), zap.Error(err))
 
 		return data, err
 	}

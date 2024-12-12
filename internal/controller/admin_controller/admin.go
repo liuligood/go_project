@@ -34,7 +34,7 @@ func GetLoginPic(svc *service.Container) gin.HandlerFunc {
 	}
 }
 
-func Upload(svc *service.Container) gin.HandlerFunc {
+func UploadFile(svc *service.Container) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		file, fileHear, err := c.Request.FormFile("file")
 		if err != nil {
@@ -57,7 +57,7 @@ func Upload(svc *service.Container) gin.HandlerFunc {
 
 		params.SetSessionContext(c)
 
-		res, err := svc.AdminService.Upload(params)
+		res, err := svc.AdminService.UploadFile(params)
 		if err != nil {
 			c.JSON(http.StatusOK, ihttp.Error(err))
 			return
