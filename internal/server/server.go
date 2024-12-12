@@ -5,6 +5,7 @@ import (
 	"crmeb_go/config"
 	"crmeb_go/internal/container/repository"
 	"crmeb_go/internal/repository/gen"
+	"crmeb_go/utils/captcha"
 	"crmeb_go/utils/icache"
 	"crmeb_go/utils/igorm"
 	oss "crmeb_go/utils/ioss"
@@ -24,6 +25,7 @@ type SvcContext struct {
 	RedisClientList map[string]redis.UniversalClient
 	Redsync         *redsync.Redsync
 	Gen             *gen.Query
+	CaptchaClient   *captcha.CaptchaClient
 }
 
 func NewSvcContext(c config.Conf) *SvcContext {
@@ -49,6 +51,8 @@ func NewSvcContext(c config.Conf) *SvcContext {
 		oss.InitOSS(svc.RedisClient, c)
 		// 初始化oss
 		oss.GetOssClient(c)
+
+		svc.CaptchaClient = captcha.NewCaptchaClient(svc.RedisClient, svc.Ctx)
 	}
 
 	return svc

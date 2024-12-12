@@ -1,4 +1,4 @@
-package ibase64_captcha
+package captcha
 
 import (
 	"context"
@@ -14,7 +14,7 @@ type CaptchaClient struct {
 	captcha *base64Captcha.Captcha
 }
 
-func NewCaptchaClient(redisClient redis.UniversalClient, ctx context.Context) CaptchaClient {
+func NewCaptchaClient(redisClient redis.UniversalClient, ctx context.Context) *CaptchaClient {
 	driverStringConfig := &base64Captcha.DriverString{
 		// 验证码图片的高度
 		Height: 50,
@@ -40,12 +40,12 @@ func NewCaptchaClient(redisClient redis.UniversalClient, ctx context.Context) Ca
 	}
 
 	// 将driverString中指定的字体文件转换为驱动程序所需的字体格式,这个步骤是为了将字体文件转换为正确的格式，以便在生成验证码时使用正确的字体
-	return CaptchaClient{
+	return &CaptchaClient{
 		captcha: base64Captcha.NewCaptcha(driverStringConfig.ConvertFonts(), NewRedisStore(redisClient, ctx)),
 	}
 }
 
-func (c CaptchaClient) GetCaptcha() (error, string, string) {
+func (c *CaptchaClient) GetCaptcha() (error, string, string) {
 	id, b64s, _, err := c.captcha.Generate()
 	if err != nil {
 		izap.Log.Error("c.captcha.Generate:", zap.Error(err))
@@ -56,7 +56,7 @@ func (c CaptchaClient) GetCaptcha() (error, string, string) {
 	return nil, b64s, id
 }
 
-func (c CaptchaClient) Verify(id, answer string) bool {
+func (c *CaptchaClient) Verify(id, answer string) bool {
 	answer = strings.ToLower(answer)
 	return c.captcha.Verify(id, answer, true)
 }
