@@ -4,6 +4,7 @@ import (
 	"context"
 	"crmeb_go/internal/data/redis_data"
 	"github.com/redis/go-redis/v9"
+	"strings"
 	"sync"
 	"time"
 )
@@ -20,7 +21,7 @@ func (r *RedisStore) Set(id string, value string) error {
 
 	key := redis_data.CaptchaKey + id
 
-	result := r.redisClient.SetNX(r.ctx, key, value, time.Second*60)
+	result := r.redisClient.SetNX(r.ctx, key, strings.ToLower(value), time.Second*60)
 	if result.Err() != nil {
 		return result.Err()
 	}
