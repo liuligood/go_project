@@ -51,9 +51,9 @@ type wechatReply struct {
 	Type      field.String // 回复类型
 	Data      field.String // 回复数据
 	Status    field.Int64  // 回复状态 0=不可用  1 =可用
-	CreatedAt field.Int64
-	UpdatedAt field.Int64
-	DeletedAt field.Field
+	CreatedAt field.Int64  // 创建时间
+	UpdatedAt field.Int64  // 修改时间
+	DeletedAt field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

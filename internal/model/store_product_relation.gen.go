@@ -15,9 +15,9 @@ type StoreProductRelation struct {
 	ProductID int64                 `gorm:"column:product_id;type:int unsigned;not null;comment:商品ID" json:"product_id"`          // 商品ID
 	Type      string                `gorm:"column:type;type:varchar(32);not null;comment:类型(收藏(collect）、点赞(like))" json:"type"`   // 类型(收藏(collect）、点赞(like))
 	Category  string                `gorm:"column:category;type:varchar(32);not null;comment:某种类型的商品(普通商品、秒杀商品)" json:"category"` // 某种类型的商品(普通商品、秒杀商品)
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`       // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`       // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`               // 是否删除
 }
 
 // TableName StoreProductRelation's table name

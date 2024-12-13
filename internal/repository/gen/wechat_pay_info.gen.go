@@ -105,9 +105,9 @@ type wechatPayInfo struct {
 	TransactionID  field.String // 微信支付订单号
 	TimeEnd        field.String // 支付完成时间
 	TradeStateDesc field.String // 交易状态描述
-	CreatedAt      field.Int64
-	UpdatedAt      field.Int64
-	DeletedAt      field.Field
+	CreatedAt      field.Int64  // 创建时间
+	UpdatedAt      field.Int64  // 修改时间
+	DeletedAt      field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

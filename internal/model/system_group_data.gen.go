@@ -15,9 +15,9 @@ type SystemGroupDatum struct {
 	Value     string                `gorm:"column:value;type:text;not null;comment:数据组对应的数据值（json数据）" json:"value"`                // 数据组对应的数据值（json数据）
 	Sort      int64                 `gorm:"column:sort;type:int;not null;comment:数据排序" json:"sort"`                                // 数据排序
 	Status    int64                 `gorm:"column:status;type:tinyint(1);not null;default:1;comment:状态（1：开启；2：关闭；）" json:"status"` // 状态（1：开启；2：关闭；）
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`        // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`        // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                // 是否删除
 }
 
 // TableName SystemGroupDatum's table name

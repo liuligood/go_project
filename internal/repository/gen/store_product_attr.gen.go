@@ -53,9 +53,9 @@ type storeProductAttr struct {
 	AttrValues field.String // 属性值
 	Type       field.Int64  // 活动类型 0=商品，1=秒杀，2=砍价，3=拼团
 	IsDel      field.Int64  // 是否删除,0-否，1-是
-	CreatedAt  field.Int64
-	UpdatedAt  field.Int64
-	DeletedAt  field.Field
+	CreatedAt  field.Int64  // 创建时间
+	UpdatedAt  field.Int64  // 修改时间
+	DeletedAt  field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

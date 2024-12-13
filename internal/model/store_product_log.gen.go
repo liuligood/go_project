@@ -28,9 +28,9 @@ type StoreProductLog struct {
 	RefundPrice decimal.Decimal       `gorm:"column:refund_price;type:decimal(10,2);not null;default:0.00;comment:退款金额" json:"refund_price"`   // 退款金额
 	CollectNum  int64                 `gorm:"column:collect_num;type:tinyint(1);not null;comment:收藏" json:"collect_num"`                       // 收藏
 	AddTime     int64                 `gorm:"column:add_time;type:bigint;not null;comment:添加时间" json:"add_time"`                               // 添加时间
-	CreatedAt   int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt   int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt   soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt   int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                  // 创建时间
+	UpdatedAt   int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                  // 修改时间
+	DeletedAt   soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                          // 是否删除
 }
 
 // TableName StoreProductLog's table name

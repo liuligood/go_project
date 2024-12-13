@@ -51,9 +51,9 @@ type storeProductRelation struct {
 	ProductID field.Int64  // 商品ID
 	Type      field.String // 类型(收藏(collect）、点赞(like))
 	Category  field.String // 某种类型的商品(普通商品、秒杀商品)
-	CreatedAt field.Int64
-	UpdatedAt field.Int64
-	DeletedAt field.Field
+	CreatedAt field.Int64  // 创建时间
+	UpdatedAt field.Int64  // 修改时间
+	DeletedAt field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

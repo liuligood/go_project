@@ -63,9 +63,9 @@ type systemNotification struct {
 	IsSms       field.Int64  // 发送短信（0：不存在，1：开启，2：关闭）
 	SmsID       field.Int64  // 短信id
 	SendType    field.Int64  // 发送类型（1：用户，2：管理员）
-	CreatedAt   field.Int64
-	UpdatedAt   field.Int64
-	DeletedAt   field.Field
+	CreatedAt   field.Int64  // 创建时间
+	UpdatedAt   field.Int64  // 修改时间
+	DeletedAt   field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

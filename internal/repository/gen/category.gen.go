@@ -59,9 +59,9 @@ type category struct {
 	Extra     field.String // 扩展字段 Jsos格式
 	Status    field.Int64  // 状态, 1正常，0失效
 	Sort      field.Int64  // 排序
-	CreatedAt field.Int64
-	UpdatedAt field.Int64
-	DeletedAt field.Field
+	CreatedAt field.Int64  // 创建时间
+	UpdatedAt field.Int64  // 修改时间
+	DeletedAt field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

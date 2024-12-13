@@ -101,9 +101,9 @@ type storeSeckill struct {
 	Quota        field.Int64  // 限购总数,随减
 	QuotaShow    field.Int64  // 限购总数显示.不变
 	SpecType     field.Int64  // 规格 0=单 1=多
-	CreatedAt    field.Int64
-	UpdatedAt    field.Int64
-	DeletedAt    field.Field
+	CreatedAt    field.Int64  // 创建时间
+	UpdatedAt    field.Int64  // 修改时间
+	DeletedAt    field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

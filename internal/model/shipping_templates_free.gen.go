@@ -22,9 +22,9 @@ type ShippingTemplatesFree struct {
 	Type      int64                 `gorm:"column:type;type:tinyint(1);not null;default:1;comment:计费方式" json:"type"`           // 计费方式
 	Uniqid    string                `gorm:"column:uniqid;type:varchar(32);not null;comment:分组唯一值" json:"uniqid"`               // 分组唯一值
 	Status    int64                 `gorm:"column:status;type:tinyint(1);comment:是否无效" json:"status"`                          // 是否无效
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`    // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`    // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`            // 是否删除
 }
 
 // TableName ShippingTemplatesFree's table name

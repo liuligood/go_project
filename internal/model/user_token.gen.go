@@ -20,9 +20,9 @@ type UserToken struct {
 	Type        int64                 `gorm:"column:type;type:tinyint(1);default:1;comment:类型，1 公众号， 2 小程序, 3 unionid, 5AppIos,6AppAndroid,7ios" json:"type"` // 类型，1 公众号， 2 小程序, 3 unionid, 5AppIos,6AppAndroid,7ios
 	ExpiresTime time.Time             `gorm:"column:expires_time;type:datetime;comment:到期时间" json:"expires_time"`                                             // 到期时间
 	LoginIP     string                `gorm:"column:login_ip;type:varchar(32);comment:登录ip" json:"login_ip"`                                                  // 登录ip
-	CreatedAt   int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt   int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt   soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt   int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                                 // 创建时间
+	UpdatedAt   int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                                 // 修改时间
+	DeletedAt   soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                                         // 是否删除
 }
 
 // TableName UserToken's table name

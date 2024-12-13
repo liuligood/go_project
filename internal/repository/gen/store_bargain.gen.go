@@ -113,9 +113,9 @@ type storeBargain struct {
 	Quota           field.Int64  // 限购总数
 	QuotaShow       field.Int64  // 限量总数显示
 	PeopleNum       field.Int64  // 砍价人数——需要多少人砍价成功
-	CreatedAt       field.Int64
-	UpdatedAt       field.Int64
-	DeletedAt       field.Field
+	CreatedAt       field.Int64  // 创建时间
+	UpdatedAt       field.Int64  // 修改时间
+	DeletedAt       field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

@@ -18,9 +18,9 @@ type SmsTemplate struct {
 	TempKey   string                `gorm:"column:temp_key;type:varchar(50);not null;comment:模板编号" json:"temp_key"`           // 模板编号
 	Status    int64                 `gorm:"column:status;type:tinyint;not null;default:1;comment:状态" json:"status"`           // 状态
 	Content   string                `gorm:"column:content;type:varchar(500);not null;comment:短息内容" json:"content"`            // 短息内容
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`   // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`   // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`           // 是否删除
 }
 
 // TableName SmsTemplate's table name

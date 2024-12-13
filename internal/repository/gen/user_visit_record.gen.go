@@ -49,9 +49,9 @@ type userVisitRecord struct {
 	Date      field.String // 日期
 	UID       field.Int64  // 用户uid
 	VisitType field.Int64  // 访问类型
-	CreatedAt field.Int64
-	UpdatedAt field.Int64
-	DeletedAt field.Field
+	CreatedAt field.Int64  // 创建时间
+	UpdatedAt field.Int64  // 修改时间
+	DeletedAt field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

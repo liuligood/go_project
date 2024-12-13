@@ -49,9 +49,9 @@ type StoreCombination struct {
 	OtPrice       decimal.Decimal       `gorm:"column:ot_price;type:decimal(10,2);not null;comment:原价" json:"ot_price"`                    // 原价
 	OnceNum       int64                 `gorm:"column:once_num;type:int;not null;comment:每个订单可购买数量" json:"once_num"`                       // 每个订单可购买数量
 	VirtualRation int64                 `gorm:"column:virtual_ration;type:int;not null;default:100;comment:虚拟成团百分比" json:"virtual_ration"` // 虚拟成团百分比
-	CreatedAt     int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt     int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt     soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt     int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`            // 创建时间
+	UpdatedAt     int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`            // 修改时间
+	DeletedAt     soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                    // 是否删除
 }
 
 // TableName StoreCombination's table name

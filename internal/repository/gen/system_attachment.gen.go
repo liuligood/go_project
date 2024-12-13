@@ -57,9 +57,9 @@ type systemAttachment struct {
 	AttType   field.String // 附件类型
 	Pid       field.Int64  // 分类ID0编辑器,1商品图片,2拼团图片,3砍价图片,4秒杀图片,5文章图片,6组合数据图， 7前台用户
 	ImageType field.Int64  // 图片上传类型 1本地 2七牛云 3OSS 4COS
-	CreatedAt field.Int64
-	UpdatedAt field.Int64
-	DeletedAt field.Field
+	CreatedAt field.Int64  // 创建时间
+	UpdatedAt field.Int64  // 修改时间
+	DeletedAt field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

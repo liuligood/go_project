@@ -18,9 +18,9 @@ type SystemAttachment struct {
 	AttType   string                `gorm:"column:att_type;type:char(30);not null;comment:附件类型" json:"att_type"`                                            // 附件类型
 	Pid       int64                 `gorm:"column:pid;type:int;not null;comment:分类ID0编辑器,1商品图片,2拼团图片,3砍价图片,4秒杀图片,5文章图片,6组合数据图， 7前台用户" json:"pid"`           // 分类ID0编辑器,1商品图片,2拼团图片,3砍价图片,4秒杀图片,5文章图片,6组合数据图， 7前台用户
 	ImageType int64                 `gorm:"column:image_type;type:tinyint unsigned;not null;default:1;comment:图片上传类型 1本地 2七牛云 3OSS 4COS" json:"image_type"` // 图片上传类型 1本地 2七牛云 3OSS 4COS
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                                 // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                                 // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                                         // 是否删除
 }
 
 // TableName SystemAttachment's table name

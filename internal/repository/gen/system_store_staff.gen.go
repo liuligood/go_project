@@ -57,9 +57,9 @@ type systemStoreStaff struct {
 	Phone        field.String // 手机号码
 	VerifyStatus field.Int64  // 核销开关
 	Status       field.Int64  // 状态
-	CreatedAt    field.Int64
-	UpdatedAt    field.Int64
-	DeletedAt    field.Field
+	CreatedAt    field.Int64  // 创建时间
+	UpdatedAt    field.Int64  // 修改时间
+	DeletedAt    field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

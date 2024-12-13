@@ -153,9 +153,9 @@ type storeOrder struct {
 	BeforePayPrice         field.Field  // 改价前支付金额
 	IsAlterPrice           field.Int64  // 是否改价,0-否，1-是
 	OutTradeNo             field.String // 商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
-	CreatedAt              field.Int64
-	UpdatedAt              field.Int64
-	DeletedAt              field.Field
+	CreatedAt              field.Int64  // 创建时间
+	UpdatedAt              field.Int64  // 修改时间
+	DeletedAt              field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

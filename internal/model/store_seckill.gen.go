@@ -45,9 +45,9 @@ type StoreSeckill struct {
 	Quota        int64                 `gorm:"column:quota;type:int;not null;comment:限购总数,随减" json:"quota"`                                               // 限购总数,随减
 	QuotaShow    int64                 `gorm:"column:quota_show;type:int;not null;comment:限购总数显示.不变" json:"quota_show"`                                   // 限购总数显示.不变
 	SpecType     int64                 `gorm:"column:spec_type;type:tinyint(1);not null;comment:规格 0=单 1=多" json:"spec_type"`                             // 规格 0=单 1=多
-	CreatedAt    int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt    int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                            // 创建时间
+	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                            // 修改时间
+	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                                    // 是否删除
 }
 
 // TableName StoreSeckill's table name

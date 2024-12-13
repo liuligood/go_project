@@ -55,9 +55,9 @@ type StoreProduct struct {
 	Activity     string                `gorm:"column:activity;type:varchar(255);not null;comment:活动显示排序0=默认, 1=秒杀，2=砍价，3=拼团" json:"activity"`   // 活动显示排序0=默认, 1=秒杀，2=砍价，3=拼团
 	FlatPattern  string                `gorm:"column:flat_pattern;type:varchar(1000);not null;comment:展示图" json:"flat_pattern"`                 // 展示图
 	IsRecycle    int64                 `gorm:"column:is_recycle;type:tinyint(1);not null;comment:是否回收站" json:"is_recycle"`                      // 是否回收站
-	CreatedAt    int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt    int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                  // 创建时间
+	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                  // 修改时间
+	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                          // 是否删除
 }
 
 // TableName StoreProduct's table name

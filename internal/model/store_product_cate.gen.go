@@ -11,12 +11,12 @@ const TableNameStoreProductCate = "store_product_cate"
 // StoreProductCate 商品分类辅助表
 type StoreProductCate struct {
 	ID        int64                 `gorm:"column:id;type:int;primaryKey;autoIncrement:true" json:"id"`
-	ProductID int64                 `gorm:"column:product_id;type:int;not null;comment:商品id" json:"product_id"` // 商品id
-	CateID    int64                 `gorm:"column:cate_id;type:int;not null;comment:分类id" json:"cate_id"`       // 分类id
-	AddTime   int64                 `gorm:"column:add_time;type:int;not null;comment:添加时间" json:"add_time"`     // 添加时间
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	ProductID int64                 `gorm:"column:product_id;type:int;not null;comment:商品id" json:"product_id"`             // 商品id
+	CateID    int64                 `gorm:"column:cate_id;type:int;not null;comment:分类id" json:"cate_id"`                   // 分类id
+	AddTime   int64                 `gorm:"column:add_time;type:int;not null;comment:添加时间" json:"add_time"`                 // 添加时间
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
 }
 
 // TableName StoreProductCate's table name

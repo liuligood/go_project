@@ -51,9 +51,9 @@ type storeProductAttrResult struct {
 	Result     field.String // 商品属性参数
 	ChangeTime field.Int64  // 上次修改时间
 	Type       field.Int64  // 活动类型 0=商品，1=秒杀，2=砍价，3=拼团
-	CreatedAt  field.Int64
-	UpdatedAt  field.Int64
-	DeletedAt  field.Field
+	CreatedAt  field.Int64  // 创建时间
+	UpdatedAt  field.Int64  // 修改时间
+	DeletedAt  field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

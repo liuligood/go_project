@@ -11,12 +11,12 @@ const TableNameStoreProductCoupon = "store_product_coupon"
 // StoreProductCoupon 商品优惠券表
 type StoreProductCoupon struct {
 	ID            int64                 `gorm:"column:id;type:int;primaryKey;autoIncrement:true" json:"id"`
-	ProductID     int64                 `gorm:"column:product_id;type:int;not null;comment:商品id" json:"product_id"`            // 商品id
-	IssueCouponID int64                 `gorm:"column:issue_coupon_id;type:int;not null;comment:优惠劵id" json:"issue_coupon_id"` // 优惠劵id
-	AddTime       int64                 `gorm:"column:add_time;type:int;not null;comment:添加时间" json:"add_time"`                // 添加时间
-	CreatedAt     int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt     int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt     soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	ProductID     int64                 `gorm:"column:product_id;type:int;not null;comment:商品id" json:"product_id"`             // 商品id
+	IssueCouponID int64                 `gorm:"column:issue_coupon_id;type:int;not null;comment:优惠劵id" json:"issue_coupon_id"`  // 优惠劵id
+	AddTime       int64                 `gorm:"column:add_time;type:int;not null;comment:添加时间" json:"add_time"`                 // 添加时间
+	CreatedAt     int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt     int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt     soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
 }
 
 // TableName StoreProductCoupon's table name

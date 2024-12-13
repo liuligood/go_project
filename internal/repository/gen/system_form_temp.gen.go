@@ -49,9 +49,9 @@ type systemFormTemp struct {
 	Name      field.String // 表单名称
 	Info      field.String // 表单简介
 	Content   field.String // 表单内容
-	CreatedAt field.Int64
-	UpdatedAt field.Int64
-	DeletedAt field.Field
+	CreatedAt field.Int64  // 创建时间
+	UpdatedAt field.Int64  // 修改时间
+	DeletedAt field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

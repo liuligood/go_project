@@ -49,11 +49,11 @@ type systemRole struct {
 	ID        field.Int64  // 身份管理id
 	RoleName  field.String // 身份管理名称
 	Rules     field.String // 身份管理权限(menus_id)
-	Level     field.Int64
-	Status    field.Int64 // 状态
-	CreatedAt field.Int64
-	UpdatedAt field.Int64
-	DeletedAt field.Field
+	Level     field.Int64  // 等级
+	Status    field.Int64  // 状态
+	CreatedAt field.Int64  // 创建时间
+	UpdatedAt field.Int64  // 修改时间
+	DeletedAt field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

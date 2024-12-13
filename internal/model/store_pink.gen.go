@@ -32,9 +32,9 @@ type StorePink struct {
 	IsVirtual  int64                 `gorm:"column:is_virtual;type:tinyint(1);not null;comment:是否虚拟拼团" json:"is_virtual"`                 // 是否虚拟拼团
 	Nickname   string                `gorm:"column:nickname;type:varchar(64);not null;comment:用户昵称" json:"nickname"`                      // 用户昵称
 	Avatar     string                `gorm:"column:avatar;type:varchar(256);not null;comment:用户头像" json:"avatar"`                         // 用户头像
-	CreatedAt  int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt  int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`              // 创建时间
+	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`              // 修改时间
+	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                      // 是否删除
 }
 
 // TableName StorePink's table name

@@ -63,9 +63,9 @@ type shippingTemplatesRegion struct {
 	Type         field.Int64  // 计费方式 1按件数 2按重量 3按体积
 	Uniqid       field.String // 分组唯一值
 	Status       field.Int64  // 是否无效
-	CreatedAt    field.Int64
-	UpdatedAt    field.Int64
-	DeletedAt    field.Field
+	CreatedAt    field.Int64  // 创建时间
+	UpdatedAt    field.Int64  // 修改时间
+	DeletedAt    field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

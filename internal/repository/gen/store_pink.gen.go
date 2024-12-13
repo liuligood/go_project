@@ -79,9 +79,9 @@ type storePink struct {
 	IsVirtual  field.Int64  // 是否虚拟拼团
 	Nickname   field.String // 用户昵称
 	Avatar     field.String // 用户头像
-	CreatedAt  field.Int64
-	UpdatedAt  field.Int64
-	DeletedAt  field.Field
+	CreatedAt  field.Int64  // 创建时间
+	UpdatedAt  field.Int64  // 修改时间
+	DeletedAt  field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

@@ -59,9 +59,9 @@ type storeBargainUser struct {
 	Status          field.Int64 // 状态 1参与中 2 活动结束参与失败 3活动结束参与成功
 	AddTime         field.Int64 // 参与时间
 	IsDel           field.Int64 // 是否取消
-	CreatedAt       field.Int64
-	UpdatedAt       field.Int64
-	DeletedAt       field.Field
+	CreatedAt       field.Int64 // 创建时间
+	UpdatedAt       field.Int64 // 修改时间
+	DeletedAt       field.Field // 是否删除
 
 	fieldMap map[string]field.Expr
 }

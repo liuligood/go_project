@@ -69,9 +69,9 @@ type StoreOrder struct {
 	BeforePayPrice         decimal.Decimal       `gorm:"column:before_pay_price;type:decimal(8,2) unsigned;not null;default:0.00;comment:改价前支付金额" json:"before_pay_price"` // 改价前支付金额
 	IsAlterPrice           int64                 `gorm:"column:is_alter_price;type:tinyint(1);not null;comment:是否改价,0-否，1-是" json:"is_alter_price"`                        // 是否改价,0-否，1-是
 	OutTradeNo             string                `gorm:"column:out_trade_no;type:varchar(32);comment:商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号" json:"out_trade_no"`             // 商户系统内部的订单号,32个字符内、可包含字母, 其他说明见商户订单号
-	CreatedAt              int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt              int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt              soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt              int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                                   // 创建时间
+	UpdatedAt              int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                                   // 修改时间
+	DeletedAt              soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                                           // 是否删除
 }
 
 // TableName StoreOrder's table name

@@ -23,14 +23,14 @@ type UserExtract struct {
 	ExtractPrice decimal.Decimal       `gorm:"column:extract_price;type:decimal(8,2) unsigned;default:0.00;comment:提现金额" json:"extract_price"`                  // 提现金额
 	Mark         string                `gorm:"column:mark;type:varchar(512)" json:"mark"`
 	Balance      decimal.Decimal       `gorm:"column:balance;type:decimal(8,2) unsigned;default:0.00" json:"balance"`
-	FailMsg      string                `gorm:"column:fail_msg;type:varchar(128);comment:无效原因" json:"fail_msg"`        // 无效原因
-	Status       int64                 `gorm:"column:status;type:tinyint;comment:-1 未通过 0 审核中 1 已提现" json:"status"`   // -1 未通过 0 审核中 1 已提现
-	Wechat       string                `gorm:"column:wechat;type:varchar(15);comment:微信号" json:"wechat"`              // 微信号
-	BankName     string                `gorm:"column:bank_name;type:varchar(512);comment:银行名称" json:"bank_name"`      // 银行名称
-	QrcodeURL    string                `gorm:"column:qrcode_url;type:varchar(512);comment:微信收款二维码" json:"qrcode_url"` // 微信收款二维码
-	CreatedAt    int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	FailMsg      string                `gorm:"column:fail_msg;type:varchar(128);comment:无效原因" json:"fail_msg"`                 // 无效原因
+	Status       int64                 `gorm:"column:status;type:tinyint;comment:-1 未通过 0 审核中 1 已提现" json:"status"`            // -1 未通过 0 审核中 1 已提现
+	Wechat       string                `gorm:"column:wechat;type:varchar(15);comment:微信号" json:"wechat"`                       // 微信号
+	BankName     string                `gorm:"column:bank_name;type:varchar(512);comment:银行名称" json:"bank_name"`               // 银行名称
+	QrcodeURL    string                `gorm:"column:qrcode_url;type:varchar(512);comment:微信收款二维码" json:"qrcode_url"`          // 微信收款二维码
+	CreatedAt    int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
 }
 
 // TableName UserExtract's table name

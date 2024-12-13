@@ -15,9 +15,9 @@ type WechatReply struct {
 	Type      string                `gorm:"column:type;type:varchar(32);not null;comment:回复类型" json:"type"`                                 // 回复类型
 	Data      string                `gorm:"column:data;type:text;not null;comment:回复数据" json:"data"`                                        // 回复数据
 	Status    int64                 `gorm:"column:status;type:tinyint unsigned;not null;default:1;comment:回复状态 0=不可用  1 =可用" json:"status"` // 回复状态 0=不可用  1 =可用
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                 // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                 // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                         // 是否删除
 }
 
 // TableName WechatReply's table name

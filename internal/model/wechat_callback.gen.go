@@ -16,9 +16,9 @@ type WechatCallback struct {
 	MsgType      string                `gorm:"column:msg_type;type:varchar(255);comment:消息类型" json:"msg_type"`                          // 消息类型
 	Event        string                `gorm:"column:event;type:varchar(255);comment:事件类型" json:"event"`                                // 事件类型
 	Content      string                `gorm:"column:content;type:text;comment:内容" json:"content"`                                      // 内容
-	CreatedAt    int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt    int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`          // 创建时间
+	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`          // 修改时间
+	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                  // 是否删除
 }
 
 // TableName WechatCallback's table name

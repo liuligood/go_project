@@ -51,9 +51,9 @@ type wechatException struct {
 	Errmsg    field.String // 错误信息
 	Data      field.String // 回复数据
 	Remark    field.String // 备注
-	CreatedAt field.Int64
-	UpdatedAt field.Int64
-	DeletedAt field.Field
+	CreatedAt field.Int64  // 创建时间
+	UpdatedAt field.Int64  // 修改时间
+	DeletedAt field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

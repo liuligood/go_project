@@ -27,9 +27,9 @@ type StoreProductReply struct {
 	Nickname             string                `gorm:"column:nickname;type:varchar(64);not null;comment:用户名称" json:"nickname"`                                  // 用户名称
 	Avatar               string                `gorm:"column:avatar;type:varchar(255);not null;comment:用户头像" json:"avatar"`                                     // 用户头像
 	Sku                  string                `gorm:"column:sku;type:varchar(128);not null;comment:商品规格属性值,多个,号隔开" json:"sku"`                                 // 商品规格属性值,多个,号隔开
-	CreatedAt            int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt            int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt            soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt            int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                          // 创建时间
+	UpdatedAt            int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                          // 修改时间
+	DeletedAt            soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                                  // 是否删除
 }
 
 // TableName StoreProductReply's table name

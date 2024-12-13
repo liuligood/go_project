@@ -49,9 +49,9 @@ type StoreBargain struct {
 	Quota           int64                 `gorm:"column:quota;type:int;not null;comment:限购总数" json:"quota"`                                                        // 限购总数
 	QuotaShow       int64                 `gorm:"column:quota_show;type:int;not null;comment:限量总数显示" json:"quota_show"`                                            // 限量总数显示
 	PeopleNum       int64                 `gorm:"column:people_num;type:int;comment:砍价人数——需要多少人砍价成功" json:"people_num"`                                            // 砍价人数——需要多少人砍价成功
-	CreatedAt       int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt       int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt       soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt       int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                                  // 创建时间
+	UpdatedAt       int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                                  // 修改时间
+	DeletedAt       soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                                          // 是否删除
 }
 
 // TableName StoreBargain's table name

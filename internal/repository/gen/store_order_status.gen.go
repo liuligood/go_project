@@ -47,9 +47,9 @@ type storeOrderStatus struct {
 	Oid           field.Int64  // 订单id
 	ChangeType    field.String // 操作类型
 	ChangeMessage field.String // 操作备注
-	CreatedAt     field.Int64
-	UpdatedAt     field.Int64
-	DeletedAt     field.Field
+	CreatedAt     field.Int64  // 创建时间
+	UpdatedAt     field.Int64  // 修改时间
+	DeletedAt     field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

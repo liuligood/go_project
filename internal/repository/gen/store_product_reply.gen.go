@@ -75,9 +75,9 @@ type storeProductReply struct {
 	Nickname             field.String // 用户名称
 	Avatar               field.String // 用户头像
 	Sku                  field.String // 商品规格属性值,多个,号隔开
-	CreatedAt            field.Int64
-	UpdatedAt            field.Int64
-	DeletedAt            field.Field
+	CreatedAt            field.Int64  // 创建时间
+	UpdatedAt            field.Int64  // 修改时间
+	DeletedAt            field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

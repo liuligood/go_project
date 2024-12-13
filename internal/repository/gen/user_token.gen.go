@@ -52,9 +52,9 @@ type userToken struct {
 	Type        field.Int64  // 类型，1 公众号， 2 小程序, 3 unionid, 5AppIos,6AppAndroid,7ios
 	ExpiresTime field.Time   // 到期时间
 	LoginIP     field.String // 登录ip
-	CreatedAt   field.Int64
-	UpdatedAt   field.Int64
-	DeletedAt   field.Field
+	CreatedAt   field.Int64  // 创建时间
+	UpdatedAt   field.Int64  // 修改时间
+	DeletedAt   field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

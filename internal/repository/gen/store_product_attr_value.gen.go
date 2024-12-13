@@ -81,9 +81,9 @@ type storeProductAttrValue struct {
 	QuotaShow    field.Int64  // 活动限购数量显示
 	AttrValue    field.String // attr_values 创建更新时的属性对应
 	IsDel        field.Int64  // 是否删除,0-否，1-是
-	CreatedAt    field.Int64
-	UpdatedAt    field.Int64
-	DeletedAt    field.Field
+	CreatedAt    field.Int64  // 创建时间
+	UpdatedAt    field.Int64  // 修改时间
+	DeletedAt    field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

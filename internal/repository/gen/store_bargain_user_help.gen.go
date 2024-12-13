@@ -53,9 +53,9 @@ type storeBargainUserHelp struct {
 	BargainUserID field.Int64 // 用户参与砍价表id
 	Price         field.Field // 帮助砍价多少金额
 	AddTime       field.Int64 // 添加时间
-	CreatedAt     field.Int64
-	UpdatedAt     field.Int64
-	DeletedAt     field.Field
+	CreatedAt     field.Int64 // 创建时间
+	UpdatedAt     field.Int64 // 修改时间
+	DeletedAt     field.Field // 是否删除
 
 	fieldMap map[string]field.Expr
 }

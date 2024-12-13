@@ -55,9 +55,9 @@ type userSign struct {
 	Balance   field.Int64  // 剩余
 	Type      field.Int64  // 类型，1积分，2经验
 	CreateDay field.Time   // 签到日期
-	CreatedAt field.Int64
-	UpdatedAt field.Int64
-	DeletedAt field.Field
+	CreatedAt field.Int64  // 创建时间
+	UpdatedAt field.Int64  // 修改时间
+	DeletedAt field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

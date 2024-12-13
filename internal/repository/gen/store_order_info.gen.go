@@ -79,9 +79,9 @@ type storeOrderInfo struct {
 	IsSub        field.Int64  // 是否单独分佣,0-否，1-是
 	VipPrice     field.Field  // 会员价
 	ProductType  field.Int64  // 商品类型:0-普通，1-秒杀，2-砍价，3-拼团，4-视频号
-	CreatedAt    field.Int64
-	UpdatedAt    field.Int64
-	DeletedAt    field.Field
+	CreatedAt    field.Int64  // 创建时间
+	UpdatedAt    field.Int64  // 修改时间
+	DeletedAt    field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

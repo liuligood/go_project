@@ -65,9 +65,9 @@ type express struct {
 	Sort       field.Int64  // 排序
 	IsShow     field.Int64  // 是否显示
 	Status     field.Int64  // 是否可用
-	CreatedAt  field.Int64
-	UpdatedAt  field.Int64
-	DeletedAt  field.Field
+	CreatedAt  field.Int64  // 创建时间
+	UpdatedAt  field.Int64  // 修改时间
+	DeletedAt  field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

@@ -113,9 +113,9 @@ type storeCombination struct {
 	OtPrice       field.Field  // 原价
 	OnceNum       field.Int64  // 每个订单可购买数量
 	VirtualRation field.Int64  // 虚拟成团百分比
-	CreatedAt     field.Int64
-	UpdatedAt     field.Int64
-	DeletedAt     field.Field
+	CreatedAt     field.Int64  // 创建时间
+	UpdatedAt     field.Int64  // 修改时间
+	DeletedAt     field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

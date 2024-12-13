@@ -19,9 +19,9 @@ type StoreBargainUserHelp struct {
 	BargainUserID int64                 `gorm:"column:bargain_user_id;type:int unsigned;comment:用户参与砍价表id" json:"bargain_user_id"`     // 用户参与砍价表id
 	Price         decimal.Decimal       `gorm:"column:price;type:decimal(8,2) unsigned;comment:帮助砍价多少金额" json:"price"`                 // 帮助砍价多少金额
 	AddTime       int64                 `gorm:"column:add_time;type:bigint unsigned;comment:添加时间" json:"add_time"`                     // 添加时间
-	CreatedAt     int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt     int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt     soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt     int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`        // 创建时间
+	UpdatedAt     int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`        // 修改时间
+	DeletedAt     soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                // 是否删除
 }
 
 // TableName StoreBargainUserHelp's table name

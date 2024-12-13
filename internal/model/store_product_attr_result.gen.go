@@ -15,9 +15,9 @@ type StoreProductAttrResult struct {
 	Result     string                `gorm:"column:result;type:longtext;not null;comment:商品属性参数" json:"result"`               // 商品属性参数
 	ChangeTime int64                 `gorm:"column:change_time;type:int unsigned;not null;comment:上次修改时间" json:"change_time"` // 上次修改时间
 	Type       int64                 `gorm:"column:type;type:tinyint(1);comment:活动类型 0=商品，1=秒杀，2=砍价，3=拼团" json:"type"`        // 活动类型 0=商品，1=秒杀，2=砍价，3=拼团
-	CreatedAt  int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt  int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`  // 创建时间
+	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`  // 修改时间
+	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
 }
 
 // TableName StoreProductAttrResult's table name

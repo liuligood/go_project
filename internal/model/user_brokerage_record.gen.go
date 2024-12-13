@@ -26,9 +26,9 @@ type UserBrokerageRecord struct {
 	FrozenTime     int64                 `gorm:"column:frozen_time;type:int;not null;comment:冻结期时间（天）" json:"frozen_time"`                                      // 冻结期时间（天）
 	ThawTime       int64                 `gorm:"column:thaw_time;type:bigint;not null;comment:解冻时间" json:"thaw_time"`                                           // 解冻时间
 	BrokerageLevel int64                 `gorm:"column:brokerage_level;type:int;comment:分销等级" json:"brokerage_level"`                                           // 分销等级
-	CreatedAt      int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt      int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt      soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt      int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                                // 创建时间
+	UpdatedAt      int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                                // 修改时间
+	DeletedAt      soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                                        // 是否删除
 }
 
 // TableName UserBrokerageRecord's table name

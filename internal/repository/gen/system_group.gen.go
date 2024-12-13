@@ -49,9 +49,9 @@ type systemGroup struct {
 	Name      field.String // 数据组名称
 	Info      field.String // 简介
 	FormID    field.Int64  // form 表单 id
-	CreatedAt field.Int64
-	UpdatedAt field.Int64
-	DeletedAt field.Field
+	CreatedAt field.Int64  // 创建时间
+	UpdatedAt field.Int64  // 修改时间
+	DeletedAt field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

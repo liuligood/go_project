@@ -59,9 +59,9 @@ type smsRecord struct {
 	Resultcode field.Int64  // 状态码 100=成功,130=失败,131=空号,132=停机,133=关机,134=无状态
 	RecordID   field.Int64  // 发送记录id
 	Memo       field.String // 短信平台返回信息
-	CreatedAt  field.Int64
-	UpdatedAt  field.Int64
-	DeletedAt  field.Field
+	CreatedAt  field.Int64  // 创建时间
+	UpdatedAt  field.Int64  // 修改时间
+	DeletedAt  field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

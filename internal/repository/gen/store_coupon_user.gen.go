@@ -69,9 +69,9 @@ type storeCouponUser struct {
 	UseTime    field.Int64
 	UseType    field.Int64  // 使用类型 1 全场通用, 2 商品券, 3 品类券
 	PrimaryKey field.String // 所属商品id / 分类id
-	CreatedAt  field.Int64
-	UpdatedAt  field.Int64
-	DeletedAt  field.Field
+	CreatedAt  field.Int64  // 创建时间
+	UpdatedAt  field.Int64  // 修改时间
+	DeletedAt  field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

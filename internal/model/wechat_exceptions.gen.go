@@ -10,14 +10,14 @@ const TableNameWechatException = "wechat_exceptions"
 
 // WechatException 微信异常表
 type WechatException struct {
-	ID        int64                 `gorm:"column:id;type:int;primaryKey;autoIncrement:true;comment:id" json:"id"` // id
-	Errcode   string                `gorm:"column:errcode;type:varchar(64);comment:错误码" json:"errcode"`            // 错误码
-	Errmsg    string                `gorm:"column:errmsg;type:varchar(255);comment:错误信息" json:"errmsg"`            // 错误信息
-	Data      string                `gorm:"column:data;type:text;comment:回复数据" json:"data"`                        // 回复数据
-	Remark    string                `gorm:"column:remark;type:text;comment:备注" json:"remark"`                      // 备注
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	ID        int64                 `gorm:"column:id;type:int;primaryKey;autoIncrement:true;comment:id" json:"id"`          // id
+	Errcode   string                `gorm:"column:errcode;type:varchar(64);comment:错误码" json:"errcode"`                     // 错误码
+	Errmsg    string                `gorm:"column:errmsg;type:varchar(255);comment:错误信息" json:"errmsg"`                     // 错误信息
+	Data      string                `gorm:"column:data;type:text;comment:回复数据" json:"data"`                                 // 回复数据
+	Remark    string                `gorm:"column:remark;type:text;comment:备注" json:"remark"`                               // 备注
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
 }
 
 // TableName WechatException's table name

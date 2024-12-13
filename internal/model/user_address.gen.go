@@ -24,9 +24,9 @@ type UserAddress struct {
 	Latitude  string                `gorm:"column:latitude;type:varchar(16);not null;default:0;comment:纬度" json:"latitude"`           // 纬度
 	IsDefault int64                 `gorm:"column:is_default;type:tinyint unsigned;not null;comment:是否默认" json:"is_default"`          // 是否默认
 	IsDel     int64                 `gorm:"column:is_del;type:tinyint unsigned;not null;comment:是否删除" json:"is_del"`                  // 是否删除
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`           // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`           // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                   // 是否删除
 }
 
 // TableName UserAddress's table name

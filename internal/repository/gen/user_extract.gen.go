@@ -71,9 +71,9 @@ type userExtract struct {
 	Wechat       field.String // 微信号
 	BankName     field.String // 银行名称
 	QrcodeURL    field.String // 微信收款二维码
-	CreatedAt    field.Int64
-	UpdatedAt    field.Int64
-	DeletedAt    field.Field
+	CreatedAt    field.Int64  // 创建时间
+	UpdatedAt    field.Int64  // 修改时间
+	DeletedAt    field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

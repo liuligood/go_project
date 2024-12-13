@@ -20,9 +20,9 @@ type SystemMenu struct {
 	Sort      int64                 `gorm:"column:sort;type:int;not null;default:99999;comment:排序" json:"sort"`                    // 排序
 	IsShow    int64                 `gorm:"column:is_show;type:tinyint(1);not null;default:1;comment:显示状态" json:"is_show"`         // 显示状态
 	IsDelte   int64                 `gorm:"column:is_delte;type:tinyint unsigned;comment:是否删除" json:"is_delte"`                    // 是否删除
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`        // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`        // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                // 是否删除
 }
 
 // TableName SystemMenu's table name

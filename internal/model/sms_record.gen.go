@@ -19,9 +19,9 @@ type SmsRecord struct {
 	Resultcode int64                 `gorm:"column:resultcode;type:int unsigned;comment:状态码 100=成功,130=失败,131=空号,132=停机,133=关机,134=无状态" json:"resultcode"` // 状态码 100=成功,130=失败,131=空号,132=停机,133=关机,134=无状态
 	RecordID   int64                 `gorm:"column:record_id;type:int unsigned;comment:发送记录id" json:"record_id"`                                           // 发送记录id
 	Memo       string                `gorm:"column:memo;type:text;comment:短信平台返回信息" json:"memo"`                                                           // 短信平台返回信息
-	CreatedAt  int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt  int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                               // 创建时间
+	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                               // 修改时间
+	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                                       // 是否删除
 }
 
 // TableName SmsRecord's table name

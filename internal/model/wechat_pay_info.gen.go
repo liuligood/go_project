@@ -42,9 +42,9 @@ type WechatPayInfo struct {
 	TransactionID  string                `gorm:"column:transaction_id;type:varchar(50);comment:微信支付订单号" json:"transaction_id"`                                                                       // 微信支付订单号
 	TimeEnd        string                `gorm:"column:time_end;type:varchar(20);comment:支付完成时间" json:"time_end"`                                                                                    // 支付完成时间
 	TradeStateDesc string                `gorm:"column:trade_state_desc;type:varchar(256);comment:交易状态描述" json:"trade_state_desc"`                                                                   // 交易状态描述
-	CreatedAt      int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt      int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt      soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt      int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                                                                     // 创建时间
+	UpdatedAt      int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                                                                     // 修改时间
+	DeletedAt      soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                                                                             // 是否删除
 }
 
 // TableName WechatPayInfo's table name

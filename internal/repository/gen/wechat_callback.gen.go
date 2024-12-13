@@ -53,9 +53,9 @@ type wechatCallback struct {
 	MsgType      field.String // 消息类型
 	Event        field.String // 事件类型
 	Content      field.String // 内容
-	CreatedAt    field.Int64
-	UpdatedAt    field.Int64
-	DeletedAt    field.Field
+	CreatedAt    field.Int64  // 创建时间
+	UpdatedAt    field.Int64  // 修改时间
+	DeletedAt    field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }

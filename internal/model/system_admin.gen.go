@@ -15,16 +15,15 @@ type SystemAdmin struct {
 	Pwd        string                `gorm:"column:pwd;type:char(32);not null;comment:后台管理员密码" json:"pwd"`                                // 后台管理员密码
 	RealName   string                `gorm:"column:real_name;type:varchar(16);not null;comment:后台管理员姓名" json:"real_name"`                 // 后台管理员姓名
 	Roles      string                `gorm:"column:roles;type:varchar(128);not null;comment:后台管理员权限(menus_id)" json:"roles"`              // 后台管理员权限(menus_id)
-	LastIP     string                `gorm:"column:last_ip;type:varchar(16);comment:后台管理员最后一次登录ip" json:"last_ip"`                        // 后台管理员最后一次登录ip
+	LastIP     string                `gorm:"column:last_ip;type:varchar(16);not null;comment:后台管理员最后一次登录ip" json:"last_ip"`               // 后台管理员最后一次登录ip
 	LoginCount int64                 `gorm:"column:login_count;type:int unsigned;not null;comment:登录次数" json:"login_count"`               // 登录次数
 	Level      int64                 `gorm:"column:level;type:tinyint unsigned;not null;default:1;comment:后台管理员级别" json:"level"`          // 后台管理员级别
 	Status     int64                 `gorm:"column:status;type:tinyint unsigned;not null;default:1;comment:后台管理员状态 1有效0无效" json:"status"` // 后台管理员状态 1有效0无效
-	IsDel      int64                 `gorm:"column:is_del;type:tinyint unsigned;not null" json:"is_del"`
-	Phone      string                `gorm:"column:phone;type:varchar(15);comment:手机号码" json:"phone"`          // 手机号码
-	IsSms      int64                 `gorm:"column:is_sms;type:tinyint unsigned;comment:是否接收短信" json:"is_sms"` // 是否接收短信
-	CreatedAt  int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	Phone      string                `gorm:"column:phone;type:varchar(15);not null;comment:手机号码" json:"phone"`                            // 手机号码
+	IsSms      int64                 `gorm:"column:is_sms;type:tinyint unsigned;not null;comment:是否接收短信" json:"is_sms"`                   // 是否接收短信
+	CreatedAt  int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`              // 创建时间
+	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`              // 修改时间
+	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                      // 是否删除
 }
 
 // TableName SystemAdmin's table name

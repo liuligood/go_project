@@ -49,9 +49,9 @@ type storeProductCoupon struct {
 	ProductID     field.Int64 // 商品id
 	IssueCouponID field.Int64 // 优惠劵id
 	AddTime       field.Int64 // 添加时间
-	CreatedAt     field.Int64
-	UpdatedAt     field.Int64
-	DeletedAt     field.Field
+	CreatedAt     field.Int64 // 创建时间
+	UpdatedAt     field.Int64 // 修改时间
+	DeletedAt     field.Field // 是否删除
 
 	fieldMap map[string]field.Expr
 }

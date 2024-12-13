@@ -21,9 +21,9 @@ type SystemNotification struct {
 	IsSms       int64                 `gorm:"column:is_sms;type:tinyint;not null;comment:发送短信（0：不存在，1：开启，2：关闭）" json:"is_sms"`            // 发送短信（0：不存在，1：开启，2：关闭）
 	SmsID       int64                 `gorm:"column:sms_id;type:int;not null;comment:短信id" json:"sms_id"`                                 // 短信id
 	SendType    int64                 `gorm:"column:send_type;type:tinyint;not null;default:1;comment:发送类型（1：用户，2：管理员）" json:"send_type"` // 发送类型（1：用户，2：管理员）
-	CreatedAt   int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt   int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt   soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt   int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`             // 创建时间
+	UpdatedAt   int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`             // 修改时间
+	DeletedAt   soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                     // 是否删除
 }
 
 // TableName SystemNotification's table name

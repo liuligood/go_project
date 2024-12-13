@@ -21,9 +21,9 @@ type StoreCart struct {
 	SeckillID         int64                 `gorm:"column:seckill_id;type:int unsigned;not null;comment:秒杀商品ID" json:"seckill_id"`                // 秒杀商品ID
 	BargainID         int64                 `gorm:"column:bargain_id;type:int unsigned;not null;comment:砍价id" json:"bargain_id"`                  // 砍价id
 	Status            int64                 `gorm:"column:status;type:tinyint(1);not null;default:1;comment:购物车状态" json:"status"`                 // 购物车状态
-	CreatedAt         int64                 `gorm:"column:created_at;type:bigint" json:"created_at"`
-	UpdatedAt         int64                 `gorm:"column:updated_at;type:bigint" json:"updated_at"`
-	DeletedAt         soft_delete.DeletedAt `gorm:"column:deleted_at;type:bigint" json:"-"`
+	CreatedAt         int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`               // 创建时间
+	UpdatedAt         int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`               // 修改时间
+	DeletedAt         soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                       // 是否删除
 }
 
 // TableName StoreCart's table name
