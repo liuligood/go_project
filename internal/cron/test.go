@@ -4,7 +4,9 @@ import (
 	"context"
 	"crmeb_go/internal/model"
 	"crmeb_go/internal/server"
+	"crmeb_go/utils/izap"
 	"fmt"
+	"go.uber.org/zap"
 	"time"
 )
 
@@ -25,19 +27,21 @@ func NewTest(svcCtx *server.SvcContext) *Test {
 func (l *Test) Exec() {
 	fmt.Println(time.Now())
 	fmt.Println("测试")
-	first, err := l.svcCtx.Gen.User.WithContext(l.ctx).Where(l.svcCtx.Gen.User.UID.Eq(int64(1))).Debug().First()
+	_, err := l.svcCtx.Gen.User.WithContext(l.ctx).Where(l.svcCtx.Gen.User.UID.Eq(int64(1))).First()
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Println("first", first)
+	err = l.svcCtx.Gen.User.WithContext(l.ctx).Create(&model.User{UID: 1, Nickname: "123", Phone: "12345678901"})
+	if err != nil {
+		izap.Log.Error("create user error", zap.Error(err))
+		fmt.Println(err)
+	}
 
 	var user model.User
 	err = l.svcCtx.Repo.UserRepository.QueryOne(l.ctx, "uid = ?", []interface{}{1}, &user)
 	if err != nil {
 		fmt.Println("err", err)
 	}
-
-	fmt.Println("user", user)
 
 }

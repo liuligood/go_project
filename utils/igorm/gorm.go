@@ -2,14 +2,11 @@ package igorm
 
 import (
 	"crmeb_go/config"
+	"crmeb_go/utils/izap"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
-	"log"
-	"os"
-	"time"
 )
 
 type DB struct {
@@ -120,16 +117,14 @@ func (db *DB) Config(prefix string, singular bool) *gorm.Config {
 		general = db.config.Mysql.GeneralDB
 	}
 
+	logger := NewGormZapLogger(izap.Log, general.LogLevel())
+
 	return &gorm.Config{
-		Logger: logger.New(NewWriter(general, log.New(os.Stdout, "\r\n", log.LstdFlags)), logger.Config{
-			SlowThreshold: 200 * time.Millisecond, // 慢 SQL 阈值
-			LogLevel:      general.LogLevel(),     // 日志等级
-			Colorful:      true,                   // 是否彩色打印
-		}),
+		Logger: logger,
 		NamingStrategy: schema.NamingStrategy{
-			TablePrefix:   prefix,
-			SingularTable: singular,
+			TablePrefix:   prefix,   // 表名前缀,通过gorm创建的表名都会已这个作为前缀
+			SingularTable: singular, // 使用单数表名,启用该选项，例如，如果model名为users,则表名为user
 		},
-		DisableForeignKeyConstraintWhenMigrating: true,
+		DisableForeignKeyConstraintWhenMigrating: true, // 数据库迁移时禁止用外健约束，创建更新表时不会创建或者更新外健
 	}
 }

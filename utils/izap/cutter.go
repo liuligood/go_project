@@ -14,7 +14,7 @@ type Cutter struct {
 	layout       string        // 时间格式 2006-01-02 15:04:05
 	formats      []string      // 自定义参数([]string{Director,"2006-01-02", "business"(此参数可不写), level+".log"}
 	director     string        // 日志文件夹
-	retentionDay int           //日志保留天数
+	retentionDay int           // 日志保留天数
 	file         *os.File      // 文件句柄
 	mutex        *sync.RWMutex // 读写锁
 }
