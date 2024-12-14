@@ -108,3 +108,8 @@ aliyun-oss:
   region: yourRegion
   role-arn: yourRoleArn
 
+jwt:
+  access_secret: daZhou
+  access_expire: 86400
+
+picture_url: https://crmebjavasingle.oss-cn-beijing.aliyuncs.com/

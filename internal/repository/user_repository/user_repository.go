@@ -18,7 +18,7 @@ func NewUserRepository(db *gorm.DB, gen *gen.Query) *UserRepository {
 	return &UserRepository{base_repository.NewRepository(db, gen)}
 }
 
-func (r *UserRepository) GetRealName(ctx context.Context, userId uint64) (data model.User, err error) {
+func (r *UserRepository) QueryRealName(ctx context.Context, userId uint64) (data model.User, err error) {
 	ebUser, err := r.Gen.User.WithContext(ctx).Where(r.Gen.User.UID.Eq(int64(userId))).First()
 	if err != nil {
 		return data, err

@@ -21,7 +21,7 @@ func NewGetRealNameService(svc *server.SvcContext) GetRealNameService {
 }
 
 func (s GetRealNameService) GetRealName(params service_data.GetRealNameParams) (data user.GetRealNameData, err error) {
-	userInfoModel, err := s.svc.Repo.UserRepository.GetRealName(params.Ctx, params.UserId)
+	userInfoModel, err := s.svc.Repo.UserRepository.QueryRealName(params.Ctx, params.UserId)
 	if err != nil {
 		izap.Log.Error("EbUserRepository.QueryOne [err]:%v", zap.Error(err))
 

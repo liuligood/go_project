@@ -1,18 +1,19 @@
 package config
 
 type Conf struct {
-	App       App     `json:"app"`        // 应用配置
-	Server    Server  `json:"server"`     // 服务配置
-	Log       Zap     `json:"log"`        // 日志配置
-	System    System  `json:"system"`     // 系统配置
-	Mysql     Mysql   `json:"mysql"`      // mysql
-	Pgsql     Pgsql   `json:"pgsql"`      // pgsql
-	Cors      CORS    `json:"cors"`       // 跨域配置
-	Redis     Redis   `json:"redis"`      // redis
-	RedisList []Redis `json:"redis_list"` // redisList
-	// oss
-	QiniuyunOSS Qiniu     `json:"qiniu-oss"`  // 七牛云
-	AliyunOSS   AliyunOSS `json:"aliyun-oss"` // 啊里云
+	App         App       `json:"app"`         // 应用配置
+	Server      Server    `json:"server"`      // 服务配置
+	Log         Zap       `json:"log"`         // 日志配置
+	System      System    `json:"system"`      // 系统配置
+	Mysql       Mysql     `json:"mysql"`       // mysql
+	Pgsql       Pgsql     `json:"pgsql"`       // pgsql
+	Cors        CORS      `json:"cors"`        // 跨域配置
+	Redis       Redis     `json:"redis"`       // redis
+	RedisList   []Redis   `json:"redis_list"`  // redisList
+	QiniuyunOSS Qiniu     `json:"qiniu-oss"`   // 七牛云
+	AliyunOSS   AliyunOSS `json:"aliyun-oss"`  // 啊里云
+	JWT         JWT       `json:"jwt"`         // token
+	PictureUrl  string    `json:"picture_url"` // 图片地址
 }
 
 type App struct {

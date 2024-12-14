@@ -6,7 +6,14 @@ type ValidateCodeData struct {
 }
 
 type GetLoginPicResp struct {
-	Map map[string]any `json:"map"`
+	BackgroundImage string   `json:"backgroundImage"`
+	LoginLogo       string   `json:"loginLogo"`
+	Logo            string   `json:"logo"`
+	BannerList      []Banner `json:"banner"`
+}
+
+type Banner struct {
+	Pic string `json:"pic"`
 }
 
 type UploadResp struct {

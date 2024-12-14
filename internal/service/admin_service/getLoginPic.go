@@ -6,7 +6,9 @@ import (
 	service_data "crmeb_go/internal/data/service"
 	"crmeb_go/internal/server"
 	"crmeb_go/internal/service/system_config_service"
+	"crmeb_go/internal/service/system_group_data_service"
 	"crmeb_go/utils/izap"
+	"github.com/samber/lo"
 	"go.uber.org/zap"
 )
 
@@ -24,7 +26,6 @@ func NewGetLoginPicService(svc *server.SvcContext) *GetLoginPicService {
 
 func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (data admin.GetLoginPicResp, err error) {
 	var systemConfigParam service_data.GetSystemConfigParams
-	result := make(map[string]any)
 	systemConfigNameList := []string{
 		define.AdminLoginBgPic,
 		define.AdminSitLogoLeftTop,
@@ -44,19 +45,38 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 		}
 
 		if systemConfigInfo.Name == define.AdminLoginBgPic {
-			result["backgroundImage"] = systemConfigInfo.Value
+			data.BackgroundImage = a.svc.Conf.PictureUrl + systemConfigInfo.Value
 		}
 
 		if systemConfigInfo.Name == define.AdminSitLogoLeftTop {
-			result["logo"] = systemConfigInfo.Value
+			data.Logo = a.svc.Conf.PictureUrl + systemConfigInfo.Value
 		}
 
 		if systemConfigInfo.Name == define.AdminSiteLogoLogin {
-			result["loginLogo"] = systemConfigInfo.Value
+			data.LoginLogo = a.svc.Conf.PictureUrl + systemConfigInfo.Value
 		}
 	}
 
-	// todo 轮播图
-	result["banner"] = []string{"1", "2", "3"}
-	return admin.GetLoginPicResp{Map: result}, nil
+	// 轮播图
+	list, err := system_group_data_service.NewGetValueListService(a.svc).
+		GetValueList(service_data.GetGetValueListParams{BaseServiceParams: params.BaseServiceParams, Gid: define.AdminLoginBannerImageList})
+	if err != nil {
+		izap.Log.Error("查询轮播图失败:", zap.Error(err))
+
+		return
+	}
+
+	if valueList, ok := list.Data[define.AdminLoginBannerImageList]; ok {
+		lo.ForEach(valueList, func(item service_data.ValueData, index int) {
+			bannerList := make([]admin.Banner, 0, len(item.Fields))
+			lo.ForEach(item.Fields, func(item service_data.Fields, index int) {
+				var banner admin.Banner
+				banner.Pic = a.svc.Conf.PictureUrl + item.Value
+				bannerList = append(bannerList, banner)
+			})
+			data.BannerList = bannerList
+		})
+	}
+
+	return
 }

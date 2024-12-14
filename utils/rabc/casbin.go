@@ -7,11 +7,9 @@ import (
 	"gorm.io/gorm"
 )
 
-type roleService struct {
-	Enforcer *casbin.Enforcer
-}
+var Enforcer *casbin.Enforcer
 
-func NewEnforcer(db *gorm.DB) RoleService {
+func NewEnforcer(db *gorm.DB) {
 	adapterByDB, err := gormadapter.NewAdapterByDB(db)
 	if err != nil {
 		fmt.Printf("NewAdapterByDB err:【%v】", err)
@@ -36,11 +34,8 @@ func NewEnforcer(db *gorm.DB) RoleService {
 		panic(err)
 	}
 
-	return &roleService{
-		Enforcer: enforcer,
-	}
-}
+	Enforcer = enforcer
 
-func (e *roleService) ()  {
-	
+	Enforcer.AddPolicy("dazhou", "data1", "read")
+
 }

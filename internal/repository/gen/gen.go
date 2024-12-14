@@ -18,6 +18,7 @@ import (
 var (
 	Q                       = new(Query)
 	Article                 *article
+	CasbinRule              *casbinRule
 	Category                *category
 	Express                 *express
 	ShippingTemplate        *shippingTemplate
@@ -87,6 +88,7 @@ var (
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
 	Article = &Q.Article
+	CasbinRule = &Q.CasbinRule
 	Category = &Q.Category
 	Express = &Q.Express
 	ShippingTemplate = &Q.ShippingTemplate
@@ -157,6 +159,7 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
 		db:                      db,
 		Article:                 newArticle(db, opts...),
+		CasbinRule:              newCasbinRule(db, opts...),
 		Category:                newCategory(db, opts...),
 		Express:                 newExpress(db, opts...),
 		ShippingTemplate:        newShippingTemplate(db, opts...),
@@ -228,6 +231,7 @@ type Query struct {
 	db *gorm.DB
 
 	Article                 article
+	CasbinRule              casbinRule
 	Category                category
 	Express                 express
 	ShippingTemplate        shippingTemplate
@@ -300,6 +304,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
 		db:                      db,
 		Article:                 q.Article.clone(db),
+		CasbinRule:              q.CasbinRule.clone(db),
 		Category:                q.Category.clone(db),
 		Express:                 q.Express.clone(db),
 		ShippingTemplate:        q.ShippingTemplate.clone(db),
@@ -379,6 +384,7 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
 		db:                      db,
 		Article:                 q.Article.replaceDB(db),
+		CasbinRule:              q.CasbinRule.replaceDB(db),
 		Category:                q.Category.replaceDB(db),
 		Express:                 q.Express.replaceDB(db),
 		ShippingTemplate:        q.ShippingTemplate.replaceDB(db),
@@ -448,6 +454,7 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 
 type queryCtx struct {
 	Article                 IArticleDo
+	CasbinRule              ICasbinRuleDo
 	Category                ICategoryDo
 	Express                 IExpressDo
 	ShippingTemplate        IShippingTemplateDo
@@ -517,6 +524,7 @@ type queryCtx struct {
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
 		Article:                 q.Article.WithContext(ctx),
+		CasbinRule:              q.CasbinRule.WithContext(ctx),
 		Category:                q.Category.WithContext(ctx),
 		Express:                 q.Express.WithContext(ctx),
 		ShippingTemplate:        q.ShippingTemplate.WithContext(ctx),
