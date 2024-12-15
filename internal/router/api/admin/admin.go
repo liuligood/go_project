@@ -13,6 +13,8 @@ func Register(app *gin.RouterGroup, appCxt *internal.AppContent) {
 	app.GET("login", user_controller.GetRealName(appCxt.Service))
 	app.GET("getLoginPic", admin_controller.GetLoginPic(appCxt.Service))
 	app.POST("upload", admin_controller.UploadFile(appCxt.Service))
+	app.POST("login", admin_controller.Login(appCxt.Service))
+	app.GET("getAdminInfoByToken", admin_controller.LoginUserInfo(appCxt.Service))
 
 	// 授权路由
 	validate.Register(app.Group("/validate"), appCxt)

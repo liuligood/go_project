@@ -23,3 +23,21 @@ func MD5V(str []byte, b ...byte) string {
 	h.Write(str)
 	return hex.EncodeToString(h.Sum(b))
 }
+
+// GetMD5Hash 计算并返回输入字符串的 MD5 哈希值
+func GetMD5Hash(password string) string {
+	hash := md5.New()
+	hash.Write([]byte(password))
+	md5Bytes := hash.Sum(nil)
+
+	return hex.EncodeToString(md5Bytes)
+}
+
+// CheckPasswordHash 校验输入的密码是否与存储的 MD5 哈希值匹配
+func CheckPasswordHash(password, hash string) bool {
+	// 计算输入密码的 MD5 哈希值
+	passwordHash := GetMD5Hash(password)
+
+	// 比较计算出的哈希值与存储的哈希值
+	return passwordHash == hash
+}

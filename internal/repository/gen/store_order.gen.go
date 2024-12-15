@@ -60,7 +60,6 @@ func newStoreOrder(db *gorm.DB, opts ...gen.DOOption) storeOrder {
 	_storeOrder.UseIntegral = field.NewInt64(tableName, "use_integral")
 	_storeOrder.BackIntegral = field.NewInt64(tableName, "back_integral")
 	_storeOrder.Mark = field.NewString(tableName, "mark")
-	_storeOrder.IsDel = field.NewInt64(tableName, "is_del")
 	_storeOrder.Remark = field.NewString(tableName, "remark")
 	_storeOrder.MerID = field.NewInt64(tableName, "mer_id")
 	_storeOrder.IsMerCheck = field.NewInt64(tableName, "is_mer_check")
@@ -130,7 +129,6 @@ type storeOrder struct {
 	UseIntegral            field.Int64  // 使用积分
 	BackIntegral           field.Int64  // 给用户退了多少积分
 	Mark                   field.String // 备注
-	IsDel                  field.Int64  // 是否删除
 	Remark                 field.String // 管理员备注
 	MerID                  field.Int64  // 商户ID
 	IsMerCheck             field.Int64
@@ -205,7 +203,6 @@ func (s *storeOrder) updateTableName(table string) *storeOrder {
 	s.UseIntegral = field.NewInt64(table, "use_integral")
 	s.BackIntegral = field.NewInt64(table, "back_integral")
 	s.Mark = field.NewString(table, "mark")
-	s.IsDel = field.NewInt64(table, "is_del")
 	s.Remark = field.NewString(table, "remark")
 	s.MerID = field.NewInt64(table, "mer_id")
 	s.IsMerCheck = field.NewInt64(table, "is_mer_check")
@@ -257,7 +254,7 @@ func (s *storeOrder) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (s *storeOrder) fillFieldMap() {
-	s.fieldMap = make(map[string]field.Expr, 59)
+	s.fieldMap = make(map[string]field.Expr, 58)
 	s.fieldMap["id"] = s.ID
 	s.fieldMap["order_id"] = s.OrderID
 	s.fieldMap["uid"] = s.UID
@@ -291,7 +288,6 @@ func (s *storeOrder) fillFieldMap() {
 	s.fieldMap["use_integral"] = s.UseIntegral
 	s.fieldMap["back_integral"] = s.BackIntegral
 	s.fieldMap["mark"] = s.Mark
-	s.fieldMap["is_del"] = s.IsDel
 	s.fieldMap["remark"] = s.Remark
 	s.fieldMap["mer_id"] = s.MerID
 	s.fieldMap["is_mer_check"] = s.IsMerCheck

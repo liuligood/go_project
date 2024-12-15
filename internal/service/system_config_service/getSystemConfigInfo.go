@@ -29,7 +29,7 @@ func (g *GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.Get
 	if !g.svc.Conf.System.AsyncConfig {
 		systemConfig, err := g.svc.Repo.SystemConfigRepository.QueryByName(params.Ctx, params.Name)
 		if err != nil {
-			izap.Log.Error("EbSystemConfigRepository.QueryOne [err]:%v", zap.Error(err))
+			izap.Log.Error("EbSystemConfigRepository.QueryOne [http_err]:%v", zap.Error(err))
 
 			return data, err
 		}
@@ -40,7 +40,7 @@ func (g *GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.Get
 	// 检测redis是否为空
 	exists, err := g.svc.RedisClient.Exists(params.Ctx, define.RedisConfigListKey).Result()
 	if err != nil && !errors.Is(err, redis.Nil) {
-		izap.Log.Error("g.svc.RedisClient.HMGet [err]:%v", zap.Error(err))
+		izap.Log.Error("g.svc.RedisClient.HMGet [http_err]:%v", zap.Error(err))
 
 		return data, err
 	}
@@ -48,7 +48,7 @@ func (g *GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.Get
 	if exists != 1 {
 		systemConfigs, err := g.svc.Repo.SystemConfigRepository.All(params.Ctx)
 		if err != nil {
-			izap.Log.Error("EbSystemConfigRepository.QueryAll [err]:%v", zap.Error(err))
+			izap.Log.Error("EbSystemConfigRepository.QueryAll [http_err]:%v", zap.Error(err))
 
 			return data, err
 		}
@@ -56,14 +56,14 @@ func (g *GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.Get
 		lo.ForEach(systemConfigs, func(item *model.SystemConfig, index int) {
 			err := g.svc.RedisClient.HMSet(params.Ctx, define.RedisConfigListKey, item.Name, item.Value).Err()
 			if err != nil {
-				izap.Log.Error("RedisClient.HMSet [err]:%v", zap.Error(err))
+				izap.Log.Error("RedisClient.HMSet [http_err]:%v", zap.Error(err))
 			}
 		})
 	}
 
 	value, err := g.svc.RedisClient.HMGet(params.Ctx, define.RedisConfigListKey, params.Name).Result()
 	if err != nil {
-		izap.Log.Error("EbSystemConfigRepository.QueryAll [err]:%v", zap.Error(err))
+		izap.Log.Error("EbSystemConfigRepository.QueryAll [http_err]:%v", zap.Error(err))
 
 		return data, err
 	}

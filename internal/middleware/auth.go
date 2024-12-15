@@ -3,31 +3,48 @@ package middleware
 import (
 	"crmeb_go/define"
 	"crmeb_go/internal/common/session_context"
+	"crmeb_go/internal/data/common/session"
+	"crmeb_go/internal/data/http_err"
 	"crmeb_go/internal/server"
+	"crmeb_go/utils/ihttp"
+	"crmeb_go/utils/ijwt"
+	"errors"
 	"github.com/gin-gonic/gin"
+	"net/http"
+	"strings"
 )
 
 func ApiAuthVisitorMiddleWare(svc *server.SvcContext) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// 参数校验
-		//var param validation.AuthMiddlewareParams
-		//var err error
-		//if err = c.ShouldBindHeader(&param); err != nil {
-		//	c.JSON(http.StatusOK, ihttp.Error(err))
-		//	c.Abort()
-		//	return
-		//}
-		//// token校验
-		//thirdUserId, err := svc.Tool.TokenTool.GetTokenUserId(param.Token)
-		//if err != nil {
-		//	c.JSON(http.StatusOK, ihttp.Error(err, http_code_data.StatusUnSilentAuthorized))
-		//	c.Abort()
-		//	return
-		//}
+		// 定义不需要认证的路径
+		whitelist := []string{"/api/admin/validate/code", "/api/admin/getLoginPic", "/api/admin/login"}
+
+		// 检查请求路径是否在白名单中
+		for _, path := range whitelist {
+			if strings.HasPrefix(c.Request.URL.Path, path) {
+				c.Next()
+				return
+			}
+		}
+
+		token := c.GetHeader(define.AdminToken)
+		if token == "" {
+			c.JSON(http.StatusOK, ihttp.Error(errors.New("无权限"), http_err.StatusUnSilentAuthorized))
+			c.Abort()
+			return
+		}
+
 		// 将 Body 内容写回，以便后续的绑定操作可以读取
+		parseToken, err := ijwt.ParseToken(token, svc.Conf.JWT.AccessSecret)
+		if err != nil {
+			c.JSON(http.StatusOK, ihttp.Error(errors.New("无权限"), http_err.StatusUnSilentAuthorized))
+			c.Abort()
+			return
+		}
 
 		// 存放登录信息到会话上下文
 		sessionContext := session_context.GetSessionContext(c)
+		sessionContext.LoginUserInfo = &session.LoginUserInfo{UserId: parseToken.UserId}
 		c.Set(define.SystemSessionContext, sessionContext)
 
 		c.Next()

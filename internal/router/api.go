@@ -16,6 +16,5 @@ func Register(app *gin.Engine, appCxt *internal.AppContent) {
 		middleware.RecoveryWithZap(izap.Log, true),
 	)
 
-	// api接口：鉴权中间件
 	api.ApiRegister(app.Group("/api"), appCxt)
 }

@@ -66,3 +66,51 @@ func UploadFile(svc *service.Container) gin.HandlerFunc {
 		c.JSON(http.StatusOK, ihttp.Data(res))
 	}
 }
+
+func Login(svc *service.Container) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var param validation.LoginParam
+		if err := c.ShouldBindJSON(&param); err != nil {
+			c.JSON(http.StatusOK, ihttp.Error(err))
+		}
+
+		params := service_data.LoginParams{
+			Account: param.Account,
+			Code:    param.Code,
+			Key:     param.Key,
+			Pwd:     param.Pwd,
+		}
+		params.SetSessionContext(c)
+
+		res, err := svc.AdminService.Login(params)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, ihttp.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusOK, ihttp.Data(res))
+	}
+}
+
+func LoginUserInfo(svc *service.Container) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var param validation.LoginUserInfoParam
+		if err := c.ShouldBindQuery(&param); err != nil {
+			c.JSON(http.StatusOK, ihttp.Error(err))
+		}
+
+		params := service_data.LoginUserInfoParams{
+			Token: param.Token,
+			Temp:  param.Temp,
+		}
+		params.BaseServiceParams.SetSessionContext(c)
+
+		res, err := svc.AdminService.LoginUserInfo(params)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, ihttp.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusOK, ihttp.Data(res))
+	}
+}

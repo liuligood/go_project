@@ -23,7 +23,7 @@ func NewGetValueListService(svc *server.SvcContext) *GetValueListService {
 func (g *GetValueListService) GetValueList(params service_data.GetGetValueListParams) (data service_data.GetGetValueListResult, err error) {
 	systemGroupDataList, err := g.svc.Repo.SystemGroupDataRepository.QueryValueByGid(params.BaseServiceParams.Ctx, params.Gid)
 	if err != nil {
-		izap.Log.Error("SystemGroupDataRepository.QueryValueByGid [err]:%v", zap.Error(err))
+		izap.Log.Error("SystemGroupDataRepository.QueryValueByGid [http_err]:%v", zap.Error(err))
 
 		return
 	}
@@ -37,7 +37,7 @@ func (g *GetValueListService) GetValueList(params service_data.GetGetValueListPa
 		var valueData service_data.ValueData
 		err = json.Unmarshal([]byte(v.Value), &valueData)
 		if err != nil {
-			izap.Log.Error("json.Unmarshal [err]:%v", zap.Error(err))
+			izap.Log.Error("json.Unmarshal [http_err]:%v", zap.Error(err))
 
 			return
 		}

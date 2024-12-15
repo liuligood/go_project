@@ -32,30 +32,30 @@ func PathExists(path string) (bool, error) {
 //@function: CreateDir
 //@description: 批量创建文件夹
 //@param: dirs ...string
-//@return: err error
+//@return: http_err error
 
-//func CreateDir(dirs ...string) (err error) {
+//func CreateDir(dirs ...string) (http_err error) {
 //	for _, v := range dirs {
-//		exist, err := PathExists(v)
-//		if err != nil {
-//			return err
+//		exist, http_err := PathExists(v)
+//		if http_err != nil {
+//			return http_err
 //		}
 //		if !exist {
 //			service.SvcContext("create directory" + v)
-//			if err := os.MkdirAll(v, os.ModePerm); err != nil {
-//				global.GVA_LOG.Error("create directory"+v, zap.Any(" error:", err))
-//				return err
+//			if http_err := os.MkdirAll(v, os.ModePerm); http_err != nil {
+//				global.GVA_LOG.Error("create directory"+v, zap.Any(" error:", http_err))
+//				return http_err
 //			}
 //		}
 //	}
-//	return err
+//	return http_err
 //}
 
 //@author: [songzhibin97](https://github.com/songzhibin97)
 //@function: FileMove
 //@description: 文件移动供外部调用
 //@param: src string, dst string(src: 源位置,绝对路径or相对路径, dst: 目标位置,绝对路径or相对路径,必须为文件夹)
-//@return: err error
+//@return: http_err error
 
 func FileMove(src string, dst string) (err error) {
 	if dst == "" {

@@ -18,7 +18,6 @@ type StoreSeckillManger struct {
 	SilderImgs string                `gorm:"column:silder_imgs;type:text;comment:轮播图" json:"silder_imgs"`                    // 轮播图
 	Sort       int64                 `gorm:"column:sort;type:int;comment:排序" json:"sort"`                                    // 排序
 	Status     int64                 `gorm:"column:status;type:int;comment:状态 0=关闭 1=开启" json:"status"`                      // 状态 0=关闭 1=开启
-	IsDel      int64                 `gorm:"column:is_del;type:int;not null;comment:删除标记 0=为删除 1=删除" json:"is_del"`          // 删除标记 0=为删除 1=删除
 	CreatedAt  int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
 	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
 	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除

@@ -17,3 +17,8 @@ type SvcContext struct {
 	RedisClientList map[string]redis.UniversalClient
 	//MQClient *rocketmq.Client
 }
+
+type LoginUserInfo struct {
+	UserId          int64    `json:"user_id,omitempty"` // 用户id
+	PermissionsList []string `json:"permissionsList"`   // 权限标识
+}

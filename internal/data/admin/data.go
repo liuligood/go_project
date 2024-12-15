@@ -1,6 +1,6 @@
 package admin
 
-type ValidateCodeData struct {
+type ValidateCodeResp struct {
 	Key  string `json:"key"`
 	Code string `json:"code"`
 }
@@ -18,4 +18,30 @@ type Banner struct {
 
 type UploadResp struct {
 	Url string `json:"url"`
+}
+
+type LoginResp struct {
+	Id       int64  `json:"id"`
+	Account  string `json:"account"`  // 账号
+	RealName string `json:"realName"` // 管理员名称
+	Token    string `json:"token"`    // token
+	IsSms    bool   `json:"isSms"`    // 是否接收短信
+}
+
+type LoginUserInfoResp struct {
+	ID              int64    `json:"id"`       // id
+	Account         string   `json:"account"`  // 账号
+	RealName        string   `json:"realName"` // 管理员名称
+	Roles           string   `json:"roles"`    // 权限(menus_id)
+	RoleNames       string   `json:"roleNames"`
+	LastIP          string   `json:"lastIp"` // 最后登录一次的id
+	LastTime        string   `json:"lastTime"`
+	AddTime         string   `json:"addTime"`    // 创建时间
+	LoginCount      int64    `json:"loginCount"` // 登录次数
+	Level           int64    `json:"level"`      // 管理员级别
+	Status          bool     `json:"status"`     // 是否有效
+	Phone           string   `json:"phone"`
+	IsSms           bool     `json:"isSms"`
+	PermissionsList []string `json:"permissionsList"` // 权限标识
+	Token           string   `json:"token"`
 }

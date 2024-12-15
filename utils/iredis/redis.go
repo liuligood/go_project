@@ -26,7 +26,7 @@ func initRedisClient(redisCfg config.Redis) (redis.UniversalClient, error) {
 	}
 	pong, err := client.Ping(context.Background()).Result()
 	if err != nil {
-		izap.Log.Error("redis connect ping failed, err:", zap.String("name", redisCfg.Name), zap.Error(err))
+		izap.Log.Error("redis connect ping failed, http_err:", zap.String("name", redisCfg.Name), zap.Error(err))
 
 		return nil, err
 	}

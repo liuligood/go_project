@@ -8,7 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// 静默授权api
 func ApiRegister(app *gin.RouterGroup, appCxt *internal.AppContent) {
 
 	// 中间件：鉴权

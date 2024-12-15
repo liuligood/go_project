@@ -27,3 +27,7 @@ func (r *UserRepository) QueryRealName(ctx context.Context, userId uint64) (data
 	data = *ebUser
 	return data, err
 }
+
+func (r *UserRepository) QueryUserByAccount(ctx context.Context, account string) (data *model.User, err error) {
+	return r.Gen.User.WithContext(ctx).Where(r.Gen.User.Account.Eq(account)).First()
+}

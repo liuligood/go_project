@@ -6,6 +6,7 @@ import (
 	"crmeb_go/internal/service/article_service"
 	"crmeb_go/internal/service/system_config_service"
 	"crmeb_go/internal/service/system_group_data_service"
+	"crmeb_go/internal/service/system_menu_service"
 	"crmeb_go/internal/service/user_service"
 )
 
@@ -15,6 +16,7 @@ type Container struct {
 	AdminService           admin_service.AdminServiceImpl
 	SystemGroupDataService system_group_data_service.SystemGroupDataServiceImpl // 组合数据详情表 模型
 	SystemConfigService    system_config_service.SystemConfigServiceImpl        // 配置表 模型
+	SystemMenuService      system_menu_service.SystemMenuServiceImpl
 }
 
 func Register(svc *server.SvcContext) *Container {
@@ -24,5 +26,6 @@ func Register(svc *server.SvcContext) *Container {
 		AdminService:           admin_service.NewAdminService(svc),
 		SystemGroupDataService: system_group_data_service.NewSystemGroupDataService(svc), // 组合数据详情表 模型
 		SystemConfigService:    system_config_service.NewSystemConfigService(svc),        // 配置表 模型
+		SystemMenuService:      system_menu_service.NewSystemMenuService(svc),
 	}
 }

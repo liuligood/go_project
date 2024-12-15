@@ -9,10 +9,10 @@ import (
 
 // 会话上下文
 type SessionContext struct {
-	GinCtx *gin.Context
-	Ctx    context.Context
-	Svc    *session.SvcContext
-	//LoginUserInfo *session_data.LoginUserInfo
+	GinCtx        *gin.Context
+	Ctx           context.Context
+	Svc           *session.SvcContext
+	LoginUserInfo *session.LoginUserInfo
 	//EnjoyMeta     *enjoy_meta_context.EnjoyMeta
 }
 
