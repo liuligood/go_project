@@ -1,11 +1,6 @@
-package service_data
+package response
 
 import "time"
-
-type GetSystemConfigParams struct {
-	BaseServiceParams
-	Name string `json:"name"`
-}
 
 type GetSystemConfigResult struct {
 	ID         uint64    `json:"id"`          // 配置id

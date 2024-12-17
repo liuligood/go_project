@@ -11,16 +11,13 @@ import (
 type SessionContext struct {
 	GinCtx        *gin.Context
 	Ctx           context.Context
-	Svc           *session.SvcContext
 	LoginUserInfo *session.LoginUserInfo
-	//EnjoyMeta     *enjoy_meta_context.EnjoyMeta
 }
 
-func New(ginCtx *gin.Context, svc *session.SvcContext) *SessionContext {
+func New(ginCtx *gin.Context) *SessionContext {
 	return &SessionContext{
 		GinCtx: ginCtx,
 		Ctx:    toContext(ginCtx),
-		Svc:    svc,
 	}
 }
 

@@ -2,8 +2,8 @@ package admin_service
 
 import (
 	"crmeb_go/define"
-	"crmeb_go/internal/data/admin"
-	service_data "crmeb_go/internal/data/service"
+	service_data "crmeb_go/internal/data/request"
+	"crmeb_go/internal/data/response"
 	"crmeb_go/internal/server"
 	"crmeb_go/internal/service/system_menu_service"
 	"crmeb_go/utils/izap"
@@ -14,7 +14,7 @@ import (
 )
 
 type LoginUserInfoServiceImpl interface {
-	Login(params service_data.LoginParams) (resp admin.LoginResp, err error)
+	Login(params service_data.LoginParams) (resp response.LoginResp, err error)
 }
 
 type LoginUserInfoService struct {
@@ -25,7 +25,7 @@ func NewLoginUserInfoService(svc *server.SvcContext) *LoginUserInfoService {
 	return &LoginUserInfoService{svc: svc}
 }
 
-func (l *LoginUserInfoService) LoginUserInfo(params service_data.LoginUserInfoParams) (resp admin.LoginUserInfoResp, err error) {
+func (l *LoginUserInfoService) LoginUserInfo(params service_data.LoginUserInfoParams) (resp response.LoginUserInfoResp, err error) {
 	systemAdmin, err := l.svc.Repo.SystemAdminRepository.QueryAdminById(params.BaseServiceParams.Ctx, params.BaseServiceParams.LoginUserInfo.UserId)
 	if err != nil {
 		izap.Log.Error("SystemAdminRepository.QueryAdminById", zap.Int64("userId", params.BaseServiceParams.LoginUserInfo.UserId), zap.Error(err))
@@ -46,12 +46,12 @@ func (l *LoginUserInfoService) LoginUserInfo(params service_data.LoginUserInfoPa
 			return resp, err
 		}
 
-		permList = lo.Map(permissionList, func(item admin.Permission, index int) string {
+		permList = lo.Map(permissionList, func(item response.Permission, index int) string {
 			return item.Path
 		})
 	}
 
-	resp = admin.LoginUserInfoResp{
+	resp = response.LoginUserInfoResp{
 		ID:              systemAdmin.ID,
 		Account:         systemAdmin.Account,
 		RealName:        systemAdmin.RealName,

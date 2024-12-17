@@ -15,7 +15,6 @@ type SvcContext struct {
 	Conf            config.Conf
 	Gorm            *gorm.DB
 	RedisClientList map[string]redis.UniversalClient
-	//MQClient *rocketmq.Client
 }
 
 type LoginUserInfo struct {

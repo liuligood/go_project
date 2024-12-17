@@ -1,9 +1,4 @@
-package service_data
-
-type GetGetValueListParams struct {
-	BaseServiceParams BaseServiceParams
-	Gid               int64 `json:"gid"`
-}
+package response
 
 type GetGetValueListResult struct {
 	Data map[int64][]ValueData `json:"data"`

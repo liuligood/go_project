@@ -11,6 +11,9 @@ func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		method := c.Request.Method
 		origin := c.Request.Header.Get("Origin")
+		//接收客户端发送的origin （重要！）
+		c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
+
 		c.Header("Access-Control-Allow-Origin", origin)
 		c.Header("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token,X-Token,X-User-Id")
 		c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS,DELETE,PUT")
@@ -19,8 +22,13 @@ func Cors() gin.HandlerFunc {
 
 		// 放行所有OPTIONS方法
 		if method == "OPTIONS" {
+			c.Header("Access-Control-Allow-Methods", c.GetHeader("Access-Control-Request-Method"))
+			c.Header("Access-Control-Allow-Headers", c.GetHeader("Access-Control-Request-Headers"))
+			c.Header("Access-Control-Max-Age", "7200")
 			c.AbortWithStatus(http.StatusNoContent)
+			return
 		}
+
 		// 处理请求
 		c.Next()
 	}

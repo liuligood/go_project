@@ -17,9 +17,9 @@ func NewSystemGroupDataRepository(db *gorm.DB, gen *gen.Query) *SystemGroupDataR
 	return &SystemGroupDataRepository{base_repository.NewRepository(db, gen)}
 }
 
-func (s *SystemGroupDataRepository) QueryValueByGid(ctx context.Context, gid int64) (data []*model.SystemGroupDatum, err error) {
-	return s.Gen.WithContext(ctx).SystemGroupDatum.Where(s.Gen.SystemGroupDatum.Gid.Eq(gid),
-		s.Gen.SystemGroupDatum.Status.Eq(define.SystemGroupDataOpenStatus)).
-		Order(s.Gen.SystemGroupDatum.Sort.Asc(), s.Gen.SystemGroupDatum.ID.Asc()).Debug().
+func (s *SystemGroupDataRepository) QueryValueByGid(ctx context.Context, gid int64) (data []*model.SystemGroupData, err error) {
+	return s.Gen.WithContext(ctx).SystemGroupData.Where(s.Gen.SystemGroupData.Gid.Eq(gid),
+		s.Gen.SystemGroupData.Status.Eq(define.SystemGroupDataOpenStatus)).
+		Order(s.Gen.SystemGroupData.Sort.Asc(), s.Gen.SystemGroupData.ID.Asc()).Debug().
 		Find()
 }

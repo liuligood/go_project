@@ -1,4 +1,4 @@
-package admin
+package response
 
 type ValidateCodeResp struct {
 	Key  string `json:"key"`

@@ -6,6 +6,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gen"
 	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 	"strings"
 )
 
@@ -49,6 +50,26 @@ func main() {
 		FieldWithTypeTag: true, // generate with gorm column type tag
 	})
 
+	// 处理 model名
+	g.WithModelNameStrategy(func(tableName string) (targetTableName string) {
+		s := tableName
+		if strings.HasPrefix(tableName, "eb_") {
+			s = strings.TrimPrefix(tableName, "eb_")
+		}
+		ns := schema.NamingStrategy{
+			SingularTable: true,
+		}
+		return ns.SchemaName(s)
+	})
+
+	// 处理文件名
+	g.WithFileNameStrategy(func(tableName string) (targetTableName string) {
+		if strings.HasPrefix(tableName, "eb_") {
+			return strings.TrimPrefix(tableName, "eb_")
+		}
+		return tableName
+	})
+
 	// 通常复用项目中已有的SQL连接配置db(*gorm.DB)
 	// 非必需，但如果需要复用连接时的gorm.Config或需要连接数据库同步表信息则必须设置
 	g.UseDB(connectDB(MySQLDSN))
@@ -73,6 +94,7 @@ func main() {
 		}
 		return columnName
 	})
+
 	softDeleteField := gen.FieldType("deleted_at", "soft_delete.DeletedAt")
 	// 模型自定义选项组
 	fieldOpts := []gen.ModelOpt{jsonField, softDeleteField}

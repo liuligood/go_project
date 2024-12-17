@@ -1,8 +1,8 @@
 package admin_service
 
 import (
-	"crmeb_go/internal/data/admin"
-	service_data "crmeb_go/internal/data/service"
+	service_data "crmeb_go/internal/data/request"
+	"crmeb_go/internal/data/response"
 	"crmeb_go/internal/server"
 	"crmeb_go/utils/ijwt"
 	"crmeb_go/utils/imd5"
@@ -11,7 +11,7 @@ import (
 )
 
 type LoginServiceImpl interface {
-	Login(params service_data.LoginParams) (resp admin.LoginResp, err error)
+	Login(params service_data.LoginParams) (resp response.LoginResp, err error)
 }
 
 type LoginService struct {
@@ -22,7 +22,7 @@ func NewLoginService(svc *server.SvcContext) *LoginService {
 	return &LoginService{svc: svc}
 }
 
-func (l *LoginService) Login(params service_data.LoginParams) (resp admin.LoginResp, err error) {
+func (l *LoginService) Login(params service_data.LoginParams) (resp response.LoginResp, err error) {
 	// 校验验证码
 	verify := l.svc.CaptchaClient.Verify(params.Key, params.Code)
 	if !verify {
@@ -49,5 +49,5 @@ func (l *LoginService) Login(params service_data.LoginParams) (resp admin.LoginR
 		return resp, err
 	}
 
-	return admin.LoginResp{Id: systemAdmin.ID, Account: systemAdmin.Account, Token: token, RealName: systemAdmin.RealName, IsSms: false}, nil
+	return response.LoginResp{Id: systemAdmin.ID, Account: systemAdmin.Account, Token: token, RealName: systemAdmin.RealName, IsSms: false}, nil
 }

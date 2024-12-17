@@ -10,7 +10,5 @@ type BaseServiceParams struct {
 }
 
 func (s *BaseServiceParams) SetSessionContext(c *gin.Context) {
-	sessionContext := session_context.GetSessionContext(c)
-	//sessionContext.EnjoyMeta = enjoy_meta_context.NewEnjoyMetaContext(sessionContext.Svc, sessionContext.Ctx)
-	s.SessionContext = sessionContext
+	s.SessionContext = session_context.GetSessionContext(c)
 }

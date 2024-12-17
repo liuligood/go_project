@@ -2,8 +2,8 @@ package admin_service
 
 import (
 	"crmeb_go/define"
-	"crmeb_go/internal/data/admin"
-	service_data "crmeb_go/internal/data/service"
+	service_data "crmeb_go/internal/data/request"
+	"crmeb_go/internal/data/response"
 	"crmeb_go/internal/server"
 	"crmeb_go/internal/service/system_config_service"
 	"crmeb_go/internal/service/system_group_data_service"
@@ -13,7 +13,7 @@ import (
 )
 
 type GetLoginPicImpl interface {
-	GetLoginPic(params service_data.GetLoginPicParams) (data admin.GetLoginPicResp, err error)
+	GetLoginPic(params service_data.GetLoginPicParams) (data response.GetLoginPicResp, err error)
 }
 
 type GetLoginPicService struct {
@@ -24,7 +24,7 @@ func NewGetLoginPicService(svc *server.SvcContext) *GetLoginPicService {
 	return &GetLoginPicService{svc: svc}
 }
 
-func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (data admin.GetLoginPicResp, err error) {
+func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (data response.GetLoginPicResp, err error) {
 	var systemConfigParam service_data.GetSystemConfigParams
 	systemConfigNameList := []string{
 		define.AdminLoginBgPic,
@@ -67,10 +67,10 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 	}
 
 	if valueList, ok := list.Data[define.AdminLoginBannerImageList]; ok {
-		lo.ForEach(valueList, func(item service_data.ValueData, index int) {
-			bannerList := make([]admin.Banner, 0, len(item.Fields))
-			lo.ForEach(item.Fields, func(item service_data.Fields, index int) {
-				var banner admin.Banner
+		lo.ForEach(valueList, func(item response.ValueData, index int) {
+			bannerList := make([]response.Banner, 0, len(item.Fields))
+			lo.ForEach(item.Fields, func(item response.Fields, index int) {
+				var banner response.Banner
 				banner.Pic = a.svc.Conf.PictureUrl + item.Value
 				bannerList = append(bannerList, banner)
 			})

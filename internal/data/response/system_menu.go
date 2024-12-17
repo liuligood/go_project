@@ -1,4 +1,4 @@
-package admin
+package response
 
 type Permission struct {
 	Id   int64  `json:"id"`
