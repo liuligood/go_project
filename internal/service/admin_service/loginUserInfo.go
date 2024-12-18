@@ -46,8 +46,11 @@ func (l *LoginUserInfoService) LoginUserInfo(params service_data.LoginUserInfoPa
 			return resp, err
 		}
 
-		permList = lo.Map(permissionList, func(item response.Permission, index int) string {
-			return item.Path
+		permList = lo.FilterMap(permissionList, func(item response.Permission, index int) (string, bool) {
+			if item.Path != "" && item.Path != "0" {
+				return item.Path, true
+			}
+			return "", false
 		})
 	}
 
@@ -65,5 +68,6 @@ func (l *LoginUserInfoService) LoginUserInfo(params service_data.LoginUserInfoPa
 		LastIP:          systemAdmin.LastIP,
 		PermissionsList: permList,
 	}
+
 	return
 }

@@ -42,7 +42,7 @@ func ErrMsg(message string, status ...int) *RespData {
 
 // Error 错误类型响应
 func Error(err error, status ...int) Response {
-	code := http.StatusOK
+	code := http.StatusInternalServerError
 	statusCode := http.StatusBadRequest
 	message := err.Error()
 	var data interface{}

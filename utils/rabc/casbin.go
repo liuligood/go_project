@@ -7,9 +7,9 @@ import (
 	"gorm.io/gorm"
 )
 
-var Enforcer *casbin.Enforcer
+//var Enforcer *casbin.Enforcer
 
-func NewEnforcer(db *gorm.DB) {
+func NewEnforcer(db *gorm.DB) *casbin.Enforcer {
 	adapterByDB, err := gormadapter.NewAdapterByDB(db)
 	if err != nil {
 		fmt.Printf("NewAdapterByDB http_err:【%v】", err)
@@ -34,8 +34,5 @@ func NewEnforcer(db *gorm.DB) {
 		panic(err)
 	}
 
-	Enforcer = enforcer
-
-	Enforcer.AddPolicy("dazhou", "data1", "read")
-
+	return enforcer
 }

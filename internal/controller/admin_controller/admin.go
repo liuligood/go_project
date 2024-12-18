@@ -84,7 +84,8 @@ func Login(svc *service.Container) gin.HandlerFunc {
 
 		res, err := svc.AdminService.Login(params)
 		if err != nil {
-			c.JSON(http.StatusBadRequest, ihttp.Error(err))
+			c.JSON(http.StatusOK, ihttp.Error(err))
+
 			return
 		}
 

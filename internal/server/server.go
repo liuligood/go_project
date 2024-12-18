@@ -10,6 +10,8 @@ import (
 	"crmeb_go/utils/igorm"
 	oss "crmeb_go/utils/ioss"
 	iredis "crmeb_go/utils/iredis"
+	"crmeb_go/utils/rabc"
+	"github.com/casbin/casbin/v2"
 	"github.com/go-redsync/redsync/v4"
 	"github.com/go-redsync/redsync/v4/redis/goredis/v9"
 	"github.com/redis/go-redis/v9"
@@ -26,6 +28,7 @@ type SvcContext struct {
 	Redsync         *redsync.Redsync
 	Gen             *gen.Query
 	CaptchaClient   *captcha.CaptchaClient
+	Enforcer        *casbin.Enforcer
 }
 
 func NewSvcContext(c config.Conf) *SvcContext {
@@ -54,6 +57,8 @@ func NewSvcContext(c config.Conf) *SvcContext {
 
 		svc.CaptchaClient = captcha.NewCaptchaClient(svc.RedisClient, svc.Ctx)
 	}
+
+	svc.Enforcer = rabc.NewEnforcer(svc.Gorm)
 
 	return svc
 }

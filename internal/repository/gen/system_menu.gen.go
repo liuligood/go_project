@@ -211,9 +211,9 @@ type ISystemMenuDo interface {
 }
 
 // SELECT m.* FROM system_menu as m
-// right join eb_system_role_menu as  rm on rm.menu_id = m.id
-// right join eb_system_role as  r on rm.rid = r.id
-// right join eb_system_admin as  a on FIND_IN_SET(r.id, a.roles)
+// right join system_role_menu as  rm on rm.menu_id = m.id
+// right join system_role as  r on rm.rid = r.id
+// right join system_admin as  a on FIND_IN_SET(r.id, a.roles)
 //
 //	{{where}}
 //		{{if condition.UserID !=0}}
@@ -227,7 +227,7 @@ func (s systemMenuDo) QueryMenuByUserId(condition model_data.UserIdCondition) (r
 	var params []interface{}
 
 	var generateSQL strings.Builder
-	generateSQL.WriteString("SELECT m.* FROM system_menu as m right join eb_system_role_menu as rm on rm.menu_id = m.id right join eb_system_role as r on rm.rid = r.id right join eb_system_admin as a on FIND_IN_SET(r.id, a.roles) ")
+	generateSQL.WriteString("SELECT m.* FROM system_menu as m right join system_role_menu as rm on rm.menu_id = m.id right join system_role as r on rm.rid = r.id right join system_admin as a on FIND_IN_SET(r.id, a.roles) ")
 	var whereSQL0 strings.Builder
 	if condition.UserID != 0 {
 		params = append(params, condition.UserID)
