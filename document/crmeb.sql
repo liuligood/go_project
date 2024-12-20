@@ -8674,7 +8674,7 @@ CREATE TABLE `system_store`  (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for system_store_staff
+-- Table structure for system_store_staff_service
 -- ----------------------------
 DROP TABLE IF EXISTS `system_store_staff`;
 CREATE TABLE `system_store_staff`  (
@@ -8693,7 +8693,7 @@ CREATE TABLE `system_store_staff`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '门店店员表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of system_store_staff
+-- Records of system_store_staff_service
 -- ----------------------------
 
 -- ----------------------------

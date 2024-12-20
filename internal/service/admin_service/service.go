@@ -11,6 +11,7 @@ type AdminServiceImpl interface {
 	GetLoginPic(params *request.GetLoginPicParams) (resp *response.GetLoginPicResp, err error)
 	UploadFile(params *request.UploadParams) (resp *response.UploadResp, err error)
 	Login(params *request.LoginParams) (resp *response.LoginResp, err error)
+	Logout(*request.BaseServiceParams) (err error)
 	LoginUserInfo(params *request.LoginUserInfoParams) (resp *response.LoginUserInfoResp, err error)
 	GetMenus(params *request.GetMenusParams) (resp []*response.GetMenusResp, err error)
 }
@@ -37,6 +38,10 @@ func (a *AdminService) UploadFile(params *request.UploadParams) (data *response.
 
 func (a *AdminService) Login(params *request.LoginParams) (resp *response.LoginResp, err error) {
 	return NewLoginService(a.svc).Login(params)
+}
+
+func (a *AdminService) Logout(params *request.BaseServiceParams) (err error) {
+	return NewLogoutService(a.svc).Logout(params)
 }
 
 func (a *AdminService) LoginUserInfo(params *request.LoginUserInfoParams) (resp *response.LoginUserInfoResp, err error) {

@@ -6,7 +6,7 @@ package model
 
 import "gorm.io/plugin/soft_delete"
 
-const TableNameSystemStoreStaff = "system_store_staff"
+const TableNameSystemStoreStaff = "system_store_staff_service"
 
 // SystemStoreStaff 门店店员表
 type SystemStoreStaff struct {

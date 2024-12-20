@@ -137,3 +137,20 @@ func GetMenus(svc *service.Container) gin.HandlerFunc {
 		c.JSON(http.StatusOK, ihttp.Data(res))
 	}
 }
+
+func Logout(svc *service.Container) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var params *request.BaseServiceParams
+
+		params.SetSessionContext(c)
+
+		err := svc.AdminService.Logout(params)
+		if err != nil {
+			c.JSON(http.StatusOK, ihttp.Error(err))
+
+			return
+		}
+
+		c.JSON(http.StatusOK, nil)
+	}
+}
