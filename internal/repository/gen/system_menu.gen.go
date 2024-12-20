@@ -207,7 +207,8 @@ type ISystemMenuDo interface {
 	UnderlyingDB() *gorm.DB
 	schema.Tabler
 
-	QueryMenuByUserId(condition model_data.UserIdCondition) (result []*model.SystemMenu, err error)
+	FindPermissionByUserId(condition model_data.UserIdCondition) (result []*model.SystemMenu, err error)
+	QueryMenusByUserId(condition model_data.UserIdCondition) (result []*model.SystemMenu, err error)
 }
 
 // SELECT m.* FROM system_menu as m
@@ -223,7 +224,7 @@ type ISystemMenuDo interface {
 //	{{end}}
 //
 // GROUP BY m.id
-func (s systemMenuDo) QueryMenuByUserId(condition model_data.UserIdCondition) (result []*model.SystemMenu, err error) {
+func (s systemMenuDo) FindPermissionByUserId(condition model_data.UserIdCondition) (result []*model.SystemMenu, err error) {
 	var params []interface{}
 
 	var generateSQL strings.Builder
@@ -234,6 +235,40 @@ func (s systemMenuDo) QueryMenuByUserId(condition model_data.UserIdCondition) (r
 		whereSQL0.WriteString("a.id = ? AND ")
 	}
 	whereSQL0.WriteString("m.deleted_at = 0 AND r.status =1 ")
+	helper.JoinWhereBuilder(&generateSQL, whereSQL0)
+	generateSQL.WriteString("GROUP BY m.id ")
+
+	var executeSQL *gorm.DB
+	executeSQL = s.UnderlyingDB().Raw(generateSQL.String(), params...).Find(&result) // ignore_security_alert
+	err = executeSQL.Error
+
+	return
+}
+
+// SELECT m.* FROM system_menu as m
+// right join system_role_menu as  rm on rm.menu_id = m.id
+// right join system_role as  r on rm.rid = r.id
+// right join system_admin as  a on FIND_IN_SET(r.id, a.roles)
+//
+//	{{where}}
+//		{{if condition.UserID !=0}}
+//			a.id = @condition.UserID AND
+//		{{end}}
+//		m.deleted_at = 0 AND r.status =1 and m.menu_type != 'A' and m.is_show =1
+//	{{end}}
+//
+// GROUP BY m.id
+func (s systemMenuDo) QueryMenusByUserId(condition model_data.UserIdCondition) (result []*model.SystemMenu, err error) {
+	var params []interface{}
+
+	var generateSQL strings.Builder
+	generateSQL.WriteString("SELECT m.* FROM system_menu as m right join system_role_menu as rm on rm.menu_id = m.id right join system_role as r on rm.rid = r.id right join system_admin as a on FIND_IN_SET(r.id, a.roles) ")
+	var whereSQL0 strings.Builder
+	if condition.UserID != 0 {
+		params = append(params, condition.UserID)
+		whereSQL0.WriteString("a.id = ? AND ")
+	}
+	whereSQL0.WriteString("m.deleted_at = 0 AND r.status =1 and m.menu_type != 'A' and m.is_show =1 ")
 	helper.JoinWhereBuilder(&generateSQL, whereSQL0)
 	generateSQL.WriteString("GROUP BY m.id ")
 

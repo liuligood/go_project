@@ -2,7 +2,7 @@ package system_config_service
 
 import (
 	"crmeb_go/define"
-	service_data "crmeb_go/internal/data/request"
+	"crmeb_go/internal/data/request"
 	"crmeb_go/internal/data/response"
 	"crmeb_go/internal/model"
 	"crmeb_go/internal/server"
@@ -14,7 +14,7 @@ import (
 )
 
 type GetSystemConfigInfoImpl interface {
-	GetSystemConfigInfo(params service_data.GetSystemConfigParams) (data response.GetSystemConfigResult, err error)
+	GetSystemConfigInfo(params request.GetSystemConfigParams) (data response.GetSystemConfigResult, err error)
 }
 
 type GetSystemConfigInfoService struct {
@@ -25,7 +25,7 @@ func NewGetSystemConfigInfoService(svc *server.SvcContext) *GetSystemConfigInfoS
 	return &GetSystemConfigInfoService{svc: svc}
 }
 
-func (g *GetSystemConfigInfoService) GetSystemConfigInfo(params service_data.GetSystemConfigParams) (data response.GetSystemConfigResult, err error) {
+func (g *GetSystemConfigInfoService) GetSystemConfigInfo(params request.GetSystemConfigParams) (data response.GetSystemConfigResult, err error) {
 	// 如果同步配置没有开启
 	if !g.svc.Conf.System.AsyncConfig {
 		systemConfig, err := g.svc.Repo.SystemConfigRepository.QueryByName(params.Ctx, params.Name)

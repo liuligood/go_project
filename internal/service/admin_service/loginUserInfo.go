@@ -2,7 +2,7 @@ package admin_service
 
 import (
 	"crmeb_go/define"
-	service_data "crmeb_go/internal/data/request"
+	"crmeb_go/internal/data/request"
 	"crmeb_go/internal/data/response"
 	"crmeb_go/internal/server"
 	"crmeb_go/internal/service/system_menu_service"
@@ -14,7 +14,7 @@ import (
 )
 
 type LoginUserInfoServiceImpl interface {
-	Login(params service_data.LoginParams) (resp response.LoginResp, err error)
+	Login(params request.LoginParams) (resp response.LoginResp, err error)
 }
 
 type LoginUserInfoService struct {
@@ -25,7 +25,7 @@ func NewLoginUserInfoService(svc *server.SvcContext) *LoginUserInfoService {
 	return &LoginUserInfoService{svc: svc}
 }
 
-func (l *LoginUserInfoService) LoginUserInfo(params service_data.LoginUserInfoParams) (resp response.LoginUserInfoResp, err error) {
+func (l *LoginUserInfoService) LoginUserInfo(params request.LoginUserInfoParams) (resp response.LoginUserInfoResp, err error) {
 	systemAdmin, err := l.svc.Repo.SystemAdminRepository.QueryAdminById(params.BaseServiceParams.Ctx, params.BaseServiceParams.LoginUserInfo.UserId)
 	if err != nil {
 		izap.Log.Error("SystemAdminRepository.QueryAdminById", zap.Int64("userId", params.BaseServiceParams.LoginUserInfo.UserId), zap.Error(err))

@@ -1,4 +1,4 @@
-package service_data
+package request
 
 import (
 	"crmeb_go/internal/common/session_context"

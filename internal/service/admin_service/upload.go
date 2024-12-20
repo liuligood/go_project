@@ -2,7 +2,7 @@ package admin_service
 
 import (
 	"crmeb_go/define"
-	service_data "crmeb_go/internal/data/request"
+	"crmeb_go/internal/data/request"
 	"crmeb_go/internal/data/response"
 	"crmeb_go/internal/server"
 	"crmeb_go/utils/imd5"
@@ -17,7 +17,7 @@ import (
 )
 
 type UploadServiceImpl interface {
-	UploadFile(params service_data.UploadParams) (data response.UploadResp, err error)
+	UploadFile(params request.UploadParams) (data response.UploadResp, err error)
 }
 
 type UploadService struct {
@@ -28,7 +28,7 @@ func NewUploadService(svc *server.SvcContext) *UploadService {
 	return &UploadService{svc: svc}
 }
 
-func (u *UploadService) UploadFile(params service_data.UploadParams) (data response.UploadResp, err error) {
+func (u *UploadService) UploadFile(params request.UploadParams) (data response.UploadResp, err error) {
 	var uploadFileName string
 	if params.ContentLength > (u.svc.Conf.System.FileSize << 20) {
 		izap.Log.Error("UploadFile ContentLength [%v]")

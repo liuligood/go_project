@@ -1,4 +1,4 @@
-package service_data
+package request
 
 type GetSystemConfigParams struct {
 	BaseServiceParams

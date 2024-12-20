@@ -45,3 +45,17 @@ type LoginUserInfoResp struct {
 	PermissionsList []string `json:"permissionsList"` // 权限标识
 	Token           string   `json:"token"`
 }
+
+type GetMenusResp struct {
+	ID        int         `json:"id"`        // ID
+	Pid       int         `json:"pid"`       // 父级id
+	Name      string      `json:"name"`      // 名称
+	Icon      string      `json:"icon"`      // icon
+	Perms     interface{} `json:"perms"`     // 权限标识
+	Component string      `json:"component"` // 组件路径
+	MenuType  string      `json:"menuType"`  // 类型
+	Sort      int         `json:"sort"`      // 排序
+	ChildList *RoleTrees  `json:"childList"` // 子对象列表
+}
+
+type RoleTrees []*GetMenusResp

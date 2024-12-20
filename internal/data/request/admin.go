@@ -1,4 +1,4 @@
-package service_data
+package request
 
 import "mime/multipart"
 
@@ -29,4 +29,9 @@ type LoginUserInfoParams struct {
 	BaseServiceParams BaseServiceParams
 	Token             string `json:"token"`
 	Temp              int64  `json:"temp"`
+}
+
+type GetMenusParams struct {
+	BaseServiceParams BaseServiceParams
+	Temp              int64 `json:"temp"`
 }

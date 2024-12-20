@@ -1,7 +1,7 @@
 package user_service
 
 import (
-	service_data "crmeb_go/internal/data/request"
+	"crmeb_go/internal/data/request"
 	"crmeb_go/internal/data/response"
 	"crmeb_go/internal/server"
 	"crmeb_go/utils/izap"
@@ -9,7 +9,7 @@ import (
 )
 
 type GetRealNameImpl interface {
-	GetRealName(params service_data.GetRealNameParams) (data response.GetRealNameResp, err error)
+	GetRealName(params request.GetRealNameParams) (data response.GetRealNameResp, err error)
 }
 
 type GetRealNameService struct {
@@ -20,7 +20,7 @@ func NewGetRealNameService(svc *server.SvcContext) GetRealNameService {
 	return GetRealNameService{svc: svc}
 }
 
-func (s GetRealNameService) GetRealName(params service_data.GetRealNameParams) (data response.GetRealNameResp, err error) {
+func (s GetRealNameService) GetRealName(params request.GetRealNameParams) (data response.GetRealNameResp, err error) {
 	userInfoModel, err := s.svc.Repo.UserRepository.QueryRealName(params.Ctx, params.UserId)
 	if err != nil {
 		izap.Log.Error("EbUserRepository.QueryOne [http_err]:%v", zap.Error(err))

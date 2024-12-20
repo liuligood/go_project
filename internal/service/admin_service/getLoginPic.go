@@ -2,7 +2,7 @@ package admin_service
 
 import (
 	"crmeb_go/define"
-	service_data "crmeb_go/internal/data/request"
+	"crmeb_go/internal/data/request"
 	"crmeb_go/internal/data/response"
 	"crmeb_go/internal/server"
 	"crmeb_go/internal/service/system_config_service"
@@ -13,7 +13,7 @@ import (
 )
 
 type GetLoginPicImpl interface {
-	GetLoginPic(params service_data.GetLoginPicParams) (data response.GetLoginPicResp, err error)
+	GetLoginPic(params request.GetLoginPicParams) (data response.GetLoginPicResp, err error)
 }
 
 type GetLoginPicService struct {
@@ -24,8 +24,8 @@ func NewGetLoginPicService(svc *server.SvcContext) *GetLoginPicService {
 	return &GetLoginPicService{svc: svc}
 }
 
-func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (data response.GetLoginPicResp, err error) {
-	var systemConfigParam service_data.GetSystemConfigParams
+func (a *GetLoginPicService) GetLoginPic(params request.GetLoginPicParams) (data response.GetLoginPicResp, err error) {
+	var systemConfigParam request.GetSystemConfigParams
 	systemConfigNameList := []string{
 		define.AdminLoginBgPic,
 		define.AdminSitLogoLeftTop,
@@ -59,7 +59,7 @@ func (a GetLoginPicService) GetLoginPic(params service_data.GetLoginPicParams) (
 
 	// 轮播图
 	list, err := system_group_data_service.NewGetValueListService(a.svc).
-		GetValueList(service_data.GetGetValueListParams{BaseServiceParams: params.BaseServiceParams, Gid: define.AdminLoginBannerImageList})
+		GetValueList(request.GetGetValueListParams{BaseServiceParams: params.BaseServiceParams, Gid: define.AdminLoginBannerImageList})
 	if err != nil {
 		izap.Log.Error("查询轮播图失败:", zap.Error(err))
 

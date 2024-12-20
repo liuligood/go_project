@@ -11,7 +11,6 @@ func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		method := c.Request.Method
 		origin := c.Request.Header.Get("Origin")
-		//接收客户端发送的origin （重要！）
 		c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
 
 		c.Header("Access-Control-Allow-Origin", origin)

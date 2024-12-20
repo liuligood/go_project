@@ -1,7 +1,7 @@
 package system_menu_service
 
 import (
-	service_data "crmeb_go/internal/data/request"
+	"crmeb_go/internal/data/request"
 	"crmeb_go/internal/data/response"
 	"crmeb_go/internal/model"
 	"crmeb_go/internal/server"
@@ -11,7 +11,7 @@ import (
 )
 
 type PermissionByUserIdServiceImpl interface {
-	GetPermissionByUserId(params service_data.BaseServiceParams) (resp []response.Permission, err error)
+	GetPermissionByUserId(params request.BaseServiceParams) (resp []response.Permission, err error)
 }
 
 type PermissionByUserIdService struct {
@@ -22,8 +22,8 @@ func NewPermissionByUserIdService(svc *server.SvcContext) *PermissionByUserIdSer
 	return &PermissionByUserIdService{svc: svc}
 }
 
-func (p *PermissionByUserIdService) GetPermissionByUserId(params service_data.BaseServiceParams) (resp []response.Permission, err error) {
-	menus, err := p.svc.Repo.SystemMenuRepository.QueryMenuByUserId(params.Ctx, params.LoginUserInfo.UserId)
+func (p *PermissionByUserIdService) GetPermissionByUserId(params request.BaseServiceParams) (resp []response.Permission, err error) {
+	menus, err := p.svc.Repo.SystemMenuRepository.FindPermissionByUserId(params.Ctx, params.LoginUserInfo.UserId)
 	if err != nil {
 		izap.Log.Error("SystemMenuRepository.QueryMenuByUserId", zap.Int64("userId", params.LoginUserInfo.UserId), zap.Error(err))
 

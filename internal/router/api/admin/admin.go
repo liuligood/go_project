@@ -15,6 +15,7 @@ func Register(app *gin.RouterGroup, appCxt *internal.AppContent) {
 	app.POST("upload", admin_controller.UploadFile(appCxt.Service))
 	app.POST("login", admin_controller.Login(appCxt.Service))
 	app.GET("getAdminInfoByToken", admin_controller.LoginUserInfo(appCxt.Service))
+	app.GET("getMenus", admin_controller.GetMenus(appCxt.Service))
 
 	// 授权路由
 	validate.Register(app.Group("/validate"), appCxt)

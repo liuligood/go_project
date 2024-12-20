@@ -34,7 +34,6 @@ func ApiAuthVisitorMiddleWare(svc *server.SvcContext) gin.HandlerFunc {
 			return
 		}
 
-		// 将 Body 内容写回，以便后续的绑定操作可以读取
 		parseToken, err := ijwt.ParseToken(token, svc.Conf.JWT.AccessSecret)
 		if err != nil {
 			c.JSON(http.StatusOK, ihttp.Error(errors.New("无权限"), http_err.StatusUnSilentAuthorized))
@@ -44,7 +43,7 @@ func ApiAuthVisitorMiddleWare(svc *server.SvcContext) gin.HandlerFunc {
 
 		// 存放登录信息到会话上下文
 		sessionContext := session_context.GetSessionContext(c)
-		sessionContext.LoginUserInfo = &session.LoginUserInfo{UserId: parseToken.UserId}
+		sessionContext.LoginUserInfo = &session.LoginUserInfo{UserId: parseToken.UserId, Roles: parseToken.Roles}
 		c.Set(define.SystemSessionContext, sessionContext)
 
 		c.Next()

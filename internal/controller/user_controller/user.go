@@ -2,7 +2,7 @@ package user_controller
 
 import (
 	"crmeb_go/internal/container/service"
-	service_data "crmeb_go/internal/data/request"
+	"crmeb_go/internal/data/request"
 	"crmeb_go/internal/validation"
 	"crmeb_go/utils/ihttp"
 	"github.com/gin-gonic/gin"
@@ -18,7 +18,7 @@ func GetRealName(svc *service.Container) gin.HandlerFunc {
 			return
 		}
 
-		params := service_data.GetRealNameParams{
+		params := request.GetRealNameParams{
 			UserId: param.UserId,
 		}
 

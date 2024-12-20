@@ -9,6 +9,7 @@ import (
 type TokenData struct {
 	UserId   int64
 	ExpireAt int64
+	Roles    string
 }
 
 // ParseToken 解析token
@@ -39,17 +40,24 @@ func ParseToken(token string, secretKey string) (*TokenData, error) {
 		return nil, fmt.Errorf("invalid expire_at type")
 	}
 
+	roles, ok := claims[define.AdminRoles].(string)
+	if !ok {
+		return nil, fmt.Errorf("invalid expire_at type")
+	}
+
 	return &TokenData{
 		UserId:   int64(userId),
 		ExpireAt: int64(expireAt),
+		Roles:    roles,
 	}, nil
 }
 
 // GenerateToken 生成token
-func GenerateToken(userId int64, expiration int64, secretKey string) (string, error) {
+func GenerateToken(userId int64, expiration int64, secretKey string, roles string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		define.AdminUserId:   userId,
 		define.AdminExpireAt: expiration,
+		define.AdminRoles:    roles,
 	})
 
 	tokenString, err := token.SignedString([]byte(secretKey))

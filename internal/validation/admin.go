@@ -15,3 +15,7 @@ type LoginUserInfoParam struct {
 	Token string `json:"token"`
 	Temp  int64  `json:"temp"`
 }
+
+type GetMenusParam struct {
+	Temp int64 `json:"temp"`
+}

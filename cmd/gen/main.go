@@ -101,7 +101,8 @@ func main() {
 
 	g.ApplyInterface(func() {}, g.GenerateAllTable(fieldOpts...)...)
 	g.ApplyInterface(func(gen_repository.Querier) {}, g.GenerateModel("user", fieldOpts...))
-	g.ApplyInterface(func(gen_repository.QueryMenuByUserId) {}, g.GenerateModel("system_menu", fieldOpts...))
+	g.ApplyInterface(func(gen_repository.FindPermissionByUserId) {}, g.GenerateModel("system_menu", fieldOpts...))
+	g.ApplyInterface(func(gen_repository.QueryMenusByUserId) {}, g.GenerateModel("system_menu", fieldOpts...))
 	g.WithImportPkgPath("github.com/shopspring/decimal")
 
 	// 执行并生成代码

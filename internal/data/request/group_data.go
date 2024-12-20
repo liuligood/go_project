@@ -1,4 +1,4 @@
-package service_data
+package request
 
 type GetGetValueListParams struct {
 	BaseServiceParams BaseServiceParams

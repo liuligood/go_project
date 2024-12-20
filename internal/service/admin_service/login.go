@@ -1,7 +1,7 @@
 package admin_service
 
 import (
-	service_data "crmeb_go/internal/data/request"
+	"crmeb_go/internal/data/request"
 	"crmeb_go/internal/data/response"
 	"crmeb_go/internal/server"
 	"crmeb_go/utils/ijwt"
@@ -11,7 +11,7 @@ import (
 )
 
 type LoginServiceImpl interface {
-	Login(params service_data.LoginParams) (resp response.LoginResp, err error)
+	Login(params request.LoginParams) (resp response.LoginResp, err error)
 }
 
 type LoginService struct {
@@ -22,7 +22,7 @@ func NewLoginService(svc *server.SvcContext) *LoginService {
 	return &LoginService{svc: svc}
 }
 
-func (l *LoginService) Login(params service_data.LoginParams) (resp response.LoginResp, err error) {
+func (l *LoginService) Login(params request.LoginParams) (resp response.LoginResp, err error) {
 	// 校验验证码
 	verify := l.svc.CaptchaClient.Verify(params.Key, params.Code)
 	if !verify {
@@ -44,7 +44,7 @@ func (l *LoginService) Login(params service_data.LoginParams) (resp response.Log
 	}
 
 	// 生成token
-	token, err := ijwt.GenerateToken(systemAdmin.ID, l.svc.Conf.JWT.AccessExpire, l.svc.Conf.JWT.AccessSecret)
+	token, err := ijwt.GenerateToken(systemAdmin.ID, l.svc.Conf.JWT.AccessExpire, l.svc.Conf.JWT.AccessSecret, systemAdmin.Roles)
 	if err != nil {
 		return resp, err
 	}

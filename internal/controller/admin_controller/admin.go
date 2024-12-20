@@ -2,7 +2,7 @@ package admin_controller
 
 import (
 	"crmeb_go/internal/container/service"
-	service_data "crmeb_go/internal/data/request"
+	"crmeb_go/internal/data/request"
 	"crmeb_go/internal/validation"
 	"crmeb_go/utils/ihttp"
 	"github.com/gin-gonic/gin"
@@ -18,7 +18,7 @@ func GetLoginPic(svc *service.Container) gin.HandlerFunc {
 			return
 		}
 
-		params := service_data.GetLoginPicParams{
+		params := request.GetLoginPicParams{
 			Temp: param.Temp,
 		}
 
@@ -46,7 +46,7 @@ func UploadFile(svc *service.Container) gin.HandlerFunc {
 		fileType := c.Request.FormValue("type")      // 路径类型
 		contentLength := c.Request.ContentLength
 
-		params := service_data.UploadParams{
+		params := request.UploadParams{
 			File:          file,
 			FileHeader:    fileHear,
 			FileKey:       key,
@@ -74,7 +74,7 @@ func Login(svc *service.Container) gin.HandlerFunc {
 			c.JSON(http.StatusOK, ihttp.Error(err))
 		}
 
-		params := service_data.LoginParams{
+		params := request.LoginParams{
 			Account: param.Account,
 			Code:    param.Code,
 			Key:     param.Key,
@@ -100,13 +100,35 @@ func LoginUserInfo(svc *service.Container) gin.HandlerFunc {
 			c.JSON(http.StatusOK, ihttp.Error(err))
 		}
 
-		params := service_data.LoginUserInfoParams{
+		params := request.LoginUserInfoParams{
 			Token: param.Token,
 			Temp:  param.Temp,
 		}
 		params.BaseServiceParams.SetSessionContext(c)
 
 		res, err := svc.AdminService.LoginUserInfo(params)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, ihttp.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusOK, ihttp.Data(res))
+	}
+}
+
+func GetMenus(svc *service.Container) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var param validation.GetMenusParam
+		if err := c.ShouldBindQuery(&param); err != nil {
+			c.JSON(http.StatusOK, ihttp.Error(err))
+		}
+
+		params := request.GetMenusParams{
+			Temp: param.Temp,
+		}
+		params.BaseServiceParams.SetSessionContext(c)
+
+		res, err := svc.AdminService.GetMenus(params)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, ihttp.Error(err))
 			return
