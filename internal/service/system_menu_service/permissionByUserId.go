@@ -11,7 +11,7 @@ import (
 )
 
 type PermissionByUserIdServiceImpl interface {
-	GetPermissionByUserId(params request.BaseServiceParams) (resp []response.Permission, err error)
+	GetPermissionByUserId(params *request.BaseServiceParams) (resp *[]response.Permission, err error)
 }
 
 type PermissionByUserIdService struct {
@@ -22,7 +22,7 @@ func NewPermissionByUserIdService(svc *server.SvcContext) *PermissionByUserIdSer
 	return &PermissionByUserIdService{svc: svc}
 }
 
-func (p *PermissionByUserIdService) GetPermissionByUserId(params request.BaseServiceParams) (resp []response.Permission, err error) {
+func (p *PermissionByUserIdService) GetPermissionByUserId(params *request.BaseServiceParams) (resp *[]response.Permission, err error) {
 	menus, err := p.svc.Repo.SystemMenuRepository.FindPermissionByUserId(params.Ctx, params.LoginUserInfo.UserId)
 	if err != nil {
 		izap.Log.Error("SystemMenuRepository.QueryMenuByUserId", zap.Int64("userId", params.LoginUserInfo.UserId), zap.Error(err))
@@ -42,6 +42,6 @@ func (p *PermissionByUserIdService) GetPermissionByUserId(params request.BaseSer
 		permissionList = append(permissionList, permission)
 	})
 
-	resp = permissionList
+	resp = &permissionList
 	return
 }

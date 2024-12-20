@@ -10,7 +10,7 @@ import (
 )
 
 type GetValueListImpl interface {
-	GetValueList(params request.GetGetValueListParams) (data response.GetGetValueListResult, err error)
+	GetValueList(params *request.GetGetValueListParams) (data *response.GetGetValueListResult, err error)
 }
 
 type GetValueListService struct {
@@ -21,7 +21,7 @@ func NewGetValueListService(svc *server.SvcContext) *GetValueListService {
 	return &GetValueListService{svc: svc}
 }
 
-func (g *GetValueListService) GetValueList(params request.GetGetValueListParams) (data response.GetGetValueListResult, err error) {
+func (g *GetValueListService) GetValueList(params *request.GetGetValueListParams) (data *response.GetGetValueListResult, err error) {
 	SystemGroupDataList, err := g.svc.Repo.SystemGroupDataRepository.QueryValueByGid(params.BaseServiceParams.Ctx, params.Gid)
 	if err != nil {
 		izap.Log.Error("SystemGroupDataRepository.QueryValueByGid [http_err]:%v", zap.Error(err))
@@ -46,6 +46,6 @@ func (g *GetValueListService) GetValueList(params request.GetGetValueListParams)
 		valueDataList = append(valueDataList, valueData)
 	}
 
-	data = response.GetGetValueListResult{Data: map[int64][]response.ValueData{params.Gid: valueDataList}}
+	data = &response.GetGetValueListResult{Data: map[int64][]response.ValueData{params.Gid: valueDataList}}
 	return
 }

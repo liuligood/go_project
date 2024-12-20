@@ -7,7 +7,7 @@ import (
 )
 
 type SystemMenuServiceImpl interface {
-	GetPermissionByUserId(params request.BaseServiceParams) (resp []response.Permission, err error)
+	GetPermissionByUserId(params *request.BaseServiceParams) (resp *[]response.Permission, err error)
 }
 
 type SystemMenuService struct {
@@ -18,6 +18,6 @@ func NewSystemMenuService(svc *server.SvcContext) *SystemMenuService {
 	return &SystemMenuService{svc: svc}
 }
 
-func (s *SystemMenuService) GetPermissionByUserId(params request.BaseServiceParams) (resp []response.Permission, err error) {
+func (s *SystemMenuService) GetPermissionByUserId(params *request.BaseServiceParams) (resp *[]response.Permission, err error) {
 	return NewPermissionByUserIdService(s.svc).GetPermissionByUserId(params)
 }

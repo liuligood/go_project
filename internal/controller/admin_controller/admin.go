@@ -24,7 +24,7 @@ func GetLoginPic(svc *service.Container) gin.HandlerFunc {
 
 		params.SetSessionContext(c)
 
-		res, err := svc.AdminService.GetLoginPic(params)
+		res, err := svc.AdminService.GetLoginPic(&params)
 		if err != nil {
 			c.JSON(http.StatusOK, ihttp.Error(err))
 			return
@@ -57,7 +57,7 @@ func UploadFile(svc *service.Container) gin.HandlerFunc {
 
 		params.SetSessionContext(c)
 
-		res, err := svc.AdminService.UploadFile(params)
+		res, err := svc.AdminService.UploadFile(&params)
 		if err != nil {
 			c.JSON(http.StatusOK, ihttp.Error(err))
 			return
@@ -82,7 +82,7 @@ func Login(svc *service.Container) gin.HandlerFunc {
 		}
 		params.SetSessionContext(c)
 
-		res, err := svc.AdminService.Login(params)
+		res, err := svc.AdminService.Login(&params)
 		if err != nil {
 			c.JSON(http.StatusOK, ihttp.Error(err))
 
@@ -106,7 +106,7 @@ func LoginUserInfo(svc *service.Container) gin.HandlerFunc {
 		}
 		params.BaseServiceParams.SetSessionContext(c)
 
-		res, err := svc.AdminService.LoginUserInfo(params)
+		res, err := svc.AdminService.LoginUserInfo(&params)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, ihttp.Error(err))
 			return
@@ -128,7 +128,7 @@ func GetMenus(svc *service.Container) gin.HandlerFunc {
 		}
 		params.BaseServiceParams.SetSessionContext(c)
 
-		res, err := svc.AdminService.GetMenus(params)
+		res, err := svc.AdminService.GetMenus(&params)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, ihttp.Error(err))
 			return

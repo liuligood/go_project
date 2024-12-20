@@ -17,7 +17,7 @@ import (
 )
 
 type UploadServiceImpl interface {
-	UploadFile(params request.UploadParams) (data response.UploadResp, err error)
+	UploadFile(params *request.UploadParams) (data *response.UploadResp, err error)
 }
 
 type UploadService struct {
@@ -28,7 +28,7 @@ func NewUploadService(svc *server.SvcContext) *UploadService {
 	return &UploadService{svc: svc}
 }
 
-func (u *UploadService) UploadFile(params request.UploadParams) (data response.UploadResp, err error) {
+func (u *UploadService) UploadFile(params *request.UploadParams) (data *response.UploadResp, err error) {
 	var uploadFileName string
 	if params.ContentLength > (u.svc.Conf.System.FileSize << 20) {
 		izap.Log.Error("UploadFile ContentLength [%v]")
@@ -105,7 +105,7 @@ func (u *UploadService) UploadFile(params request.UploadParams) (data response.U
 		return data, errors.New("文件上传错误")
 	}
 
-	return response.UploadResp{Url: fmt.Sprintf("https://%s.%s/%s", u.svc.Conf.AliyunOSS.BucketName, u.svc.Conf.AliyunOSS.Endpoint, uploadFileName)}, nil
+	return &response.UploadResp{Url: fmt.Sprintf("https://%s.%s/%s", u.svc.Conf.AliyunOSS.BucketName, u.svc.Conf.AliyunOSS.Endpoint, uploadFileName)}, nil
 }
 
 func (u *UploadService) getDirPath(pathName string) string {

@@ -10,10 +10,10 @@ import (
 )
 
 type DB struct {
-	config config.Conf
+	config *config.Conf
 }
 
-func NewDB(conf config.Conf) *DB {
+func NewDB(conf *config.Conf) *DB {
 	return &DB{
 		config: conf,
 	}

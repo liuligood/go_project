@@ -62,7 +62,7 @@ func (p *program) run() {
 	// 初始化zap日志库
 	izap.NewZap(c.Log)
 
-	p.svcContext = server.NewSvcContext(c)
+	p.svcContext = server.NewSvcContext(&c)
 
 	appCxt := internal.Register(p.svcContext)
 

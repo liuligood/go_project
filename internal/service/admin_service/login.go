@@ -11,7 +11,7 @@ import (
 )
 
 type LoginServiceImpl interface {
-	Login(params request.LoginParams) (resp response.LoginResp, err error)
+	Login(params *request.LoginParams) (resp *response.LoginResp, err error)
 }
 
 type LoginService struct {
@@ -22,7 +22,7 @@ func NewLoginService(svc *server.SvcContext) *LoginService {
 	return &LoginService{svc: svc}
 }
 
-func (l *LoginService) Login(params request.LoginParams) (resp response.LoginResp, err error) {
+func (l *LoginService) Login(params *request.LoginParams) (resp *response.LoginResp, err error) {
 	// 校验验证码
 	verify := l.svc.CaptchaClient.Verify(params.Key, params.Code)
 	if !verify {
@@ -49,5 +49,5 @@ func (l *LoginService) Login(params request.LoginParams) (resp response.LoginRes
 		return resp, err
 	}
 
-	return response.LoginResp{Id: systemAdmin.ID, Account: systemAdmin.Account, Token: token, RealName: systemAdmin.RealName, IsSms: false}, nil
+	return &response.LoginResp{Id: systemAdmin.ID, Account: systemAdmin.Account, Token: token, RealName: systemAdmin.RealName, IsSms: false}, nil
 }

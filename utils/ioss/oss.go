@@ -32,7 +32,7 @@ type Client interface {
 var OssClient Client
 var syncOssClient Client
 
-func InitOSS(redisClient redis.UniversalClient, config config.Conf) error {
+func InitOSS(redisClient redis.UniversalClient, config *config.Conf) error {
 	// 使用stsToken 上传
 	//result, http_err := redisClient.Get(context.Background(), define.OSSSTSTokenKey).Result()
 	//if http_err != nil && !errors.Is(http_err, redis.Nil) {
@@ -59,7 +59,7 @@ func InitOSS(redisClient redis.UniversalClient, config config.Conf) error {
 
 var once sync.Once
 
-func GetOssClient(c config.Conf) (Client, error) {
+func GetOssClient(c *config.Conf) (Client, error) {
 	var flag error
 	once.Do(func() {
 		if c.System.OssType == "" {
@@ -74,7 +74,7 @@ func GetOssClient(c config.Conf) (Client, error) {
 			return
 		}
 
-		client, err := factory.Create(c)
+		client, err := factory.Create(*c)
 		if err != nil {
 			panic(err)
 		}
@@ -91,7 +91,7 @@ func GetOssClient(c config.Conf) (Client, error) {
 	return OssClient, nil
 }
 
-func GenerateSTSToken(config config.Conf) ([]byte, error) {
+func GenerateSTSToken(config *config.Conf) ([]byte, error) {
 	client, err := sts.NewClientWithAccessKey(config.AliyunOSS.Region, config.AliyunOSS.AccessKeyId, config.AliyunOSS.AccessKeySecret)
 	if err != nil {
 		izap.Log.Error("Error: ", zap.Error(err))

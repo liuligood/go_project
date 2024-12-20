@@ -9,7 +9,7 @@ import (
 )
 
 type GetValidateCodeGetRealNameImpl interface {
-	GetValidateCode(context context.Context) (data response.ValidateCodeResp, err error)
+	GetValidateCode(context context.Context) (data *response.ValidateCodeResp, err error)
 }
 
 type GetValidateCodeService struct {
@@ -20,7 +20,7 @@ func NewGetValidateCodeService(svc *server.SvcContext) *GetValidateCodeService {
 	return &GetValidateCodeService{svc: svc}
 }
 
-func (a *GetValidateCodeService) GetValidateCode() (data response.ValidateCodeResp, err error) {
+func (a *GetValidateCodeService) GetValidateCode() (data *response.ValidateCodeResp, err error) {
 	err, code, id := a.svc.CaptchaClient.GetCaptcha()
 	if err != nil {
 		izap.Log.Error("生成验证码错误err:", zap.Error(err))
@@ -28,5 +28,5 @@ func (a *GetValidateCodeService) GetValidateCode() (data response.ValidateCodeRe
 		return
 	}
 
-	return response.ValidateCodeResp{Code: code, Key: id}, err
+	return &response.ValidateCodeResp{Code: code, Key: id}, err
 }

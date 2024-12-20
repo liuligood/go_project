@@ -14,7 +14,7 @@ import (
 )
 
 type LoginUserInfoServiceImpl interface {
-	Login(params request.LoginParams) (resp response.LoginResp, err error)
+	Login(params *request.LoginParams) (resp *response.LoginResp, err error)
 }
 
 type LoginUserInfoService struct {
@@ -25,7 +25,7 @@ func NewLoginUserInfoService(svc *server.SvcContext) *LoginUserInfoService {
 	return &LoginUserInfoService{svc: svc}
 }
 
-func (l *LoginUserInfoService) LoginUserInfo(params request.LoginUserInfoParams) (resp response.LoginUserInfoResp, err error) {
+func (l *LoginUserInfoService) LoginUserInfo(params *request.LoginUserInfoParams) (resp *response.LoginUserInfoResp, err error) {
 	systemAdmin, err := l.svc.Repo.SystemAdminRepository.QueryAdminById(params.BaseServiceParams.Ctx, params.BaseServiceParams.LoginUserInfo.UserId)
 	if err != nil {
 		izap.Log.Error("SystemAdminRepository.QueryAdminById", zap.Int64("userId", params.BaseServiceParams.LoginUserInfo.UserId), zap.Error(err))
@@ -39,14 +39,14 @@ func (l *LoginUserInfoService) LoginUserInfo(params request.LoginUserInfoParams)
 	if lo.Contains(roleList, define.SystemAdminRoles) {
 		permList = append(permList, define.SystemAdminAllPerm)
 	} else {
-		permissionList, err := system_menu_service.NewPermissionByUserIdService(l.svc).GetPermissionByUserId(params.BaseServiceParams)
+		permissionList, err := system_menu_service.NewPermissionByUserIdService(l.svc).GetPermissionByUserId(&params.BaseServiceParams)
 		if err != nil {
 			izap.Log.Error("PermissionByUserIdService.GetPermissionByUserId", zap.Int64("userId", params.BaseServiceParams.LoginUserInfo.UserId), zap.Error(err))
 
 			return resp, err
 		}
 
-		permList = lo.FilterMap(permissionList, func(item response.Permission, index int) (string, bool) {
+		permList = lo.FilterMap(*permissionList, func(item response.Permission, index int) (string, bool) {
 			if item.Path != "" && item.Path != "0" {
 				return item.Path, true
 			}
@@ -54,7 +54,7 @@ func (l *LoginUserInfoService) LoginUserInfo(params request.LoginUserInfoParams)
 		})
 	}
 
-	resp = response.LoginUserInfoResp{
+	resp = &response.LoginUserInfoResp{
 		ID:              systemAdmin.ID,
 		Account:         systemAdmin.Account,
 		RealName:        systemAdmin.RealName,

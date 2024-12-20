@@ -20,7 +20,7 @@ import (
 
 type SvcContext struct {
 	Ctx             context.Context
-	Conf            config.Conf
+	Conf            *config.Conf
 	Gorm            *gorm.DB
 	Repo            *repository.Container
 	RedisClient     redis.UniversalClient
@@ -31,7 +31,7 @@ type SvcContext struct {
 	Enforcer        *casbin.Enforcer
 }
 
-func NewSvcContext(c config.Conf) *SvcContext {
+func NewSvcContext(c *config.Conf) *SvcContext {
 	svc := &SvcContext{
 		Ctx:  context.Background(),
 		Conf: c,

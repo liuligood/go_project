@@ -7,7 +7,7 @@ import (
 )
 
 type SystemGroupDataServiceImpl interface {
-	GetValueList(params request.GetGetValueListParams) (data response.GetGetValueListResult, err error)
+	GetValueList(params *request.GetGetValueListParams) (data *response.GetGetValueListResult, err error)
 }
 
 // SystemGroupDataService 组合数据详情表 模型服务
@@ -20,6 +20,6 @@ func NewSystemGroupDataService(svc *server.SvcContext) *SystemGroupDataService {
 	return &SystemGroupDataService{svc: svc}
 }
 
-func (s *SystemGroupDataService) GetValueList(params request.GetGetValueListParams) (data response.GetGetValueListResult, err error) {
+func (s *SystemGroupDataService) GetValueList(params *request.GetGetValueListParams) (data *response.GetGetValueListResult, err error) {
 	return NewGetValueListService(s.svc).GetValueList(params)
 }

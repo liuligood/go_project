@@ -23,7 +23,7 @@ func GetRealName(svc *service.Container) gin.HandlerFunc {
 		}
 
 		params.SetSessionContext(c)
-		res, err := svc.UserService.GetRealName(params)
+		res, err := svc.UserService.GetRealName(&params)
 		if err != nil {
 			c.JSON(http.StatusOK, ihttp.Error(err))
 			return

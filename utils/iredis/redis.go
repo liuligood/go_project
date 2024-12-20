@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func initRedisClient(redisCfg config.Redis) (redis.UniversalClient, error) {
+func initRedisClient(redisCfg *config.Redis) (redis.UniversalClient, error) {
 	var client redis.UniversalClient
 	// 使用集群模式
 	if redisCfg.UseCluster {
@@ -35,8 +35,8 @@ func initRedisClient(redisCfg config.Redis) (redis.UniversalClient, error) {
 	return client, nil
 }
 
-func Redis(config config.Conf) redis.UniversalClient {
-	redisClient, err := initRedisClient(config.Redis)
+func Redis(config *config.Conf) redis.UniversalClient {
+	redisClient, err := initRedisClient(&config.Redis)
 	if err != nil {
 		panic(err)
 	}
@@ -44,11 +44,11 @@ func Redis(config config.Conf) redis.UniversalClient {
 	return redisClient
 }
 
-func RedisList(config config.Conf) map[string]redis.UniversalClient {
+func RedisList(config *config.Conf) map[string]redis.UniversalClient {
 	redisMap := make(map[string]redis.UniversalClient)
 
 	for _, redisCfg := range config.RedisList {
-		client, err := initRedisClient(redisCfg)
+		client, err := initRedisClient(&redisCfg)
 		if err != nil {
 			panic(err)
 		}

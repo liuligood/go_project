@@ -11,7 +11,7 @@ import (
 )
 
 type GetMenusImpl interface {
-	GetMenus(params request.GetMenusParams) (resp []*response.GetMenusResp, err error)
+	GetMenus(params *request.GetMenusParams) (resp []*response.GetMenusResp, err error)
 }
 
 type GetMenusService struct {
@@ -22,7 +22,7 @@ func NewGetMenusService(svc *server.SvcContext) *GetMenusService {
 	return &GetMenusService{svc: svc}
 }
 
-func (g *GetMenusService) GetMenus(params request.GetMenusParams) (resp []*response.GetMenusResp, err error) {
+func (g *GetMenusService) GetMenus(params *request.GetMenusParams) (resp []*response.GetMenusResp, err error) {
 	var systemMenus []*model.SystemMenu
 
 	if strings.Contains(params.BaseServiceParams.LoginUserInfo.Roles, "1") {

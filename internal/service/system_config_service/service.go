@@ -7,7 +7,7 @@ import (
 )
 
 type SystemConfigServiceImpl interface {
-	GetSystemConfigInfo(params request.GetSystemConfigParams) (data response.GetSystemConfigResult, err error)
+	GetSystemConfigInfo(params *request.GetSystemConfigParams) (data *response.GetSystemConfigResult, err error)
 }
 
 // SystemConfigService 配置表 模型服务
@@ -20,6 +20,6 @@ func NewSystemConfigService(svc *server.SvcContext) *SystemConfigService {
 	return &SystemConfigService{svc: svc}
 }
 
-func (s SystemConfigService) GetSystemConfigInfo(params request.GetSystemConfigParams) (data response.GetSystemConfigResult, err error) {
+func (s SystemConfigService) GetSystemConfigInfo(params *request.GetSystemConfigParams) (data *response.GetSystemConfigResult, err error) {
 	return NewGetSystemConfigInfoService(s.svc).GetSystemConfigInfo(params)
 }

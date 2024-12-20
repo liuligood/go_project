@@ -14,7 +14,7 @@ import (
 )
 
 type GetSystemConfigInfoImpl interface {
-	GetSystemConfigInfo(params request.GetSystemConfigParams) (data response.GetSystemConfigResult, err error)
+	GetSystemConfigInfo(params *request.GetSystemConfigParams) (data *response.GetSystemConfigResult, err error)
 }
 
 type GetSystemConfigInfoService struct {
@@ -25,7 +25,7 @@ func NewGetSystemConfigInfoService(svc *server.SvcContext) *GetSystemConfigInfoS
 	return &GetSystemConfigInfoService{svc: svc}
 }
 
-func (g *GetSystemConfigInfoService) GetSystemConfigInfo(params request.GetSystemConfigParams) (data response.GetSystemConfigResult, err error) {
+func (g *GetSystemConfigInfoService) GetSystemConfigInfo(params *request.GetSystemConfigParams) (data *response.GetSystemConfigResult, err error) {
 	// 如果同步配置没有开启
 	if !g.svc.Conf.System.AsyncConfig {
 		systemConfig, err := g.svc.Repo.SystemConfigRepository.QueryByName(params.Ctx, params.Name)
@@ -35,7 +35,7 @@ func (g *GetSystemConfigInfoService) GetSystemConfigInfo(params request.GetSyste
 			return data, err
 		}
 
-		return response.GetSystemConfigResult{Value: systemConfig.Value, Name: systemConfig.Name}, nil
+		return &response.GetSystemConfigResult{Value: systemConfig.Value, Name: systemConfig.Name}, nil
 	}
 
 	// 检测redis是否为空
@@ -69,7 +69,5 @@ func (g *GetSystemConfigInfoService) GetSystemConfigInfo(params request.GetSyste
 		return data, err
 	}
 
-	data.Value = value[0].(string)
-	data.Name = params.Name
-	return data, nil
+	return &response.GetSystemConfigResult{Value: value[0].(string), Name: params.Name}, nil
 }

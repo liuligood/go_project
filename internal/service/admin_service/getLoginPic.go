@@ -13,7 +13,7 @@ import (
 )
 
 type GetLoginPicImpl interface {
-	GetLoginPic(params request.GetLoginPicParams) (data response.GetLoginPicResp, err error)
+	GetLoginPic(params *request.GetLoginPicParams) (data *response.GetLoginPicResp, err error)
 }
 
 type GetLoginPicService struct {
@@ -24,8 +24,9 @@ func NewGetLoginPicService(svc *server.SvcContext) *GetLoginPicService {
 	return &GetLoginPicService{svc: svc}
 }
 
-func (a *GetLoginPicService) GetLoginPic(params request.GetLoginPicParams) (data response.GetLoginPicResp, err error) {
+func (a *GetLoginPicService) GetLoginPic(params *request.GetLoginPicParams) (*response.GetLoginPicResp, error) {
 	var systemConfigParam request.GetSystemConfigParams
+	var data response.GetLoginPicResp
 	systemConfigNameList := []string{
 		define.AdminLoginBgPic,
 		define.AdminSitLogoLeftTop,
@@ -37,11 +38,11 @@ func (a *GetLoginPicService) GetLoginPic(params request.GetLoginPicParams) (data
 
 	for _, v := range systemConfigNameList {
 		systemConfigParam.Name = v
-		systemConfigInfo, err := configInfoService.GetSystemConfigInfo(systemConfigParam)
+		systemConfigInfo, err := configInfoService.GetSystemConfigInfo(&systemConfigParam)
 		if err != nil {
 			izap.Log.Error("查询系统配置错误:", zap.String("name", v), zap.Error(err))
 
-			return data, err
+			return &data, err
 		}
 
 		if systemConfigInfo.Name == define.AdminLoginBgPic {
@@ -59,11 +60,11 @@ func (a *GetLoginPicService) GetLoginPic(params request.GetLoginPicParams) (data
 
 	// 轮播图
 	list, err := system_group_data_service.NewGetValueListService(a.svc).
-		GetValueList(request.GetGetValueListParams{BaseServiceParams: params.BaseServiceParams, Gid: define.AdminLoginBannerImageList})
+		GetValueList(&request.GetGetValueListParams{BaseServiceParams: params.BaseServiceParams, Gid: define.AdminLoginBannerImageList})
 	if err != nil {
 		izap.Log.Error("查询轮播图失败:", zap.Error(err))
 
-		return
+		return nil, err
 	}
 
 	if valueList, ok := list.Data[define.AdminLoginBannerImageList]; ok {
@@ -78,5 +79,5 @@ func (a *GetLoginPicService) GetLoginPic(params request.GetLoginPicParams) (data
 		})
 	}
 
-	return
+	return &data, nil
 }
