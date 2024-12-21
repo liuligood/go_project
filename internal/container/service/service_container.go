@@ -4,6 +4,7 @@ import (
 	"crmeb_go/internal/server"
 	"crmeb_go/internal/service/admin_service"
 	"crmeb_go/internal/service/article_service"
+	"crmeb_go/internal/service/home_service"
 	"crmeb_go/internal/service/system_config_service"
 	"crmeb_go/internal/service/system_group_data_service"
 	"crmeb_go/internal/service/system_menu_service"
@@ -19,6 +20,7 @@ type Container struct {
 	SystemConfigService     system_config_service.SystemConfigServiceImpl        // 配置表 模型
 	SystemMenuService       system_menu_service.SystemMenuServiceImpl
 	SystemStoreStaffService system_store_staff_service.SystemStoreStaffServiceImpl
+	HomeService             home_service.HomeServiceImpl
 }
 
 func Register(svc *server.SvcContext) *Container {
@@ -30,5 +32,6 @@ func Register(svc *server.SvcContext) *Container {
 		SystemConfigService:     system_config_service.NewSystemConfigService(svc),        // 配置表 模型
 		SystemMenuService:       system_menu_service.NewSystemMenuService(svc),
 		SystemStoreStaffService: system_store_staff_service.NewSystemStoreStaffService(svc),
+		HomeService:             home_service.NewHomeService(svc),
 	}
 }

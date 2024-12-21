@@ -112,7 +112,7 @@ type storeOrder struct {
 	CouponID               field.Int64  // 优惠券id
 	CouponPrice            field.Field  // 优惠券金额
 	Paid                   field.Int64  // 支付状态
-	PayTime                field.Int64
+	PayTime                field.Int64  // 支付时间
 	PayType                field.String // 支付方式
 	Status                 field.Int64  // 订单状态（0：待发货；1：待收货；2：已收货，待评价；3：已完成；）
 	RefundStatus           field.Int64  // 0 未退款 1 申请中 2 已退款 3 退款中
@@ -120,7 +120,7 @@ type storeOrder struct {
 	RefundReasonWapExplain field.String // 退款用户说明
 	RefundReasonWap        field.String // 前台退款原因
 	RefundReason           field.String // 不退款的理由
-	RefundReasonTime       field.Int64
+	RefundReasonTime       field.Int64  // 退款时间
 	RefundPrice            field.Field  // 退款金额
 	DeliveryName           field.String // 快递名称/送货人姓名
 	DeliveryType           field.String // 发货类型

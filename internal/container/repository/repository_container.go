@@ -9,6 +9,7 @@ import (
 	"crmeb_go/internal/repository/system_store_repository"
 	"crmeb_go/internal/repository/system_store_staff_repository"
 	"crmeb_go/internal/repository/user_repository"
+	"crmeb_go/internal/repository/user_visit_repository"
 	"gorm.io/gorm"
 )
 
@@ -20,6 +21,7 @@ type Container struct {
 	SystemMenuRepository       *system_menu_repository.SystemMenuRepository
 	SystemStoreRepository      *system_store_repository.SystemStoreRepository
 	SystemStoreStaffRepository *system_store_staff_repository.SystemStoreStaffRepository
+	UserVisitRecordRepository  *user_visit_repository.UserVisitRecordRepository
 }
 
 func Register(db *gorm.DB, gen *gen.Query) *Container {
@@ -31,5 +33,6 @@ func Register(db *gorm.DB, gen *gen.Query) *Container {
 		SystemMenuRepository:       system_menu_repository.NewSystemMenuRepository(db, gen),              // 菜单表
 		SystemStoreRepository:      system_store_repository.NewSystemStoreRepository(db, gen),            // 门店自提表
 		SystemStoreStaffRepository: system_store_staff_repository.NewSystemStoreStaffRepository(db, gen), // 门店店员表
+		UserVisitRecordRepository:  user_visit_repository.NewUserVisitRecordRepository(db, gen),          // 用户访问记录表
 	}
 }
