@@ -8646,7 +8646,7 @@ INSERT INTO `system_role_menu` VALUES (5, 402, 0, 0, 0);
 INSERT INTO `system_role_menu` VALUES (5, 403, 0, 0, 0);
 
 -- ----------------------------
--- Table structure for system_store
+-- Table structure for system_store_repository
 -- ----------------------------
 DROP TABLE IF EXISTS `system_store`;
 CREATE TABLE `system_store`  (
@@ -8670,7 +8670,7 @@ CREATE TABLE `system_store`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '门店自提' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of system_store
+-- Records of system_store_repository
 -- ----------------------------
 
 -- ----------------------------

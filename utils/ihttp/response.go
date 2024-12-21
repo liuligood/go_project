@@ -95,29 +95,29 @@ func Nil() Response {
 }
 
 // Paginate 分页类型响应
-func Paginate[T any](data []T, total, page, pageSize int) Response {
-	var meta = make(map[string]interface{})
-	meta["pagination"] = map[string]int{
-		"count":      len(data),
-		"total":      total,
-		"page":       page,
-		"page_size":  pageSize,
-		"total_page": calcTotalPage(total, pageSize),
+func Paginate[T any](list []T, total, page, pageSize int64) Response {
+	var data = make(map[string]interface{})
+	data["data"] = map[string]interface{}{
+		"count":     len(list),
+		"total":     total,
+		"page":      page,
+		"limit":     pageSize,
+		"totalPage": calcTotalPage(total, pageSize),
+		"list":      list,
 	}
-	if len(data) == 0 {
-		data = []T{}
+	if len(list) == 0 {
+		list = []T{}
 	}
 	return &RespData{
 		Code:    http.StatusOK,
 		Message: SuccessMessage,
 		Status:  0,
 		Data:    data,
-		Meta:    meta,
 	}
 }
 
 // calcTotalPage 计算总页数的辅助函数
-func calcTotalPage(total, pageSize int) int {
+func calcTotalPage(total, pageSize int64) int64 {
 	if pageSize == 0 {
 		return 0
 	}

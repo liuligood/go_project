@@ -7,7 +7,7 @@ import (
 )
 
 type SystemStoreStaffServiceImpl interface {
-	SystemStoreStaffList(params *request.SystemStaffListParams) (data *response.GetRealNameResp, err error)
+	SystemStoreStaffList(params *request.SystemStaffListParams) (data *response.SystemStaffListResp, err error)
 }
 
 type SystemStoreStaffService struct {
@@ -18,5 +18,6 @@ func NewSystemStoreStaffService(svc *server.SvcContext) *SystemStoreStaffService
 	return &SystemStoreStaffService{svc: svc}
 }
 
-func (s UserService) GetRealName(params *request.GetRealNameParams) (data *response.GetRealNameResp, err error) {
+func (s *SystemStoreStaffService) SystemStoreStaffList(params *request.SystemStaffListParams) (data *response.SystemStaffListResp, err error) {
+	return NewSystemStoreStaffListService(s.svc).SystemStoreStaffList(params)
 }

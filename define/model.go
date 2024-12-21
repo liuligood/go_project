@@ -11,3 +11,8 @@ const (
 	SystemAdminStatusValid int64  = 1 // 有效
 	SystemAdminIsSmsValid  int64  = 1 // 发送短信
 )
+
+const (
+	UserStatusValid int64 = 1 // 正常
+	UserIsPromoter  int64 = 1 // 是推广员
+)

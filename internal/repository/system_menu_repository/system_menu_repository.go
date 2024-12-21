@@ -21,15 +21,15 @@ func (s *SystemMenuRepository) FindPermissionByUserId(ctx context.Context, userI
 	return s.Gen.WithContext(ctx).SystemMenu.Debug().FindPermissionByUserId(model_data.UserIdCondition{UserID: userId})
 }
 
-func (s *SystemMenuRepository) QueryAllMenu(ctx context.Context) (data []*model.SystemMenu, err error) {
+func (s *SystemMenuRepository) FindAllMenu(ctx context.Context) (data []*model.SystemMenu, err error) {
 	return s.Gen.WithContext(ctx).SystemMenu.Where(s.Gen.SystemMenu.MenuType.Neq("M")).Find()
 }
 
-func (s *SystemMenuRepository) QueryAllMenuByA(ctx context.Context) (data []*model.SystemMenu, err error) {
+func (s *SystemMenuRepository) FindAllMenuByA(ctx context.Context) (data []*model.SystemMenu, err error) {
 	return s.Gen.WithContext(ctx).SystemMenu.Where(s.Gen.SystemMenu.MenuType.Neq("A"),
 		s.Gen.SystemMenu.IsShow.Eq(1)).Find()
 }
 
-func (s *SystemMenuRepository) QueryMenusByUserId(ctx context.Context, userId int64) (data []*model.SystemMenu, err error) {
+func (s *SystemMenuRepository) FindMenusByUserId(ctx context.Context, userId int64) (data []*model.SystemMenu, err error) {
 	return s.Gen.WithContext(ctx).SystemMenu.Debug().QueryMenusByUserId(model_data.UserIdCondition{UserID: userId})
 }

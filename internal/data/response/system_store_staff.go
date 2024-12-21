@@ -1,7 +1,13 @@
 package response
 
+import (
+	"crmeb_go/internal/model"
+	"crmeb_go/utils/itime"
+)
+
 type SystemStaffListResp struct {
-	List []SystemStaffListData `json:"list"`
+	List  []SystemStaffListData
+	Count int64
 }
 
 type SystemStaffListData struct {
@@ -17,4 +23,16 @@ type SystemStaffListData struct {
 	Status       int64       `json:"status"`       // 状态
 	CreateTime   string      `json:"createTime"`   // 创建时间
 	UpdateTime   string      `json:"updateTime"`   // 更新时间
+}
+
+func (s *SystemStaffListData) Marshal(m *model.SystemStoreStaff) {
+	s.Id = m.ID
+	s.Avatar = m.Avatar
+	s.StoreId = m.StoreID
+	s.StaffName = m.StaffName
+	s.Phone = m.Phone
+	s.VerifyStatus = m.VerifyStatus
+	s.Status = m.Status
+	s.CreateTime = itime.Format(m.CreatedAt)
+	s.UpdateTime = itime.Format(m.UpdatedAt)
 }

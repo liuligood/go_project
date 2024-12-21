@@ -4,6 +4,7 @@ import (
 	"crmeb_go/internal"
 	"crmeb_go/internal/middleware"
 	"crmeb_go/internal/router/api/admin"
+	"crmeb_go/internal/router/api/public"
 	"crmeb_go/internal/router/api/user"
 	"github.com/gin-gonic/gin"
 )
@@ -18,4 +19,7 @@ func ApiRegister(app *gin.RouterGroup, appCxt *internal.AppContent) {
 
 	// 授权路由
 	admin.Register(app.Group("/admin"), appCxt)
+
+	// 授权路由
+	public.Register(app.Group("/public"), appCxt)
 }

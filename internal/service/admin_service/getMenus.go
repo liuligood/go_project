@@ -27,7 +27,7 @@ func (g *GetMenusService) GetMenus(params *request.GetMenusParams) (resp []*resp
 
 	if strings.Contains(params.BaseServiceParams.LoginUserInfo.Roles, "1") {
 		// 超管获取全部
-		systemMenus, err = g.svc.Repo.SystemMenuRepository.QueryAllMenuByA(params.BaseServiceParams.Ctx)
+		systemMenus, err = g.svc.Repo.SystemMenuRepository.FindAllMenuByA(params.BaseServiceParams.Ctx)
 		if err != nil {
 			izap.Log.Error("查询菜单错误:", zap.Error(err))
 
@@ -35,7 +35,7 @@ func (g *GetMenusService) GetMenus(params *request.GetMenusParams) (resp []*resp
 		}
 	} else {
 		// 非超管
-		systemMenus, err = g.svc.Repo.SystemMenuRepository.QueryMenusByUserId(params.BaseServiceParams.Ctx, params.BaseServiceParams.LoginUserInfo.UserId)
+		systemMenus, err = g.svc.Repo.SystemMenuRepository.FindMenusByUserId(params.BaseServiceParams.Ctx, params.BaseServiceParams.LoginUserInfo.UserId)
 		if err != nil {
 			izap.Log.Error("根据用户id查询菜单错误:", zap.Any("userId", params.BaseServiceParams.LoginUserInfo.UserId), zap.Error(err))
 
@@ -63,7 +63,7 @@ func (g *GetMenusService) buildMenuTree(systemMenus []*model.SystemMenu) []*resp
 			Component: menu.Component,
 			MenuType:  menu.MenuType,
 			Sort:      int(menu.Sort),
-			ChildList: nil, // 初始时子列表为空
+			ChildList: &response.RoleTrees{}, // 初始时子列表为空
 		}
 		menuMap[menu.ID] = getMenusResp
 	}

@@ -23,3 +23,7 @@ func NewSystemConfigService(svc *server.SvcContext) *SystemConfigService {
 func (s SystemConfigService) GetSystemConfigInfo(params *request.GetSystemConfigParams) (data *response.GetSystemConfigResult, err error) {
 	return NewGetSystemConfigInfoService(s.svc).GetSystemConfigInfo(params)
 }
+
+func (s SystemConfigService) SystemConfigNameByKey(params *request.GetSystemConfigParams) (data *response.GetSystemConfigResult, err error) {
+	return NewGetSystemConfigInfoService(s.svc).GetSystemConfigInfo(params)
+}

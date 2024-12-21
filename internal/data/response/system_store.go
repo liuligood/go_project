@@ -1,5 +1,10 @@
 package response
 
+import (
+	"crmeb_go/internal/model"
+	"crmeb_go/utils/itime"
+)
+
 type SystemStore struct {
 	ID              int64  `json:"id"`
 	Name            string `json:"name"`             // 门店名称
@@ -15,4 +20,19 @@ type SystemStore struct {
 	IsShow          bool   `json:"isShow"`           // 是否显示
 	CreateTime      string `json:"createTime"`       // 创建时间
 	UpdateTime      string `json:"updateTime"`       // 修改时间
+}
+
+func (s *SystemStore) Marshal(m *model.SystemStore) {
+	s.ID = m.ID
+	s.Name = m.Name
+	s.Introduction = m.Introduction
+	s.Phone = m.Phone
+	s.Address = m.Address
+	s.DetailedAddress = m.DetailedAddress
+	s.Image = m.Image
+	s.Latitude = m.Latitude
+	s.ValidTime = itime.Format(m.ValidTime)
+	s.DayTime = itime.Format(m.DayTime)
+	s.CreateTime = itime.Format(m.CreatedAt)
+	s.UpdateTime = itime.Format(m.UpdatedAt)
 }

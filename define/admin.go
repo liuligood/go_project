@@ -8,5 +8,6 @@ const (
 	AdminUserId               = "user_id"   // token user_id 标识
 	AdminExpireAt             = "expire_at" // token过期时间
 	AdminToken                = "authori-zation"
-	AdminRoles                = "roles" // token 用户权限标识
+	AdminRoles                = "roles"           // token 用户权限标识
+	AdminChatStatistics       = "crmeb_tongji_js" // 公共JS配置
 )
