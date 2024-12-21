@@ -18,8 +18,8 @@ func NewUserRepository(db *gorm.DB, gen *gen.Query) *UserRepository {
 	return &UserRepository{base_repository.NewRepository(db, gen)}
 }
 
-func (r *UserRepository) FindRealName(ctx context.Context, userId uint64) (data *model.User, err error) {
-	ebUser, err := r.Gen.User.WithContext(ctx).Where(r.Gen.User.UID.Eq(int64(userId))).First()
+func (u *UserRepository) FindRealName(ctx context.Context, userId uint64) (data *model.User, err error) {
+	ebUser, err := u.Gen.User.WithContext(ctx).Where(u.Gen.User.UID.Eq(int64(userId))).First()
 	if err != nil {
 		return data, err
 	}
@@ -28,10 +28,14 @@ func (r *UserRepository) FindRealName(ctx context.Context, userId uint64) (data 
 	return data, err
 }
 
-func (r *UserRepository) FindUserByAccount(ctx context.Context, account string) (data *model.User, err error) {
-	return r.Gen.User.WithContext(ctx).Where(r.Gen.User.Account.Eq(account)).First()
+func (u *UserRepository) FindUserByAccount(ctx context.Context, account string) (data *model.User, err error) {
+	return u.Gen.User.WithContext(ctx).Where(u.Gen.User.Account.Eq(account)).First()
 }
 
-func (r *UserRepository) FindListById(ctx context.Context, userIdList []int64) (data []*model.User, err error) {
-	return r.Gen.User.WithContext(ctx).Where(r.Gen.User.UID.In(userIdList...)).Find()
+func (u *UserRepository) FindListById(ctx context.Context, userIdList []int64) (data []*model.User, err error) {
+	return u.Gen.User.WithContext(ctx).Where(u.Gen.User.UID.In(userIdList...)).Find()
+}
+
+func (u *UserRepository) GetRegisterNumByDate(ctx context.Context, start, end int64) (data int64, err error) {
+	return u.Gen.User.WithContext(ctx).Where(u.Gen.User.CreatedAt.Between(start, end)).Count()
 }

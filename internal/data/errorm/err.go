@@ -1,4 +1,4 @@
-package http_err
+package errorm
 
 const (
 	StatusBadRequest         = 400 // 失败请求

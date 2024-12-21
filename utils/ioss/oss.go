@@ -34,19 +34,19 @@ var syncOssClient Client
 
 func InitOSS(redisClient redis.UniversalClient, config *config.Conf) error {
 	// 使用stsToken 上传
-	//result, http_err := redisClient.Get(context.Background(), define.OSSSTSTokenKey).Result()
-	//if http_err != nil && !errors.Is(http_err, redis.Nil) {
-	//	izap.Log.Error("redis http_err:", zap.Error(http_err))
+	//result, errorm := redisClient.Get(context.Background(), define.OSSSTSTokenKey).Result()
+	//if errorm != nil && !errors.Is(errorm, redis.Nil) {
+	//	izap.Log.Error("redis errorm:", zap.Error(errorm))
 	//
-	//	return http_err
+	//	return errorm
 	//}
 	//
 	//if len(result) == 0 {
-	//	jsonData, http_err := GenerateSTSToken(config)
-	//	if http_err != nil {
-	//		izap.Log.Error("GenerateSTSToken http_err: ", zap.Error(http_err))
+	//	jsonData, errorm := GenerateSTSToken(config)
+	//	if errorm != nil {
+	//		izap.Log.Error("GenerateSTSToken errorm: ", zap.Error(errorm))
 	//
-	//		return http_err
+	//		return errorm
 	//	}
 	//
 	//	redisClient.Set(context.Background(), define.OSSSTSTokenKey, string(jsonData), time.Hour)
@@ -129,7 +129,7 @@ func GenerateSTSToken(config *config.Conf) ([]byte, error) {
 	// 将结构体转换为JSON格式的字节切片
 	jsonData, err := json.Marshal(ossInfo)
 	if err != nil {
-		izap.Log.Error("json Marshal http_err: ", zap.Error(err))
+		izap.Log.Error("json Marshal errorm: ", zap.Error(err))
 
 		return nil, err
 	}

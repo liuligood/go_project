@@ -40,7 +40,7 @@ func (u *UploadService) UploadFile(params *request.UploadParams) (data *response
 	if openError != nil {
 		izap.Log.Error("function file.Open() Failed", zap.Error(err))
 
-		return data, errors.New("function file.Open() Failed, http_err:" + openError.Error())
+		return data, errors.New("function file.Open() Failed, errorm:" + openError.Error())
 	}
 	defer fileData.Close() // 创建文件 defer 关闭
 
@@ -57,7 +57,7 @@ func (u *UploadService) UploadFile(params *request.UploadParams) (data *response
 	_, err = params.File.Read(b)
 
 	if err != nil {
-		izap.Log.Error("read file http_err", zap.Error(err))
+		izap.Log.Error("read file errorm", zap.Error(err))
 
 		return data, err
 	}
@@ -90,7 +90,7 @@ func (u *UploadService) UploadFile(params *request.UploadParams) (data *response
 	checkData, err := oss.OssClient.IsExist(uploadFileName)
 
 	if err != nil {
-		izap.Log.Error("check file exist http_err", zap.Error(err))
+		izap.Log.Error("check file exist errorm", zap.Error(err))
 
 		return data, errors.New("检查文件重复上传失败")
 	}
@@ -100,7 +100,7 @@ func (u *UploadService) UploadFile(params *request.UploadParams) (data *response
 	}
 
 	if err := oss.OssClient.UploadFormFile(uploadFileName, fileData); err != nil {
-		izap.Log.Error("UploadFile UploadFormFile http_err", zap.Error(err))
+		izap.Log.Error("UploadFile UploadFormFile errorm", zap.Error(err))
 
 		return data, errors.New("文件上传错误")
 	}

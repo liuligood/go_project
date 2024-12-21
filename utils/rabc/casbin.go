@@ -12,14 +12,14 @@ import (
 func NewEnforcer(db *gorm.DB) *casbin.Enforcer {
 	adapterByDB, err := gormadapter.NewAdapterByDB(db)
 	if err != nil {
-		fmt.Printf("NewAdapterByDB http_err:【%v】", err)
+		fmt.Printf("NewAdapterByDB errorm:【%v】", err)
 
 		panic(err)
 	}
 
 	enforcer, err := casbin.NewEnforcer("utils/rabc/rbac_model.conf", adapterByDB)
 	if err != nil {
-		fmt.Printf("NewEnforcer http_err:【%v】", err)
+		fmt.Printf("NewEnforcer errorm:【%v】", err)
 
 		panic(err)
 	}

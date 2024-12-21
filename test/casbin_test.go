@@ -18,13 +18,13 @@ func Test(t *testing.T) {
 	}
 	adapterByDB, err := gormadapter.NewAdapterByDB(db)
 	if err != nil {
-		fmt.Printf("NewAdapterByDB http_err:【%v】", err)
+		fmt.Printf("NewAdapterByDB errorm:【%v】", err)
 
 		panic(err)
 	}
 	enforcer, err := casbin.NewEnforcer("D:\\go\\crmeb_go\\utils\\rabc\\rbac_model.conf", adapterByDB, true)
 	if err != nil {
-		fmt.Printf("NewEnforcer http_err:【%v】", err)
+		fmt.Printf("NewEnforcer errorm:【%v】", err)
 
 		panic(err)
 	}

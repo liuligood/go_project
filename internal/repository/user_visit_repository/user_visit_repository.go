@@ -17,6 +17,6 @@ func NewUserVisitRecordRepository(db *gorm.DB, gen *gen.Query) *UserVisitRecordR
 	return &UserVisitRecordRepository{base_repository.NewRepository(db, gen)}
 }
 
-func (u *UserVisitRecordRepository) FindRegisterNumByDate(ctx context.Context, start int64, end int64) (data int64, err error) {
-	return u.Gen.WithContext(ctx).UserVisitRecord.Select(u.Gen.UserVisitRecord.UID).Where(u.Gen.UserVisitRecord.Date.Between(start, end)).Debug().Count()
+func (u *UserVisitRecordRepository) FindPageViewsByDate(ctx context.Context, start int64, end int64) (data int64, err error) {
+	return u.Gen.WithContext(ctx).UserVisitRecord.Select(u.Gen.UserVisitRecord.UID).Where(u.Gen.UserVisitRecord.Date.Between(start, end)).Count()
 }

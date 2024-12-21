@@ -132,7 +132,7 @@ func GetCache(ctx context.Context, key string, redisClient redis.UniversalClient
 	if int(duration.Seconds()) > 0 {
 		err = SetLocal(key, value, duration)
 		if err != nil {
-			return "", errors.New("cache set http_err")
+			return "", errors.New("cache set errorm")
 		}
 	}
 	return value, nil
@@ -188,7 +188,7 @@ func GetCacheOrElse(ctx context.Context, key string, ttl time.Duration, fetcher 
 	if int(duration.Seconds()) > 0 {
 		err = SetLocal(key, value, duration)
 		if err != nil {
-			return "", errors.New("cache set http_err")
+			return "", errors.New("cache set errorm")
 		}
 	}
 
@@ -207,9 +207,9 @@ func SetLocal(key, value string, ttl time.Duration) error {
 
 	err := LocalCache.Set([]byte(key), []byte(value), int(ttl.Seconds()))
 	if err != nil && !errors.Is(err, freecache.ErrLargeEntry) {
-		izap.Log.Error("cache set http_err:", zap.Error(err))
+		izap.Log.Error("cache set errorm:", zap.Error(err))
 
-		return errors.New("cache set http_err")
+		return errors.New("cache set errorm")
 	}
 
 	return nil

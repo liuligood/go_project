@@ -4,7 +4,7 @@ import (
 	"crmeb_go/define"
 	"crmeb_go/internal/common/session_context"
 	"crmeb_go/internal/data/common/session"
-	"crmeb_go/internal/data/http_err"
+	"crmeb_go/internal/data/errorm"
 	"crmeb_go/internal/server"
 	"crmeb_go/utils/ihttp"
 	"crmeb_go/utils/ijwt"
@@ -29,14 +29,14 @@ func ApiAuthVisitorMiddleWare(svc *server.SvcContext) gin.HandlerFunc {
 
 		token := c.GetHeader(define.AdminToken)
 		if token == "" {
-			c.JSON(http.StatusOK, ihttp.Error(errors.New("无权限"), http_err.StatusUnSilentAuthorized))
+			c.JSON(http.StatusOK, ihttp.Error(errors.New("无权限"), errorm.StatusUnSilentAuthorized))
 			c.Abort()
 			return
 		}
 
 		parseToken, err := ijwt.ParseToken(token, svc.Conf.JWT.AccessSecret)
 		if err != nil {
-			c.JSON(http.StatusOK, ihttp.Error(errors.New("无权限"), http_err.StatusUnSilentAuthorized))
+			c.JSON(http.StatusOK, ihttp.Error(errors.New("无权限"), errorm.StatusUnSilentAuthorized))
 			c.Abort()
 			return
 		}

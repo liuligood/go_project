@@ -76,13 +76,13 @@ func (s *SystemStoreStaffListService) SystemStoreStaffList(params *request.Syste
 
 		if mStore, ok := storeMap[v.StoreID]; ok {
 			var store response.SystemStore
-			store.Marshal(mStore)
+			store.ConvertFromModel(mStore)
 			systemStaffListData.SystemStore = store
 		}
 
 		if mUser, ok := userMap[v.UID]; ok {
 			var user response.User
-			user.Marshal(mUser)
+			user.ConvertFromModel(mUser)
 			systemStaffListData.User = user
 		}
 

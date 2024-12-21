@@ -41,7 +41,7 @@ func (l *Test) Exec() {
 	var user model.User
 	err = l.svcCtx.Repo.UserRepository.QueryOne(l.ctx, "uid = ?", []interface{}{1}, &user)
 	if err != nil {
-		fmt.Println("http_err", err)
+		fmt.Println("errorm", err)
 	}
 
 }

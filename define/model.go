@@ -16,3 +16,7 @@ const (
 	UserStatusValid int64 = 1 // 正常
 	UserIsPromoter  int64 = 1 // 是推广员
 )
+
+const (
+	StoreOrderPaidValid int64 = 1 // 已支付
+)

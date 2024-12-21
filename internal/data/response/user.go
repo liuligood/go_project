@@ -55,7 +55,7 @@ type User struct {
 	PromoterTime   string          `json:"promoterTime"`   // 成为分销员时间
 }
 
-func (u *User) Marshal(m *model.User) {
+func (u *User) ConvertFromModel(m *model.User) {
 	u.UID = m.UID
 	u.Account = m.Account
 	u.Pwd = m.Pwd

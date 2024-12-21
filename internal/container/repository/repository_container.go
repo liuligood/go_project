@@ -2,6 +2,7 @@ package repository
 
 import (
 	"crmeb_go/internal/repository/gen"
+	"crmeb_go/internal/repository/store_order_repository"
 	"crmeb_go/internal/repository/system_admin_repository"
 	"crmeb_go/internal/repository/system_config_repository"
 	"crmeb_go/internal/repository/system_group_data_repository"
@@ -22,6 +23,7 @@ type Container struct {
 	SystemStoreRepository      *system_store_repository.SystemStoreRepository
 	SystemStoreStaffRepository *system_store_staff_repository.SystemStoreStaffRepository
 	UserVisitRecordRepository  *user_visit_repository.UserVisitRecordRepository
+	StoreOrderRepository       *store_order_repository.StoreOrderRepository
 }
 
 func Register(db *gorm.DB, gen *gen.Query) *Container {
@@ -34,5 +36,6 @@ func Register(db *gorm.DB, gen *gen.Query) *Container {
 		SystemStoreRepository:      system_store_repository.NewSystemStoreRepository(db, gen),            // 门店自提表
 		SystemStoreStaffRepository: system_store_staff_repository.NewSystemStoreStaffRepository(db, gen), // 门店店员表
 		UserVisitRecordRepository:  user_visit_repository.NewUserVisitRecordRepository(db, gen),          // 用户访问记录表
+		StoreOrderRepository:       store_order_repository.NewStoreOrderRepository(db, gen),              // 订单表
 	}
 }
