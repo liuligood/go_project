@@ -22,3 +22,18 @@ func IndexDate(svc *service.Container) gin.HandlerFunc {
 		c.JSON(http.StatusOK, ihttp.Data(res))
 	}
 }
+
+func ChartOrder(svc *service.Container) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		params := request.BaseServiceParams{}
+		params.SetSessionContext(c)
+
+		res, err := svc.HomeService.ChartOrder(&params)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, ihttp.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusOK, ihttp.Data(res))
+	}
+}

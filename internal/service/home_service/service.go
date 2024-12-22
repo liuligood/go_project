@@ -12,6 +12,7 @@ import (
 
 type HomeServiceImpl interface {
 	IndexDate(params *request.BaseServiceParams) (data *response.HomeRateResp, err error)
+	ChartOrder(params *request.BaseServiceParams) (data *map[string]interface{}, err error)
 }
 
 type HomeService struct {
@@ -79,4 +80,10 @@ func (h *HomeService) IndexDate(params *request.BaseServiceParams) (data *respon
 	resp.Sale = payOrderAmount.NowSale
 	resp.YesterdaySale = payOrderAmount.YesterdaySale
 	return &resp, nil
+}
+
+// ChartOrder 30天订单趋势
+func (h *HomeService) ChartOrder(params *request.BaseServiceParams) (data *map[string]interface{}, err error) {
+	storeOrderService := store_order_service.NewStoreOrderService(h.svc)
+	storeOrderService.GetOrderGroupByDate()
 }

@@ -7,3 +7,8 @@ type DateParams struct {
 	YesterdayStart    int64 // 咋天0点时间戳
 	YesterdayEnd      int64 // 咋天24点时间戳
 }
+
+type SearchDateParams struct {
+	BaseServiceParams BaseServiceParams
+	Date              string // 搜索时间标识
+}
