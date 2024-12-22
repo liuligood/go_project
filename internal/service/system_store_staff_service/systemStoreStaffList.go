@@ -5,7 +5,9 @@ import (
 	"crmeb_go/internal/data/response"
 	"crmeb_go/internal/model"
 	"crmeb_go/internal/server"
+	"crmeb_go/utils/izap"
 	"github.com/samber/lo"
+	"go.uber.org/zap"
 )
 
 type SystemStoreStaffListServiceImpl interface {
@@ -72,11 +74,19 @@ func (s *SystemStoreStaffListService) SystemStoreStaffList(params *request.Syste
 
 	for _, v := range systemStoreStaff {
 		var systemStaffListData response.SystemStaffListData
-		systemStaffListData.Marshal(v)
+		if err := systemStaffListData.ConvertFromModel(v); err != nil {
+			izap.Log.Error("systemStaffListData.ConvertFromModel err", zap.Error(err))
+
+			return &data, err
+		}
 
 		if mStore, ok := storeMap[v.StoreID]; ok {
 			var store response.SystemStore
-			store.ConvertFromModel(mStore)
+			if err := store.ConvertFromModel(mStore); err != nil {
+				izap.Log.Error("systemStaffListData.ConvertFromModel err", zap.Error(err))
+
+				return &data, err
+			}
 			systemStaffListData.SystemStore = store
 		}
 

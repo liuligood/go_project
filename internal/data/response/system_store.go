@@ -3,6 +3,7 @@ package response
 import (
 	"crmeb_go/internal/model"
 	"crmeb_go/utils/itime"
+	"github.com/jinzhu/copier"
 )
 
 type SystemStore struct {
@@ -22,17 +23,16 @@ type SystemStore struct {
 	UpdateTime      string `json:"updateTime"`      // 修改时间
 }
 
-func (s *SystemStore) ConvertFromModel(m *model.SystemStore) {
-	s.ID = m.ID
-	s.Name = m.Name
-	s.Introduction = m.Introduction
-	s.Phone = m.Phone
-	s.Address = m.Address
-	s.DetailedAddress = m.DetailedAddress
-	s.Image = m.Image
-	s.Latitude = m.Latitude
+func (s *SystemStore) ConvertFromModel(m *model.SystemStore) error {
+	err := copier.Copy(s, m)
+	if err != nil {
+		return err
+	}
+
 	s.ValidTime = itime.Format(m.ValidTime)
 	s.DayTime = itime.Format(m.DayTime)
 	s.CreateTime = itime.Format(m.CreatedAt)
 	s.UpdateTime = itime.Format(m.UpdatedAt)
+
+	return nil
 }

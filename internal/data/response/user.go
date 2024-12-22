@@ -4,6 +4,7 @@ import (
 	"crmeb_go/define"
 	"crmeb_go/internal/model"
 	"crmeb_go/utils/itime"
+	"github.com/jinzhu/copier"
 	"github.com/shopspring/decimal"
 )
 
@@ -55,48 +56,20 @@ type User struct {
 	PromoterTime   string          `json:"promoterTime"`   // 成为分销员时间
 }
 
-func (u *User) ConvertFromModel(m *model.User) {
-	u.UID = m.UID
-	u.Account = m.Account
-	u.Pwd = m.Pwd
-	u.RealName = m.RealName
-	u.Birthday = m.Birthday
-	u.CardID = m.CardID
-	u.Mark = m.Mark
-	u.PartnerID = m.PartnerID
-	u.GroupID = m.GroupID
-	u.TagID = m.TagID
-	u.Nickname = m.Nickname
-	u.Avatar = m.Avatar
-	u.Path = m.Path
-	u.Sex = m.Sex
-	u.Country = m.Country
-	u.AddIP = m.AddIP
-	u.LastIP = m.LastIP
-	u.NowMoney = m.NowMoney
-	u.BrokeragePrice = m.BrokeragePrice
-	u.Integral = m.Integral
-	u.Experience = m.Experience
-	u.SignNum = m.SignNum
+func (u *User) ConvertFromModel(m *model.User) error {
+	if err := copier.Copy(u, m); err != nil {
+		return err
+	}
+
 	u.Status = m.Status == define.UserStatusValid
-	u.Level = m.Level
-	u.SpreadUID = m.SpreadUID
 	u.SpreadTime = itime.Format(m.SpreadTime)
-	u.UserType = m.UserType
 	u.IsPromoter = m.IsPromoter == define.UserIsPromoter
-	u.PayCount = m.PayCount
-	u.SpreadCount = m.SpreadCount
-	u.Addres = m.Addres
-	u.Adminid = m.Adminid
-	u.LoginType = m.LoginType
 	u.LastLoginTime = itime.Format(m.LastLoginTime)
 	u.CleanTime = itime.Format(m.CleanTime)
-	u.Path = m.Path
-	u.Subscribe = m.Subscribe
 	u.PromoterTime = itime.Format(m.PromoterTime)
-	u.Sex = m.Sex
-	u.Country = m.Country
 	u.PromoterTime = itime.Format(m.PromoterTime)
 	u.CreateTime = itime.Format(m.CreatedAt)
 	u.UpdateTime = itime.Format(m.UpdatedAt)
+
+	return nil
 }
