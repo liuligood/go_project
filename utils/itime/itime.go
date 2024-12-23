@@ -61,3 +61,25 @@ func CalculateDateRange(data string) (int64, int64) {
 
 	return startTime, endTime
 }
+
+func getLastWeekStartEnd() (startTime, endTime time.Time) {
+	now := time.Now().In(time.Local) // 使用本地时区的时间
+
+	// 找到本周一
+	today := now.Weekday()
+	offsetToMonday := int(today) - 1 // 如果今天是周一，则offset为0；如果是周日，offset为6
+	if offsetToMonday < 0 {
+		offsetToMonday = 6 // 如果今天是周日，那么需要向前移动6天到达上一个星期的周一
+	}
+
+	// 从当前时间减去偏移量得到本周一的时间，并设置为当天的00:00:00
+	startOfWeek := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()).AddDate(0, 0, -offsetToMonday)
+
+	// 上周的开始时间是本周一往前7天的午夜
+	startTime = startOfWeek.AddDate(0, 0, -7)
+
+	// 上周的结束时间是上周日的最后一秒
+	endTime = startTime.AddDate(0, 0, 6).Add(23*time.Hour + 59*time.Minute + 59*time.Second)
+
+	return
+}
