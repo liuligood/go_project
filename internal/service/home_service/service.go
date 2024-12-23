@@ -1,6 +1,7 @@
 package home_service
 
 import (
+	"crmeb_go/define"
 	"crmeb_go/internal/data/request"
 	"crmeb_go/internal/data/response"
 	"crmeb_go/internal/server"
@@ -85,5 +86,10 @@ func (h *HomeService) IndexDate(params *request.BaseServiceParams) (data *respon
 // ChartOrder 30天订单趋势
 func (h *HomeService) ChartOrder(params *request.BaseServiceParams) (data *map[string]interface{}, err error) {
 	storeOrderService := store_order_service.NewStoreOrderService(h.svc)
-	storeOrderService.GetOrderGroupByDate()
+	data, err = storeOrderService.GetOrderGroupByDate(&request.SearchDateParams{BaseServiceParams: *params, Date: define.AdminSearchDateLatelyThirty})
+	if err != nil {
+		return nil, err
+	}
+
+	return data, nil
 }

@@ -3,7 +3,6 @@ package store_order_repository
 import (
 	"context"
 	"crmeb_go/define"
-	"crmeb_go/internal/model"
 	"crmeb_go/internal/model/model_data"
 	"crmeb_go/internal/repository/base_repository"
 	"crmeb_go/internal/repository/gen"
@@ -36,6 +35,6 @@ func (s *StoreOrderRepository) FindPayOrderAmountByDate(ctx context.Context, sta
 	return data, err
 }
 
-func (s *StoreOrderRepository) FindOrderGroupByDate(ctx context.Context, start int64, end int64) (data []*model.StoreOrder, err error) {
+func (s *StoreOrderRepository) FindOrderGroupByDate(ctx context.Context, start int64, end int64) (data []*model_data.EveryDateResp, err error) {
 	return s.Gen.StoreOrder.WithContext(ctx).Debug().QueryOrderGroupByDate(&model_data.DateCondition{Start: start, End: end})
 }

@@ -391,12 +391,12 @@ type IStoreOrderDo interface {
 	UnderlyingDB() *gorm.DB
 	schema.Tabler
 
-	QueryOrderGroupByDate(condition *model_data.DateCondition) (result []*model.StoreOrder, err error)
+	QueryOrderGroupByDate(condition *model_data.DateCondition) (result []*model_data.EveryDateResp, err error)
 }
 
 // SELECT
 //
-//		 DATE(FROM_UNIXTIME(created_at)) AS orderId,
+//		 DATE(FROM_UNIXTIME(created_at)) AS every_date,
 //	 COUNT(id) AS id,
 //	 SUM(pay_price) AS pay_price
 //
@@ -405,7 +405,7 @@ type IStoreOrderDo interface {
 //		store_order
 //	{{where}}
 //		{{if condition.Start !=0}}
-//			store_order.created_at >= @condition.Start
+//			store_order.created_at >= @condition.Start AND
 //		{{end}}
 //		{{if condition.End !=0}}
 //			store_order.created_at <  @condition.End AND
@@ -413,17 +413,17 @@ type IStoreOrderDo interface {
 //		store_order.deleted_at = 0
 //	{{end}}
 //
-// GROUP BY orderId
-// ORDER BY orderId
-func (s storeOrderDo) QueryOrderGroupByDate(condition *model_data.DateCondition) (result []*model.StoreOrder, err error) {
+// GROUP BY every_date
+// ORDER BY every_date
+func (s storeOrderDo) QueryOrderGroupByDate(condition *model_data.DateCondition) (result []*model_data.EveryDateResp, err error) {
 	var params []interface{}
 
 	var generateSQL strings.Builder
-	generateSQL.WriteString("SELECT DATE(FROM_UNIXTIME(created_at)) AS orderId, COUNT(id) AS id, SUM(pay_price) AS pay_price FROM store_order ")
+	generateSQL.WriteString("SELECT DATE(FROM_UNIXTIME(created_at)) AS every_date, COUNT(id) AS id, SUM(pay_price) AS pay_price FROM store_order ")
 	var whereSQL0 strings.Builder
 	if condition.Start != 0 {
 		params = append(params, condition.Start)
-		whereSQL0.WriteString("store_order.created_at >= ? ")
+		whereSQL0.WriteString("store_order.created_at >= ? AND ")
 	}
 	if condition.End != 0 {
 		params = append(params, condition.End)
@@ -431,7 +431,7 @@ func (s storeOrderDo) QueryOrderGroupByDate(condition *model_data.DateCondition)
 	}
 	whereSQL0.WriteString("store_order.deleted_at = 0 ")
 	helper.JoinWhereBuilder(&generateSQL, whereSQL0)
-	generateSQL.WriteString("GROUP BY orderId ORDER BY orderId ")
+	generateSQL.WriteString("GROUP BY every_date ORDER BY every_date ")
 
 	var executeSQL *gorm.DB
 	executeSQL = s.UnderlyingDB().Raw(generateSQL.String(), params...).Find(&result) // ignore_security_alert

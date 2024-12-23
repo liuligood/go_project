@@ -1,9 +1,9 @@
 package store_order_service
 
 import (
+	"crmeb_go/define"
 	"crmeb_go/internal/data/request"
 	"crmeb_go/internal/data/response"
-	"crmeb_go/internal/model"
 	"crmeb_go/internal/server"
 	"crmeb_go/utils/itime"
 	"crmeb_go/utils/izap"
@@ -11,12 +11,13 @@ import (
 	"fmt"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
+	"time"
 )
 
 type StoreOrderServiceImpl interface {
 	GetOrderNumByDate(params *request.DateParams) (*response.DateResp, error)
 	GetPayOrderAmountByDate(params *request.DateParams) (*response.DateResp, error)
-	GetOrderGroupByDate(params *request.SearchDateParams) (*[]model.StoreOrder, error)
+	GetOrderGroupByDate(params *request.SearchDateParams) (*map[string]interface{}, error)
 }
 
 type StoreOrderService struct {
@@ -74,11 +75,7 @@ func (s *StoreOrderService) GetPayOrderAmountByDate(params *request.DateParams) 
 }
 
 func (s *StoreOrderService) GetOrderGroupByDate(params *request.SearchDateParams) (*map[string]interface{}, error) {
-	var (
-		start int64
-		end   int64
-	)
-
+	start, end := itime.CalculateDateRange(params.Date)
 	// 计算时间范围
 	data, err := s.svc.Repo.StoreOrderRepository.FindOrderGroupByDate(params.BaseServiceParams.Ctx, start, end)
 	if err != nil {
@@ -88,6 +85,20 @@ func (s *StoreOrderService) GetOrderGroupByDate(params *request.SearchDateParams
 	}
 
 	resp := make(map[string]interface{}, len(data))
+	priceMap := make(map[string]interface{}, len(data))
+	IdMap := make(map[string]interface{}, len(data))
+	for _, v := range data {
+		parse, err := time.Parse(time.RFC3339, v.EveryDate)
+		if err != nil {
+			return nil, errors.New("解析日期时间失败")
+		}
+		formatDate := parse.Format(define.SystemTimeMonthDayFormat)
 
+		priceMap[formatDate] = v.PayPrice
+		IdMap[formatDate] = v.ID
+	}
+
+	resp["price"] = priceMap
+	resp["quality"] = IdMap
 	return &resp, nil
 }
