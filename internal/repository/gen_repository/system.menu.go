@@ -5,7 +5,7 @@ import (
 	"crmeb_go/internal/model/model_data"
 )
 
-type FindPermissionByUserId interface {
+type SystemMenuQuerier interface {
 	//	SELECT m.* FROM system_menu as m
 	//  right join system_role_menu as  rm on rm.menu_id = m.id
 	//  right join system_role as  r on rm.rid = r.id
@@ -18,9 +18,7 @@ type FindPermissionByUserId interface {
 	// 		{{end}}
 	// GROUP BY m.id
 	FindPermissionByUserId(condition model_data.UserIdCondition) ([]*model.SystemMenu, error)
-}
 
-type QueryMenusByUserId interface {
 	//	SELECT m.* FROM system_menu as m
 	//  right join system_role_menu as  rm on rm.menu_id = m.id
 	//  right join system_role as  r on rm.rid = r.id

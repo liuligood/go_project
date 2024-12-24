@@ -4,7 +4,7 @@ import (
 	"crmeb_go/internal/model/model_data"
 )
 
-type QueryOrderGroupByDate interface {
+type StoreOrderQuerier interface {
 	//	SELECT
 	//	 DATE(FROM_UNIXTIME(created_at)) AS every_date,
 	//   COUNT(id) AS id,

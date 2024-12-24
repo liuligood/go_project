@@ -34,9 +34,9 @@ func CalculateDateRange(data string) (int64, int64) {
 		startTime = today.AddDate(0, 0, -int(today.Weekday())).Unix()
 		endTime = now.Unix()
 	case define.AdminSearchDatePreWeek:
-		date := today.AddDate(0, 0, -int(today.Weekday())+1)
-		startTime = date.Unix()
-		endTime = date.AddDate(0, 0, 6).Unix()
+		weekStart, weekEnd := getLastWeekStartEnd()
+		startTime = weekStart.Unix()
+		endTime = weekEnd.Unix()
 	case define.AdminSearchDateLatelyThirty:
 		date := today.AddDate(0, 0, -30)
 		startTime = date.Unix()
@@ -82,4 +82,32 @@ func getLastWeekStartEnd() (startTime, endTime time.Time) {
 	endTime = startTime.AddDate(0, 0, 6).Add(23*time.Hour + 59*time.Minute + 59*time.Second)
 
 	return
+}
+
+// GetListDate 获取某一时间段内的时间集合
+func GetListDate(data string) []string {
+	today := time.Now()
+	dateString := make([]string, 0, 32)
+	switch data {
+	case define.AdminSearchDateLatelyThirty:
+		startDate := today.AddDate(0, 0, -30)
+		for date := startDate; date.Unix() <= today.Unix(); date = date.Add(24 * time.Hour) {
+			dateString = append(dateString, date.Format("01-02"))
+		}
+	case define.AdminSearchDateMonth:
+		year, month, _ := today.Date()
+		location := today.Location()
+		firstOfMonth := time.Date(year, month, 1, 0, 0, 0, 0, location)
+		lastOfMonth := firstOfMonth.AddDate(0, 1, -1)
+		for day := firstOfMonth; day.Before(lastOfMonth) || day.Equal(lastOfMonth); day = day.AddDate(0, 0, 1) {
+			startOfDay := time.Date(day.Year(), day.Month(), day.Day(), 0, 0, 0, 0, location)
+			dateString = append(dateString, startOfDay.Format("01-02"))
+		}
+	case define.AdminSearchDateWeek:
+		dateString = []string{"星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"}
+	case define.AdminSearchDateYear:
+		dateString = []string{"一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"}
+	}
+
+	return dateString
 }

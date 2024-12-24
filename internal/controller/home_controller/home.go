@@ -37,3 +37,18 @@ func ChartOrder(svc *service.Container) gin.HandlerFunc {
 		c.JSON(http.StatusOK, ihttp.Data(res))
 	}
 }
+
+func ChartOrderInWeek(svc *service.Container) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		params := request.BaseServiceParams{}
+		params.SetSessionContext(c)
+
+		res, err := svc.HomeService.ChartOrderInWeek(&params)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, ihttp.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusOK, ihttp.Data(res))
+	}
+}

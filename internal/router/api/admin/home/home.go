@@ -10,4 +10,5 @@ func Register(app *gin.RouterGroup, appCxt *internal.AppContent) {
 	// 获取微服务token
 	app.GET("index", home_controller.IndexDate(appCxt.Service))
 	app.GET("chart/order", home_controller.ChartOrder(appCxt.Service))
+	app.GET("chart/order/week", home_controller.ChartOrderInWeek(appCxt.Service))
 }

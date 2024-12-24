@@ -4,16 +4,20 @@ import (
 	"crmeb_go/define"
 	"crmeb_go/internal/data/request"
 	"crmeb_go/internal/data/response"
+	"crmeb_go/internal/model/model_data"
 	"crmeb_go/internal/server"
 	"crmeb_go/internal/service/store_order_service"
 	"crmeb_go/internal/service/user_service"
 	"crmeb_go/internal/service/user_visit_record_service"
+	"crmeb_go/utils/itime"
+	"errors"
 	"time"
 )
 
 type HomeServiceImpl interface {
 	IndexDate(params *request.BaseServiceParams) (data *response.HomeRateResp, err error)
 	ChartOrder(params *request.BaseServiceParams) (data *map[string]interface{}, err error)
+	ChartOrderInWeek(params *request.BaseServiceParams) (data *map[string]interface{}, err error)
 }
 
 type HomeService struct {
@@ -86,10 +90,101 @@ func (h *HomeService) IndexDate(params *request.BaseServiceParams) (data *respon
 // ChartOrder 30天订单趋势
 func (h *HomeService) ChartOrder(params *request.BaseServiceParams) (data *map[string]interface{}, err error) {
 	storeOrderService := store_order_service.NewStoreOrderService(h.svc)
-	data, err = storeOrderService.GetOrderGroupByDate(&request.SearchDateParams{BaseServiceParams: *params, Date: define.AdminSearchDateLatelyThirty})
+	everyDateResp, err := storeOrderService.GetOrderGroupByDate(&request.SearchDateParams{BaseServiceParams: *params, Date: define.AdminSearchDateLatelyThirty})
 	if err != nil {
 		return nil, err
 	}
 
-	return data, nil
+	listDate := itime.GetListDate(define.AdminSearchDateLatelyThirty)
+	resp := make(map[string]interface{}, len(everyDateResp))
+	priceMap, idMap, err := h.getPriceAndIdMap(everyDateResp, define.AdminSearchDateLatelyThirty)
+	if err != nil {
+		return nil, err
+	}
+
+	h.setValue(listDate, priceMap)
+	h.setValue(listDate, idMap)
+	resp["price"] = priceMap
+	resp["quality"] = idMap
+	return &resp, nil
+}
+
+// ChartOrderInWeek 周订单量趋势
+func (h *HomeService) ChartOrderInWeek(params *request.BaseServiceParams) (data *map[string]interface{}, err error) {
+	storeOrderService := store_order_service.NewStoreOrderService(h.svc)
+	listDate := itime.GetListDate(define.AdminSearchDateWeek)
+
+	// 本周
+	weekData, err := storeOrderService.GetOrderGroupByDate(&request.SearchDateParams{BaseServiceParams: *params, Date: define.AdminSearchDateWeek})
+	if err != nil {
+		return nil, err
+	}
+
+	resp := make(map[string]interface{}, len(weekData))
+	priceMap, idMap, err := h.getPriceAndIdMap(weekData, define.AdminSearchDateWeek)
+	if err != nil {
+		return nil, err
+	}
+
+	h.setValue(listDate, priceMap)
+	h.setValue(listDate, idMap)
+
+	// 上周
+	preWeekData, err := storeOrderService.GetOrderGroupByDate(&request.SearchDateParams{BaseServiceParams: *params, Date: define.AdminSearchDatePreWeek})
+	if err != nil {
+		return nil, err
+	}
+
+	prePriceMap, preIdMap, err := h.getPriceAndIdMap(preWeekData, define.AdminSearchDateWeek)
+	if err != nil {
+		return nil, err
+	}
+
+	h.setValue(listDate, prePriceMap)
+	h.setValue(listDate, preIdMap)
+	resp["prePrice"] = prePriceMap
+	resp["preQuality"] = preIdMap
+	resp["price"] = priceMap
+	resp["quality"] = idMap
+	return &resp, nil
+}
+
+func (h *HomeService) setValue(listDate []string, priceMap map[string]interface{}) {
+	for _, v := range listDate {
+		if _, ok := priceMap[v]; ok {
+			continue
+		}
+		priceMap[v] = 0
+	}
+}
+
+func (h *HomeService) getPriceAndIdMap(weekData []*model_data.EveryDateResp, data string) (map[string]interface{}, map[string]interface{}, error) {
+	priceMap := make(map[string]interface{}, len(weekData))
+	idMap := make(map[string]interface{}, len(weekData))
+	for _, v := range weekData {
+		switch data {
+		case define.AdminSearchDateLatelyThirty:
+			parse, err := time.Parse(time.RFC3339, v.EveryDate)
+			if err != nil {
+				return nil, nil, errors.New("解析日期时间失败")
+			}
+			formatDate := parse.Format(define.SystemTimeMonthDayFormat)
+			priceMap[formatDate] = v.PayPrice
+			idMap[formatDate] = v.ID
+
+		case define.AdminSearchDateWeek:
+			parse, err := time.Parse(time.RFC3339, v.EveryDate)
+			if err != nil {
+				return nil, nil, errors.New("解析日期时间失败")
+			}
+			// 获取星期几
+			weekday := parse.Weekday()
+			weekdays := []string{"星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"}
+			weekdayStr := weekdays[weekday-1]
+			priceMap[weekdayStr] = v.PayPrice
+			idMap[weekdayStr] = v.ID
+		}
+	}
+
+	return priceMap, idMap, nil
 }
