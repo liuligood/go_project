@@ -11,13 +11,16 @@ import (
 	"crmeb_go/internal/service/user_visit_record_service"
 	"crmeb_go/utils/itime"
 	"errors"
+	"github.com/iancoleman/orderedmap"
 	"time"
 )
 
 type HomeServiceImpl interface {
 	IndexDate(params *request.BaseServiceParams) (data *response.HomeRateResp, err error)
-	ChartOrder(params *request.BaseServiceParams) (data *map[string]interface{}, err error)
-	ChartOrderInWeek(params *request.BaseServiceParams) (data *map[string]interface{}, err error)
+	ChartOrder(params *request.BaseServiceParams) (data *response.ChartOrder, err error)
+	ChartOrderInWeek(params *request.BaseServiceParams) (data *response.ChartOrder, err error)
+	ChartOrderInMonth(params *request.BaseServiceParams) (data *response.ChartOrder, err error)
+	ChartOrderInYear(params *request.BaseServiceParams) (data *response.ChartOrder, err error)
 }
 
 type HomeService struct {
@@ -88,31 +91,31 @@ func (h *HomeService) IndexDate(params *request.BaseServiceParams) (data *respon
 }
 
 // ChartOrder 30天订单趋势
-func (h *HomeService) ChartOrder(params *request.BaseServiceParams) (data *map[string]interface{}, err error) {
+func (h *HomeService) ChartOrder(params *request.BaseServiceParams) (data *response.ChartOrder, err error) {
 	storeOrderService := store_order_service.NewStoreOrderService(h.svc)
+	var resp response.ChartOrder
+	listDate := itime.GetListDate(define.AdminSearchDateLatelyThirty)
+
 	everyDateResp, err := storeOrderService.GetOrderGroupByDate(&request.SearchDateParams{BaseServiceParams: *params, Date: define.AdminSearchDateLatelyThirty})
 	if err != nil {
 		return nil, err
 	}
 
-	listDate := itime.GetListDate(define.AdminSearchDateLatelyThirty)
-	resp := make(map[string]interface{}, len(everyDateResp))
-	priceMap, idMap, err := h.getPriceAndIdMap(everyDateResp, define.AdminSearchDateLatelyThirty)
+	priceMap, idMap, err := h.getPriceAndIdMap(everyDateResp, define.AdminSearchDateLatelyThirty, listDate)
 	if err != nil {
 		return nil, err
 	}
 
-	h.setValue(listDate, priceMap)
-	h.setValue(listDate, idMap)
-	resp["price"] = priceMap
-	resp["quality"] = idMap
+	resp.Price = priceMap
+	resp.Quality = idMap
 	return &resp, nil
 }
 
 // ChartOrderInWeek 周订单量趋势
-func (h *HomeService) ChartOrderInWeek(params *request.BaseServiceParams) (data *map[string]interface{}, err error) {
+func (h *HomeService) ChartOrderInWeek(params *request.BaseServiceParams) (data *response.ChartOrder, err error) {
 	storeOrderService := store_order_service.NewStoreOrderService(h.svc)
 	listDate := itime.GetListDate(define.AdminSearchDateWeek)
+	var resp response.ChartOrder
 
 	// 本周
 	weekData, err := storeOrderService.GetOrderGroupByDate(&request.SearchDateParams{BaseServiceParams: *params, Date: define.AdminSearchDateWeek})
@@ -120,14 +123,10 @@ func (h *HomeService) ChartOrderInWeek(params *request.BaseServiceParams) (data 
 		return nil, err
 	}
 
-	resp := make(map[string]interface{}, len(weekData))
-	priceMap, idMap, err := h.getPriceAndIdMap(weekData, define.AdminSearchDateWeek)
+	priceMap, idMap, err := h.getPriceAndIdMap(weekData, define.AdminSearchDateWeek, listDate)
 	if err != nil {
 		return nil, err
 	}
-
-	h.setValue(listDate, priceMap)
-	h.setValue(listDate, idMap)
 
 	// 上周
 	preWeekData, err := storeOrderService.GetOrderGroupByDate(&request.SearchDateParams{BaseServiceParams: *params, Date: define.AdminSearchDatePreWeek})
@@ -135,32 +134,32 @@ func (h *HomeService) ChartOrderInWeek(params *request.BaseServiceParams) (data 
 		return nil, err
 	}
 
-	prePriceMap, preIdMap, err := h.getPriceAndIdMap(preWeekData, define.AdminSearchDateWeek)
+	prePriceMap, preIdMap, err := h.getPriceAndIdMap(preWeekData, define.AdminSearchDateWeek, listDate)
 	if err != nil {
 		return nil, err
 	}
 
-	h.setValue(listDate, prePriceMap)
-	h.setValue(listDate, preIdMap)
-	resp["prePrice"] = prePriceMap
-	resp["preQuality"] = preIdMap
-	resp["price"] = priceMap
-	resp["quality"] = idMap
+	resp.PrePrice = prePriceMap
+	resp.PreQuality = preIdMap
+	resp.Price = priceMap
+	resp.Quality = idMap
 	return &resp, nil
 }
 
-func (h *HomeService) setValue(listDate []string, priceMap map[string]interface{}) {
+func (h *HomeService) setValue(listDate []string, priceMap *orderedmap.OrderedMap) {
 	for _, v := range listDate {
-		if _, ok := priceMap[v]; ok {
+		if _, ok := priceMap.Get(v); ok {
 			continue
 		}
-		priceMap[v] = 0
+		priceMap.Set(v, 0)
 	}
 }
 
-func (h *HomeService) getPriceAndIdMap(weekData []*model_data.EveryDateResp, data string) (map[string]interface{}, map[string]interface{}, error) {
-	priceMap := make(map[string]interface{}, len(weekData))
-	idMap := make(map[string]interface{}, len(weekData))
+func (h *HomeService) getPriceAndIdMap(weekData []*model_data.EveryDateResp, data string, listDate []string) (*orderedmap.OrderedMap, *orderedmap.OrderedMap, error) {
+	priceMap := orderedmap.New()
+	idMap := orderedmap.New()
+	h.setValue(listDate, priceMap)
+	h.setValue(listDate, idMap)
 	for _, v := range weekData {
 		switch data {
 		case define.AdminSearchDateLatelyThirty:
@@ -168,23 +167,126 @@ func (h *HomeService) getPriceAndIdMap(weekData []*model_data.EveryDateResp, dat
 			if err != nil {
 				return nil, nil, errors.New("解析日期时间失败")
 			}
-			formatDate := parse.Format(define.SystemTimeMonthDayFormat)
-			priceMap[formatDate] = v.PayPrice
-			idMap[formatDate] = v.ID
 
+			formatDate := parse.Format(define.SystemTimeMonthDayFormat)
+			priceMap.Set(formatDate, v.PayPrice)
+			idMap.Set(formatDate, v.ID)
 		case define.AdminSearchDateWeek:
 			parse, err := time.Parse(time.RFC3339, v.EveryDate)
 			if err != nil {
 				return nil, nil, errors.New("解析日期时间失败")
 			}
+
 			// 获取星期几
 			weekday := parse.Weekday()
-			weekdays := []string{"星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"}
-			weekdayStr := weekdays[weekday-1]
-			priceMap[weekdayStr] = v.PayPrice
-			idMap[weekdayStr] = v.ID
+			weekdayList := []string{"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"}
+			weekdayStr := weekdayList[weekday]
+			priceMap.Set(weekdayStr, v.PayPrice)
+			idMap.Set(weekdayStr, v.ID)
+		case define.AdminSearchDateMonth:
+			parse, err := time.Parse(time.RFC3339, v.EveryDate)
+			if err != nil {
+				return nil, nil, errors.New("解析日期时间失败")
+			}
+
+			formatDate := parse.Format(define.SystemTimeDayFormat)
+			priceMap.Set(formatDate, v.PayPrice)
+			idMap.Set(formatDate, v.ID)
+		case define.AdminSearchDatePreMonth:
+			parse, err := time.Parse(time.RFC3339, v.EveryDate)
+			if err != nil {
+				return nil, nil, errors.New("解析日期时间失败")
+			}
+
+			formatDate := parse.Format(define.SystemTimeDayFormat)
+			priceMap.Set(formatDate, v.PayPrice)
+			idMap.Set(formatDate, v.ID)
+		case define.AdminSearchDateYear:
+			parse, err := time.Parse(time.RFC3339, v.EveryDate)
+			if err != nil {
+				return nil, nil, errors.New("解析日期时间失败")
+			}
+			// 获取是当月几号
+			month := parse.Month()
+			monthList := []string{"一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"}
+			monthStr := monthList[month-1]
+			priceMap.Set(monthStr, v.PayPrice)
+			idMap.Set(monthStr, v.ID)
 		}
 	}
 
 	return priceMap, idMap, nil
+}
+
+// ChartOrderInMonth 本月上月订单量趋势
+func (h *HomeService) ChartOrderInMonth(params *request.BaseServiceParams) (data *response.ChartOrder, err error) {
+	storeOrderService := store_order_service.NewStoreOrderService(h.svc)
+	listDate := itime.GetListDate(define.AdminSearchDateMonth)
+	var resp response.ChartOrder
+
+	// 本月
+	monthData, err := storeOrderService.GetOrderGroupByDate(&request.SearchDateParams{BaseServiceParams: *params, Date: define.AdminSearchDateMonth})
+	if err != nil {
+		return nil, err
+	}
+
+	priceMap, idMap, err := h.getPriceAndIdMap(monthData, define.AdminSearchDateMonth, listDate)
+
+	if err != nil {
+		return nil, err
+	}
+
+	// 上个月
+	preMonthData, err := storeOrderService.GetOrderGroupByDate(&request.SearchDateParams{BaseServiceParams: *params, Date: define.AdminSearchDatePreMonth})
+	if err != nil {
+		return nil, err
+	}
+
+	preListDate := itime.GetListDate(define.AdminSearchDatePreMonth)
+	prePriceMap, preIdMap, err := h.getPriceAndIdMap(preMonthData, define.AdminSearchDatePreMonth, preListDate)
+	if err != nil {
+		return nil, err
+	}
+
+	resp.PrePrice = prePriceMap
+	resp.PreQuality = preIdMap
+	resp.Price = priceMap
+	resp.Quality = idMap
+	return &resp, nil
+}
+
+// ChartOrderInYear 今年去年订单量趋势
+func (h *HomeService) ChartOrderInYear(params *request.BaseServiceParams) (data *response.ChartOrder, err error) {
+	storeOrderService := store_order_service.NewStoreOrderService(h.svc)
+	listDate := itime.GetListDate(define.AdminSearchDateYear)
+	var resp response.ChartOrder
+
+	// 今年
+	monthData, err := storeOrderService.GetOrderGroupByDate(&request.SearchDateParams{BaseServiceParams: *params, Date: define.AdminSearchDateYear})
+	if err != nil {
+		return nil, err
+	}
+
+	priceMap, idMap, err := h.getPriceAndIdMap(monthData, define.AdminSearchDateYear, listDate)
+
+	if err != nil {
+		return nil, err
+	}
+
+	// 去年
+	preMonthData, err := storeOrderService.GetOrderGroupByDate(&request.SearchDateParams{BaseServiceParams: *params, Date: define.AdminSearchDatePreYear})
+	if err != nil {
+		return nil, err
+	}
+
+	prePriceMap, preIdMap, err := h.getPriceAndIdMap(preMonthData, define.AdminSearchDateYear, listDate)
+	if err != nil {
+		return nil, err
+	}
+
+	resp.PrePrice = prePriceMap
+	resp.PreQuality = preIdMap
+	resp.Price = priceMap
+	resp.Quality = idMap
+	return &resp, nil
 }

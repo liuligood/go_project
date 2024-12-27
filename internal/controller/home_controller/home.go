@@ -52,3 +52,33 @@ func ChartOrderInWeek(svc *service.Container) gin.HandlerFunc {
 		c.JSON(http.StatusOK, ihttp.Data(res))
 	}
 }
+
+func ChartOrderInMonth(svc *service.Container) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		params := request.BaseServiceParams{}
+		params.SetSessionContext(c)
+
+		res, err := svc.HomeService.ChartOrderInMonth(&params)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, ihttp.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusOK, ihttp.Data(res))
+	}
+}
+
+func ChartOrderInYear(svc *service.Container) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		params := request.BaseServiceParams{}
+		params.SetSessionContext(c)
+
+		res, err := svc.HomeService.ChartOrderInYear(&params)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, ihttp.Error(err))
+			return
+		}
+
+		c.JSON(http.StatusOK, ihttp.Data(res))
+	}
+}

@@ -1,6 +1,9 @@
 package response
 
-import "github.com/shopspring/decimal"
+import (
+	"github.com/iancoleman/orderedmap"
+	"github.com/shopspring/decimal"
+)
 
 type HomeRateResp struct {
 	Sale                decimal.Decimal `json:"sales"`               // 今日销售额
@@ -18,4 +21,11 @@ type DateResp struct {
 	YesterdayData int64 // 咋天结果
 	NowSale       decimal.Decimal
 	YesterdaySale decimal.Decimal
+}
+
+type ChartOrder struct {
+	PrePrice   *orderedmap.OrderedMap `json:"prePrice"`
+	PreQuality *orderedmap.OrderedMap `json:"preQuality"`
+	Price      *orderedmap.OrderedMap `json:"price"`
+	Quality    *orderedmap.OrderedMap `json:"quality"`
 }

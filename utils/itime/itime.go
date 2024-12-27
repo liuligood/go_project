@@ -51,7 +51,13 @@ func CalculateDateRange(data string) (int64, int64) {
 		endDate := date.AddDate(0, 1, -1)
 		endTime = time.Date(endDate.Year(), endDate.Month(), endDate.Day(), 23, 59, 59, 59, endDate.Location()).Unix()
 	case define.AdminSearchDateYear:
+		startOfYear := time.Date(now.Year(), time.January, 1, 0, 0, 0, 0, now.Location())
+		startTime = startOfYear.Unix()
+		endTime = today.Unix()
 	case define.AdminSearchDatePreYear:
+		startOfYear := time.Date(now.Year()-1, time.January, 1, 0, 0, 0, 0, now.Location())
+		startTime = startOfYear.Unix()
+		endTime = today.Unix()
 	default:
 		// 今天0点
 		startTime = time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()).Unix()
@@ -101,7 +107,16 @@ func GetListDate(data string) []string {
 		lastOfMonth := firstOfMonth.AddDate(0, 1, -1)
 		for day := firstOfMonth; day.Before(lastOfMonth) || day.Equal(lastOfMonth); day = day.AddDate(0, 0, 1) {
 			startOfDay := time.Date(day.Year(), day.Month(), day.Day(), 0, 0, 0, 0, location)
-			dateString = append(dateString, startOfDay.Format("01-02"))
+			dateString = append(dateString, startOfDay.Format("2"))
+		}
+	case define.AdminSearchDatePreMonth:
+		year, month, _ := today.Date()
+		location := today.Location()
+		firstOfMonth := time.Date(year, month-1, 1, 0, 0, 0, 0, location)
+		lastOfMonth := firstOfMonth.AddDate(0, 1, -1)
+		for day := firstOfMonth; day.Before(lastOfMonth) || day.Equal(lastOfMonth); day = day.AddDate(0, 0, 1) {
+			startOfDay := time.Date(day.Year(), day.Month(), day.Day(), 0, 0, 0, 0, location)
+			dateString = append(dateString, startOfDay.Format("2"))
 		}
 	case define.AdminSearchDateWeek:
 		dateString = []string{"星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"}
