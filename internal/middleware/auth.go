@@ -43,7 +43,7 @@ func ApiAuthVisitorMiddleWare(svc *server.SvcContext) gin.HandlerFunc {
 
 		// 存放登录信息到会话上下文
 		sessionContext := session_context.GetSessionContext(c)
-		sessionContext.LoginUserInfo = &session.LoginUserInfo{UserId: parseToken.UserId, Roles: parseToken.Roles}
+		sessionContext.LoginUserInfo = &session.LoginUserInfo{UserId: parseToken.UserId, Roles: parseToken.Roles, ClientIp: c.ClientIP()}
 		c.Set(define.SystemSessionContext, sessionContext)
 
 		c.Next()

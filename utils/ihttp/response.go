@@ -101,7 +101,7 @@ func Paginate[T any](list []T, total, page, pageSize int64) Response {
 		"count":     len(list),
 		"total":     total,
 		"page":      page,
-		"limit":     pageSize,
+		"pageSize":  pageSize,
 		"totalPage": calcTotalPage(total, pageSize),
 		"list":      list,
 	}

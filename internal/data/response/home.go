@@ -24,8 +24,8 @@ type DateResp struct {
 }
 
 type ChartOrder struct {
-	PrePrice   *orderedmap.OrderedMap `json:"prePrice"`
-	PreQuality *orderedmap.OrderedMap `json:"preQuality"`
-	Price      *orderedmap.OrderedMap `json:"price"`
-	Quality    *orderedmap.OrderedMap `json:"quality"`
+	PrePrice   *orderedmap.OrderedMap `json:"prePrice,omitempty"`
+	PreQuality *orderedmap.OrderedMap `json:"preQuality,omitempty"`
+	Price      *orderedmap.OrderedMap `json:"price,omitempty"`
+	Quality    *orderedmap.OrderedMap `json:"quality,omitempty"`
 }

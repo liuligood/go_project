@@ -1,6 +1,7 @@
 package admin_service
 
 import (
+	"crmeb_go/define"
 	"crmeb_go/internal/data/request"
 	"crmeb_go/internal/data/response"
 	"crmeb_go/internal/server"
@@ -8,6 +9,7 @@ import (
 	"crmeb_go/utils/imd5"
 	"crmeb_go/utils/izap"
 	"errors"
+	"go.uber.org/zap"
 )
 
 type LoginServiceImpl interface {
@@ -30,7 +32,7 @@ func (l *LoginService) Login(params *request.LoginParams) (resp *response.LoginR
 	}
 
 	// 校验用户名和密码
-	systemAdmin, err := l.svc.Repo.SystemAdminRepository.QueryAdminByAccount(params.Ctx, params.Account)
+	systemAdmin, err := l.svc.Repo.SystemAdminRepository.FindAdminByAccount(params.Ctx, params.Account)
 	if err != nil {
 		izap.Log.Error("用户名或密码错误")
 
@@ -46,6 +48,14 @@ func (l *LoginService) Login(params *request.LoginParams) (resp *response.LoginR
 	// 生成token
 	token, err := ijwt.GenerateToken(systemAdmin.ID, l.svc.Conf.JWT.AccessExpire, l.svc.Conf.JWT.AccessSecret, systemAdmin.Roles)
 	if err != nil {
+		return resp, err
+	}
+
+	// 更新最后登录信息
+	l.svc.Repo.SystemAdminRepository.UpdateSystemAdminIpCount(params.Ctx, systemAdmin.ID, params.Ctx.Value(define.SystemRequestHost).(string))
+	if err != nil {
+		izap.Log.Error("更新最后登录信息失败", zap.Error(err))
+
 		return resp, err
 	}
 

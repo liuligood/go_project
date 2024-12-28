@@ -66,7 +66,7 @@ func (h *HomeService) IndexDate(params *request.BaseServiceParams) (data *respon
 		return &resp, err
 	}
 
-	// 今日咋日注册用户数量
+	// 今日咋日订单数量
 	storeOrderService := store_order_service.NewStoreOrderService(h.svc)
 	orderNum, err := storeOrderService.GetOrderNumByDate(dateParams)
 	if err != nil {

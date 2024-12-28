@@ -36,8 +36,8 @@ func toContext(ginCtx *gin.Context) context.Context {
 	}
 
 	// host
-	if host, ok := requestCtx.Value("request_host").(string); ok {
-		newCtx = context.WithValue(newCtx, "request_host", host)
+	if host, ok := requestCtx.Value(define.SystemRequestHost).(string); ok {
+		newCtx = context.WithValue(newCtx, define.SystemRequestHost, host)
 	}
 
 	//// trace

@@ -77,7 +77,7 @@ func (p *program) run() {
 func main() {
 	// 定义服务配置
 	svcConfig := &service.Config{
-		Name:        "crmeb_gp",
+		Name:        "crmeb_go",
 		DisplayName: "personal mall project",
 		Description: "a fully functional mall project is worth learning",
 	}

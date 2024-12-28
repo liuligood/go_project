@@ -18,7 +18,8 @@ type SvcContext struct {
 }
 
 type LoginUserInfo struct {
-	UserId          int64    `json:"user_id,omitempty"` // 用户id
-	Roles           string   `json:"roles"`             // 用户权限
-	PermissionsList []string `json:"permissionsList"`   // 权限标识
+	UserId          int64    `json:"user_id,omitempty"`         // 用户id
+	Roles           string   `json:"roles,omitempty"`           // 用户权限
+	PermissionsList []string `json:"permissionsList,omitempty"` // 权限标识
+	ClientIp        string   `json:"client_ip,omitempty"`       // ip地址
 }

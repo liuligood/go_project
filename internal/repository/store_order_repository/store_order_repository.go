@@ -24,7 +24,7 @@ func (s *StoreOrderRepository) FindOrderNumByDate(ctx context.Context, start int
 }
 
 func (s *StoreOrderRepository) FindPayOrderAmountByDate(ctx context.Context, start int64, end int64) (data decimal.Decimal, err error) {
-	storeOrder, err := s.Gen.WithContext(ctx).StoreOrder.Select(s.Gen.StoreOrder.PayPrice).
+	storeOrder, err := s.Gen.WithContext(ctx).StoreOrder.Select(s.Gen.StoreOrder.PayPrice.Sum().As("pay_price")).
 		Where(s.Gen.StoreOrder.CreatedAt.Between(start, end), s.Gen.StoreOrder.Paid.Eq(define.StoreOrderPaidValid)).
 		First()
 

@@ -26,7 +26,7 @@ func NewLoginUserInfoService(svc *server.SvcContext) *LoginUserInfoService {
 }
 
 func (l *LoginUserInfoService) LoginUserInfo(params *request.LoginUserInfoParams) (resp *response.LoginUserInfoResp, err error) {
-	systemAdmin, err := l.svc.Repo.SystemAdminRepository.QueryAdminById(params.BaseServiceParams.Ctx, params.BaseServiceParams.LoginUserInfo.UserId)
+	systemAdmin, err := l.svc.Repo.SystemAdminRepository.FindAdminById(params.BaseServiceParams.Ctx, params.BaseServiceParams.LoginUserInfo.UserId)
 	if err != nil {
 		izap.Log.Error("SystemAdminRepository.QueryAdminById", zap.Int64("userId", params.BaseServiceParams.LoginUserInfo.UserId), zap.Error(err))
 
