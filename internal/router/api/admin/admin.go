@@ -3,9 +3,9 @@ package admin
 import (
 	"crmeb_go/internal"
 	"crmeb_go/internal/controller/admin_controller"
-	"crmeb_go/internal/controller/system_store_staff_controller"
 	"crmeb_go/internal/controller/user_controller"
 	"crmeb_go/internal/router/api/admin/home"
+	"crmeb_go/internal/router/api/admin/system"
 	"crmeb_go/internal/router/api/admin/validate"
 	"github.com/gin-gonic/gin"
 )
@@ -18,9 +18,9 @@ func Register(app *gin.RouterGroup, appCxt *internal.AppContent) {
 	app.POST("login", admin_controller.Login(appCxt.Service))
 	app.GET("getAdminInfoByToken", admin_controller.LoginUserInfo(appCxt.Service))
 	app.GET("getMenus", admin_controller.GetMenus(appCxt.Service))
-	app.GET("system/store/staff/list", system_store_staff_controller.SystemStaffList(appCxt.Service))
 
 	// 授权路由
 	validate.Register(app.Group("/validate"), appCxt)
 	home.Register(app.Group("/statistics/home"), appCxt)
+	system.Register(app.Group("/system"), appCxt)
 }

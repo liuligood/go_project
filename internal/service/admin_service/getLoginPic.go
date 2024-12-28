@@ -46,15 +46,15 @@ func (a *GetLoginPicService) GetLoginPic(params *request.GetLoginPicParams) (*re
 		}
 
 		if systemConfigInfo.Name == define.AdminLoginBgPic {
-			data.BackgroundImage = a.svc.Conf.PictureUrl + systemConfigInfo.Value
+			data.BackgroundImage = systemConfigInfo.Value
 		}
 
 		if systemConfigInfo.Name == define.AdminSitLogoLeftTop {
-			data.Logo = a.svc.Conf.PictureUrl + systemConfigInfo.Value
+			data.Logo = systemConfigInfo.Value
 		}
 
 		if systemConfigInfo.Name == define.AdminSiteLogoLogin {
-			data.LoginLogo = a.svc.Conf.PictureUrl + systemConfigInfo.Value
+			data.LoginLogo = systemConfigInfo.Value
 		}
 	}
 

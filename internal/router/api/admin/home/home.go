@@ -13,4 +13,5 @@ func Register(app *gin.RouterGroup, appCxt *internal.AppContent) {
 	app.GET("chart/order/week", home_controller.ChartOrderInWeek(appCxt.Service))
 	app.GET("chart/order/month", home_controller.ChartOrderInMonth(appCxt.Service))
 	app.GET("chart/order/year", home_controller.ChartOrderInYear(appCxt.Service))
+	app.GET("chart/user", home_controller.ChartUser(appCxt.Service))
 }

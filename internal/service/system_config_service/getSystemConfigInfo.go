@@ -69,5 +69,11 @@ func (g *GetSystemConfigInfoService) GetSystemConfigInfo(params *request.GetSyst
 		return data, err
 	}
 
+	// 是图片的value
+	var pictureKey = []string{define.AdminSitLogoLeftTop, define.AdminLoginBgPic, define.AdminSiteLogoLogin, define.AdminSiteLogoSquare}
+	if lo.Contains(pictureKey, params.Name) {
+		value = []interface{}{g.svc.Conf.PictureUrl + value[0].(string)}
+	}
+
 	return &response.GetSystemConfigResult{Value: value[0].(string), Name: params.Name}, nil
 }

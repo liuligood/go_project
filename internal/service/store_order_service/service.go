@@ -16,7 +16,7 @@ import (
 type StoreOrderServiceImpl interface {
 	GetOrderNumByDate(params *request.DateParams) (*response.DateResp, error)
 	GetPayOrderAmountByDate(params *request.DateParams) (*response.DateResp, error)
-	GetOrderGroupByDate(params *request.SearchDateParams) ([]*model_data.EveryDateResp, error)
+	GetOrderGroupByDate(params *request.SearchDateParams) ([]*model_data.StoreOrderDateResp, error)
 }
 
 type StoreOrderService struct {
@@ -73,7 +73,7 @@ func (s *StoreOrderService) GetPayOrderAmountByDate(params *request.DateParams) 
 	return &data, nil
 }
 
-func (s *StoreOrderService) GetOrderGroupByDate(params *request.SearchDateParams) (data []*model_data.EveryDateResp, err error) {
+func (s *StoreOrderService) GetOrderGroupByDate(params *request.SearchDateParams) (data []*model_data.StoreOrderDateResp, err error) {
 	start, end := itime.CalculateDateRange(params.Date)
 	// 计算时间范围
 	data, err = s.svc.Repo.StoreOrderRepository.FindOrderGroupByDate(params.BaseServiceParams.Ctx, start, end)

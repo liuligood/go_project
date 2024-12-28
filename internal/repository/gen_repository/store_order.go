@@ -22,5 +22,5 @@ type StoreOrderQuerier interface {
 	// 	{{end}}
 	// GROUP BY every_date
 	// ORDER BY every_date
-	QueryOrderGroupByDate(condition *model_data.DateCondition) ([]*model_data.EveryDateResp, error)
+	QueryOrderGroupByDate(condition *model_data.DateCondition) ([]*model_data.StoreOrderDateResp, error)
 }

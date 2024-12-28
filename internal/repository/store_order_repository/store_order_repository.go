@@ -35,6 +35,6 @@ func (s *StoreOrderRepository) FindPayOrderAmountByDate(ctx context.Context, sta
 	return data, err
 }
 
-func (s *StoreOrderRepository) FindOrderGroupByDate(ctx context.Context, start int64, end int64) (data []*model_data.EveryDateResp, err error) {
-	return s.Gen.StoreOrder.WithContext(ctx).Debug().QueryOrderGroupByDate(&model_data.DateCondition{Start: start, End: end})
+func (s *StoreOrderRepository) FindOrderGroupByDate(ctx context.Context, start int64, end int64) (data []*model_data.StoreOrderDateResp, err error) {
+	return s.Gen.StoreOrder.WithContext(ctx).QueryOrderGroupByDate(&model_data.DateCondition{Start: start, End: end})
 }

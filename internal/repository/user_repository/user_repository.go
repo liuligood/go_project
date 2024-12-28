@@ -3,6 +3,7 @@ package user_repository
 import (
 	"context"
 	"crmeb_go/internal/model"
+	"crmeb_go/internal/model/model_data"
 	"crmeb_go/internal/repository/base_repository"
 	"crmeb_go/internal/repository/gen"
 	"gorm.io/gorm"
@@ -36,6 +37,10 @@ func (u *UserRepository) FindListById(ctx context.Context, userIdList []int64) (
 	return u.Gen.User.WithContext(ctx).Where(u.Gen.User.UID.In(userIdList...)).Find()
 }
 
-func (u *UserRepository) GetRegisterNumByDate(ctx context.Context, start, end int64) (data int64, err error) {
+func (u *UserRepository) FindRegisterNumByDate(ctx context.Context, start, end int64) (data int64, err error) {
 	return u.Gen.User.WithContext(ctx).Where(u.Gen.User.CreatedAt.Between(start, end)).Count()
+}
+
+func (u *UserRepository) FindAddUserCountGroupDate(ctx context.Context, start, end int64) (data []*model_data.UserDateResp, err error) {
+	return u.Gen.User.WithContext(ctx).GetAddUserCountGroupDate(&model_data.DateCondition{Start: start, End: end})
 }

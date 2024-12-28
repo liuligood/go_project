@@ -391,7 +391,7 @@ type IStoreOrderDo interface {
 	UnderlyingDB() *gorm.DB
 	schema.Tabler
 
-	QueryOrderGroupByDate(condition *model_data.DateCondition) (result []*model_data.EveryDateResp, err error)
+	QueryOrderGroupByDate(condition *model_data.DateCondition) (result []*model_data.StoreOrderDateResp, err error)
 }
 
 // SELECT
@@ -415,7 +415,7 @@ type IStoreOrderDo interface {
 //
 // GROUP BY every_date
 // ORDER BY every_date
-func (s storeOrderDo) QueryOrderGroupByDate(condition *model_data.DateCondition) (result []*model_data.EveryDateResp, err error) {
+func (s storeOrderDo) QueryOrderGroupByDate(condition *model_data.DateCondition) (result []*model_data.StoreOrderDateResp, err error) {
 	var params []interface{}
 
 	var generateSQL strings.Builder

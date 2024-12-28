@@ -4,6 +4,7 @@ const (
 	AdminLoginBgPic           = "admin_login_bg_pic"
 	AdminSitLogoLeftTop       = "site_logo_lefttop" // 登录页LOGO
 	AdminSiteLogoLogin        = "site_logo_login"
+	AdminSiteLogoSquare       = "site_logo_square"
 	AdminLoginBannerImageList = 72          // 后台登录页面轮播图
 	AdminUserId               = "user_id"   // token user_id 标识
 	AdminExpireAt             = "expire_at" // token过期时间

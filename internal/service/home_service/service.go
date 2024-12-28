@@ -21,6 +21,7 @@ type HomeServiceImpl interface {
 	ChartOrderInWeek(params *request.BaseServiceParams) (data *response.ChartOrder, err error)
 	ChartOrderInMonth(params *request.BaseServiceParams) (data *response.ChartOrder, err error)
 	ChartOrderInYear(params *request.BaseServiceParams) (data *response.ChartOrder, err error)
+	ChartUser(params *request.BaseServiceParams) (data *orderedmap.OrderedMap, err error)
 }
 
 type HomeService struct {
@@ -155,7 +156,7 @@ func (h *HomeService) setValue(listDate []string, priceMap *orderedmap.OrderedMa
 	}
 }
 
-func (h *HomeService) getPriceAndIdMap(weekData []*model_data.EveryDateResp, data string, listDate []string) (*orderedmap.OrderedMap, *orderedmap.OrderedMap, error) {
+func (h *HomeService) getPriceAndIdMap(weekData []*model_data.StoreOrderDateResp, data string, listDate []string) (*orderedmap.OrderedMap, *orderedmap.OrderedMap, error) {
 	priceMap := orderedmap.New()
 	idMap := orderedmap.New()
 	h.setValue(listDate, priceMap)
@@ -289,4 +290,29 @@ func (h *HomeService) ChartOrderInYear(params *request.BaseServiceParams) (data 
 	resp.Price = priceMap
 	resp.Quality = idMap
 	return &resp, nil
+}
+
+// ChartUser 用户曲线图
+func (h *HomeService) ChartUser(params *request.BaseServiceParams) (data *orderedmap.OrderedMap, err error) {
+	user := user_service.NewUserService(h.svc)
+
+	everyDateResp, err := user.GetAddUserCountGroupDate(&request.SearchDateParams{BaseServiceParams: *params, Date: define.AdminSearchDateLatelyThirty})
+	if err != nil {
+		return nil, err
+	}
+
+	resp := orderedmap.New()
+	listDate := itime.GetListDate(define.AdminSearchDateLatelyThirty)
+	h.setValue(listDate, resp)
+
+	for _, v := range everyDateResp {
+		parse, err := time.Parse(time.RFC3339, v.EveryDate)
+		if err != nil {
+			return nil, err
+		}
+		formatDate := parse.Format(define.SystemTimeMonthDayFormat)
+		resp.Set(formatDate, v.UID)
+	}
+
+	return resp, nil
 }

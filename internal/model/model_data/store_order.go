@@ -7,7 +7,7 @@ type DateCondition struct {
 	End   int64
 }
 
-type EveryDateResp struct {
+type StoreOrderDateResp struct {
 	model.StoreOrder
 	EveryDate string `gorm:"column:every_date;type:varchar(32);not null;comment:每天日期" json:"every_date"` // 每天日期
 }

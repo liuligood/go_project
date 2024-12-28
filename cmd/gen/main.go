@@ -107,7 +107,7 @@ func main() {
 }
 
 func customSql(g *gen.Generator, fieldOpts []gen.ModelOpt) {
-	g.ApplyInterface(func(gen_repository.Querier) {}, g.GenerateModel("user", fieldOpts...))
+	g.ApplyInterface(func(gen_repository.UserQuerier) {}, g.GenerateModel("user", fieldOpts...))
 	g.ApplyInterface(func(gen_repository.SystemMenuQuerier) {}, g.GenerateModel("system_menu", fieldOpts...))
 	g.ApplyInterface(func(gen_repository.StoreOrderQuerier) {}, g.GenerateModel("store_order", fieldOpts...))
 }
