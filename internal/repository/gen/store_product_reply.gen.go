@@ -28,10 +28,10 @@ func newStoreProductReply(db *gorm.DB, opts ...gen.DOOption) storeProductReply {
 	tableName := _storeProductReply.storeProductReplyDo.TableName()
 	_storeProductReply.ALL = field.NewAsterisk(tableName)
 	_storeProductReply.ID = field.NewInt64(tableName, "id")
+	_storeProductReply.ProductID = field.NewInt64(tableName, "product_id")
 	_storeProductReply.UID = field.NewInt64(tableName, "uid")
 	_storeProductReply.Oid = field.NewInt64(tableName, "oid")
 	_storeProductReply.Unique = field.NewString(tableName, "unique")
-	_storeProductReply.ProductID = field.NewInt64(tableName, "product_id")
 	_storeProductReply.ReplyType = field.NewString(tableName, "reply_type")
 	_storeProductReply.ProductScore = field.NewInt64(tableName, "product_score")
 	_storeProductReply.ServiceScore = field.NewInt64(tableName, "service_score")
@@ -58,10 +58,10 @@ type storeProductReply struct {
 
 	ALL                  field.Asterisk
 	ID                   field.Int64  // 评论ID
+	ProductID            field.Int64  // 商品id
 	UID                  field.Int64  // 用户ID
 	Oid                  field.Int64  // 订单ID
 	Unique               field.String // 商品唯一id
-	ProductID            field.Int64  // 商品id
 	ReplyType            field.String // 某种商品类型(普通商品、秒杀商品）
 	ProductScore         field.Int64  // 商品分数
 	ServiceScore         field.Int64  // 服务分数
@@ -93,10 +93,10 @@ func (s storeProductReply) As(alias string) *storeProductReply {
 func (s *storeProductReply) updateTableName(table string) *storeProductReply {
 	s.ALL = field.NewAsterisk(table)
 	s.ID = field.NewInt64(table, "id")
+	s.ProductID = field.NewInt64(table, "product_id")
 	s.UID = field.NewInt64(table, "uid")
 	s.Oid = field.NewInt64(table, "oid")
 	s.Unique = field.NewString(table, "unique")
-	s.ProductID = field.NewInt64(table, "product_id")
 	s.ReplyType = field.NewString(table, "reply_type")
 	s.ProductScore = field.NewInt64(table, "product_score")
 	s.ServiceScore = field.NewInt64(table, "service_score")
@@ -141,10 +141,10 @@ func (s *storeProductReply) GetFieldByName(fieldName string) (field.OrderExpr, b
 func (s *storeProductReply) fillFieldMap() {
 	s.fieldMap = make(map[string]field.Expr, 19)
 	s.fieldMap["id"] = s.ID
+	s.fieldMap["product_id"] = s.ProductID
 	s.fieldMap["uid"] = s.UID
 	s.fieldMap["oid"] = s.Oid
 	s.fieldMap["unique"] = s.Unique
-	s.fieldMap["product_id"] = s.ProductID
 	s.fieldMap["reply_type"] = s.ReplyType
 	s.fieldMap["product_score"] = s.ProductScore
 	s.fieldMap["service_score"] = s.ServiceScore

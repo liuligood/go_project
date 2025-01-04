@@ -28,9 +28,9 @@ func newStoreProductLog(db *gorm.DB, opts ...gen.DOOption) storeProductLog {
 	tableName := _storeProductLog.storeProductLogDo.TableName()
 	_storeProductLog.ALL = field.NewAsterisk(tableName)
 	_storeProductLog.ID = field.NewInt64(tableName, "id")
-	_storeProductLog.Type = field.NewString(tableName, "type")
 	_storeProductLog.ProductID = field.NewInt64(tableName, "product_id")
 	_storeProductLog.UID = field.NewInt64(tableName, "uid")
+	_storeProductLog.Type = field.NewString(tableName, "type")
 	_storeProductLog.VisitNum = field.NewInt64(tableName, "visit_num")
 	_storeProductLog.CartNum = field.NewInt64(tableName, "cart_num")
 	_storeProductLog.OrderNum = field.NewInt64(tableName, "order_num")
@@ -41,7 +41,6 @@ func newStoreProductLog(db *gorm.DB, opts ...gen.DOOption) storeProductLog {
 	_storeProductLog.RefundNum = field.NewInt64(tableName, "refund_num")
 	_storeProductLog.RefundPrice = field.NewField(tableName, "refund_price")
 	_storeProductLog.CollectNum = field.NewInt64(tableName, "collect_num")
-	_storeProductLog.AddTime = field.NewInt64(tableName, "add_time")
 	_storeProductLog.CreatedAt = field.NewInt64(tableName, "created_at")
 	_storeProductLog.UpdatedAt = field.NewInt64(tableName, "updated_at")
 	_storeProductLog.DeletedAt = field.NewField(tableName, "deleted_at")
@@ -57,9 +56,9 @@ type storeProductLog struct {
 
 	ALL         field.Asterisk
 	ID          field.Int64  // 统计ID
-	Type        field.String // 类型visit,cart,order,pay,collect,refund
 	ProductID   field.Int64  // 商品ID
 	UID         field.Int64  // 用户ID
+	Type        field.String // 类型visit,cart,order,pay,collect,refund
 	VisitNum    field.Int64  // 是否浏览
 	CartNum     field.Int64  // 加入购物车数量
 	OrderNum    field.Int64  // 下单数量
@@ -70,7 +69,6 @@ type storeProductLog struct {
 	RefundNum   field.Int64  // 退款数量
 	RefundPrice field.Field  // 退款金额
 	CollectNum  field.Int64  // 收藏
-	AddTime     field.Int64  // 添加时间
 	CreatedAt   field.Int64  // 创建时间
 	UpdatedAt   field.Int64  // 修改时间
 	DeletedAt   field.Field  // 是否删除
@@ -91,9 +89,9 @@ func (s storeProductLog) As(alias string) *storeProductLog {
 func (s *storeProductLog) updateTableName(table string) *storeProductLog {
 	s.ALL = field.NewAsterisk(table)
 	s.ID = field.NewInt64(table, "id")
-	s.Type = field.NewString(table, "type")
 	s.ProductID = field.NewInt64(table, "product_id")
 	s.UID = field.NewInt64(table, "uid")
+	s.Type = field.NewString(table, "type")
 	s.VisitNum = field.NewInt64(table, "visit_num")
 	s.CartNum = field.NewInt64(table, "cart_num")
 	s.OrderNum = field.NewInt64(table, "order_num")
@@ -104,7 +102,6 @@ func (s *storeProductLog) updateTableName(table string) *storeProductLog {
 	s.RefundNum = field.NewInt64(table, "refund_num")
 	s.RefundPrice = field.NewField(table, "refund_price")
 	s.CollectNum = field.NewInt64(table, "collect_num")
-	s.AddTime = field.NewInt64(table, "add_time")
 	s.CreatedAt = field.NewInt64(table, "created_at")
 	s.UpdatedAt = field.NewInt64(table, "updated_at")
 	s.DeletedAt = field.NewField(table, "deleted_at")
@@ -136,11 +133,11 @@ func (s *storeProductLog) GetFieldByName(fieldName string) (field.OrderExpr, boo
 }
 
 func (s *storeProductLog) fillFieldMap() {
-	s.fieldMap = make(map[string]field.Expr, 18)
+	s.fieldMap = make(map[string]field.Expr, 17)
 	s.fieldMap["id"] = s.ID
-	s.fieldMap["type"] = s.Type
 	s.fieldMap["product_id"] = s.ProductID
 	s.fieldMap["uid"] = s.UID
+	s.fieldMap["type"] = s.Type
 	s.fieldMap["visit_num"] = s.VisitNum
 	s.fieldMap["cart_num"] = s.CartNum
 	s.fieldMap["order_num"] = s.OrderNum
@@ -151,7 +148,6 @@ func (s *storeProductLog) fillFieldMap() {
 	s.fieldMap["refund_num"] = s.RefundNum
 	s.fieldMap["refund_price"] = s.RefundPrice
 	s.fieldMap["collect_num"] = s.CollectNum
-	s.fieldMap["add_time"] = s.AddTime
 	s.fieldMap["created_at"] = s.CreatedAt
 	s.fieldMap["updated_at"] = s.UpdatedAt
 	s.fieldMap["deleted_at"] = s.DeletedAt

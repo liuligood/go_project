@@ -29,7 +29,7 @@ func newStoreProductAttrValue(db *gorm.DB, opts ...gen.DOOption) storeProductAtt
 	_storeProductAttrValue.ALL = field.NewAsterisk(tableName)
 	_storeProductAttrValue.ID = field.NewInt64(tableName, "id")
 	_storeProductAttrValue.ProductID = field.NewInt64(tableName, "product_id")
-	_storeProductAttrValue.Suk = field.NewString(tableName, "suk")
+	_storeProductAttrValue.Sku = field.NewString(tableName, "sku")
 	_storeProductAttrValue.Stock = field.NewInt64(tableName, "stock")
 	_storeProductAttrValue.Sales = field.NewInt64(tableName, "sales")
 	_storeProductAttrValue.Price = field.NewField(tableName, "price")
@@ -62,7 +62,7 @@ type storeProductAttrValue struct {
 	ALL          field.Asterisk
 	ID           field.Int64  // 主键
 	ProductID    field.Int64  // 商品ID
-	Suk          field.String // 商品属性索引值 (attr_value|attr_value[|....])
+	Sku          field.String // 商品属性索引值 (attr_value|attr_value[|....])
 	Stock        field.Int64  // 属性对应的库存
 	Sales        field.Int64  // 销量
 	Price        field.Field  // 属性金额
@@ -100,7 +100,7 @@ func (s *storeProductAttrValue) updateTableName(table string) *storeProductAttrV
 	s.ALL = field.NewAsterisk(table)
 	s.ID = field.NewInt64(table, "id")
 	s.ProductID = field.NewInt64(table, "product_id")
-	s.Suk = field.NewString(table, "suk")
+	s.Sku = field.NewString(table, "sku")
 	s.Stock = field.NewInt64(table, "stock")
 	s.Sales = field.NewInt64(table, "sales")
 	s.Price = field.NewField(table, "price")
@@ -151,7 +151,7 @@ func (s *storeProductAttrValue) fillFieldMap() {
 	s.fieldMap = make(map[string]field.Expr, 22)
 	s.fieldMap["id"] = s.ID
 	s.fieldMap["product_id"] = s.ProductID
-	s.fieldMap["suk"] = s.Suk
+	s.fieldMap["sku"] = s.Sku
 	s.fieldMap["stock"] = s.Stock
 	s.fieldMap["sales"] = s.Sales
 	s.fieldMap["price"] = s.Price

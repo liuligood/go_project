@@ -29,13 +29,13 @@ func newCategory(db *gorm.DB, opts ...gen.DOOption) category {
 	_category.ALL = field.NewAsterisk(tableName)
 	_category.ID = field.NewInt64(tableName, "id")
 	_category.Pid = field.NewInt64(tableName, "pid")
-	_category.Path = field.NewString(tableName, "path")
 	_category.Name = field.NewString(tableName, "name")
-	_category.Type = field.NewInt64(tableName, "type")
-	_category.URL = field.NewString(tableName, "url")
+	_category.Code = field.NewString(tableName, "code")
+	_category.Icon = field.NewString(tableName, "icon")
 	_category.Extra = field.NewString(tableName, "extra")
-	_category.Status = field.NewInt64(tableName, "status")
 	_category.Sort = field.NewInt64(tableName, "sort")
+	_category.CreatedBy = field.NewInt64(tableName, "created_by")
+	_category.UpdatedBy = field.NewInt64(tableName, "updated_by")
 	_category.CreatedAt = field.NewInt64(tableName, "created_at")
 	_category.UpdatedAt = field.NewInt64(tableName, "updated_at")
 	_category.DeletedAt = field.NewField(tableName, "deleted_at")
@@ -50,15 +50,15 @@ type category struct {
 	categoryDo categoryDo
 
 	ALL       field.Asterisk
-	ID        field.Int64
-	Pid       field.Int64  // 父级ID
-	Path      field.String // 路径
-	Name      field.String // 分类名称
-	Type      field.Int64  // 类型，1 产品分类，2 附件分类，3 文章分类， 4 设置分类， 5 菜单分类，6 配置分类， 7 秒杀配置
-	URL       field.String // 地址
-	Extra     field.String // 扩展字段 Jsos格式
-	Status    field.Int64  // 状态, 1正常，0失效
+	ID        field.Int64  // 主键
+	Pid       field.Int64  // 父id
+	Name      field.String // 名称
+	Code      field.String // 编码
+	Icon      field.String // 图标
+	Extra     field.String // json拓展
 	Sort      field.Int64  // 排序
+	CreatedBy field.Int64  // 创建时间
+	UpdatedBy field.Int64  // 修改时间
 	CreatedAt field.Int64  // 创建时间
 	UpdatedAt field.Int64  // 修改时间
 	DeletedAt field.Field  // 是否删除
@@ -80,13 +80,13 @@ func (c *category) updateTableName(table string) *category {
 	c.ALL = field.NewAsterisk(table)
 	c.ID = field.NewInt64(table, "id")
 	c.Pid = field.NewInt64(table, "pid")
-	c.Path = field.NewString(table, "path")
 	c.Name = field.NewString(table, "name")
-	c.Type = field.NewInt64(table, "type")
-	c.URL = field.NewString(table, "url")
+	c.Code = field.NewString(table, "code")
+	c.Icon = field.NewString(table, "icon")
 	c.Extra = field.NewString(table, "extra")
-	c.Status = field.NewInt64(table, "status")
 	c.Sort = field.NewInt64(table, "sort")
+	c.CreatedBy = field.NewInt64(table, "created_by")
+	c.UpdatedBy = field.NewInt64(table, "updated_by")
 	c.CreatedAt = field.NewInt64(table, "created_at")
 	c.UpdatedAt = field.NewInt64(table, "updated_at")
 	c.DeletedAt = field.NewField(table, "deleted_at")
@@ -117,13 +117,13 @@ func (c *category) fillFieldMap() {
 	c.fieldMap = make(map[string]field.Expr, 12)
 	c.fieldMap["id"] = c.ID
 	c.fieldMap["pid"] = c.Pid
-	c.fieldMap["path"] = c.Path
 	c.fieldMap["name"] = c.Name
-	c.fieldMap["type"] = c.Type
-	c.fieldMap["url"] = c.URL
+	c.fieldMap["code"] = c.Code
+	c.fieldMap["icon"] = c.Icon
 	c.fieldMap["extra"] = c.Extra
-	c.fieldMap["status"] = c.Status
 	c.fieldMap["sort"] = c.Sort
+	c.fieldMap["created_by"] = c.CreatedBy
+	c.fieldMap["updated_by"] = c.UpdatedBy
 	c.fieldMap["created_at"] = c.CreatedAt
 	c.fieldMap["updated_at"] = c.UpdatedAt
 	c.fieldMap["deleted_at"] = c.DeletedAt

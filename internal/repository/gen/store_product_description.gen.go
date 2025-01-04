@@ -27,10 +27,10 @@ func newStoreProductDescription(db *gorm.DB, opts ...gen.DOOption) storeProductD
 
 	tableName := _storeProductDescription.storeProductDescriptionDo.TableName()
 	_storeProductDescription.ALL = field.NewAsterisk(tableName)
+	_storeProductDescription.ID = field.NewInt64(tableName, "id")
 	_storeProductDescription.ProductID = field.NewInt64(tableName, "product_id")
 	_storeProductDescription.Description = field.NewString(tableName, "description")
 	_storeProductDescription.Type = field.NewInt64(tableName, "type")
-	_storeProductDescription.ID = field.NewInt64(tableName, "id")
 	_storeProductDescription.CreatedAt = field.NewInt64(tableName, "created_at")
 	_storeProductDescription.UpdatedAt = field.NewInt64(tableName, "updated_at")
 	_storeProductDescription.DeletedAt = field.NewField(tableName, "deleted_at")
@@ -45,13 +45,13 @@ type storeProductDescription struct {
 	storeProductDescriptionDo storeProductDescriptionDo
 
 	ALL         field.Asterisk
+	ID          field.Int64
 	ProductID   field.Int64  // 商品ID
 	Description field.String // 商品详情
 	Type        field.Int64  // 商品类型
-	ID          field.Int64
-	CreatedAt   field.Int64 // 创建时间
-	UpdatedAt   field.Int64 // 修改时间
-	DeletedAt   field.Field // 是否删除
+	CreatedAt   field.Int64  // 创建时间
+	UpdatedAt   field.Int64  // 修改时间
+	DeletedAt   field.Field  // 是否删除
 
 	fieldMap map[string]field.Expr
 }
@@ -68,10 +68,10 @@ func (s storeProductDescription) As(alias string) *storeProductDescription {
 
 func (s *storeProductDescription) updateTableName(table string) *storeProductDescription {
 	s.ALL = field.NewAsterisk(table)
+	s.ID = field.NewInt64(table, "id")
 	s.ProductID = field.NewInt64(table, "product_id")
 	s.Description = field.NewString(table, "description")
 	s.Type = field.NewInt64(table, "type")
-	s.ID = field.NewInt64(table, "id")
 	s.CreatedAt = field.NewInt64(table, "created_at")
 	s.UpdatedAt = field.NewInt64(table, "updated_at")
 	s.DeletedAt = field.NewField(table, "deleted_at")
@@ -104,10 +104,10 @@ func (s *storeProductDescription) GetFieldByName(fieldName string) (field.OrderE
 
 func (s *storeProductDescription) fillFieldMap() {
 	s.fieldMap = make(map[string]field.Expr, 7)
+	s.fieldMap["id"] = s.ID
 	s.fieldMap["product_id"] = s.ProductID
 	s.fieldMap["description"] = s.Description
 	s.fieldMap["type"] = s.Type
-	s.fieldMap["id"] = s.ID
 	s.fieldMap["created_at"] = s.CreatedAt
 	s.fieldMap["updated_at"] = s.UpdatedAt
 	s.fieldMap["deleted_at"] = s.DeletedAt

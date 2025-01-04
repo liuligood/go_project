@@ -18,14 +18,23 @@ import (
 var (
 	Q                       = new(Query)
 	Article                 *article
+	Brand                   *brand
 	CasbinRule              *casbinRule
 	Category                *category
 	Express                 *express
 	ShippingTemplates       *shippingTemplates
 	ShippingTemplatesFree   *shippingTemplatesFree
 	ShippingTemplatesRegion *shippingTemplatesRegion
+	Sku                     *sku
+	SkuAttribute            *skuAttribute
 	SmsRecord               *smsRecord
 	SmsTemplate             *smsTemplate
+	Spu                     *spu
+	SpuLog                  *spuLog
+	SpuLogistics            *spuLogistics
+	SpuPicture              *spuPicture
+	SpuService              *spuService
+	SpuStockStream          *spuStockStream
 	StoreBargain            *storeBargain
 	StoreBargainUser        *storeBargainUser
 	StoreBargainUserHelp    *storeBargainUserHelp
@@ -88,14 +97,23 @@ var (
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
 	Article = &Q.Article
+	Brand = &Q.Brand
 	CasbinRule = &Q.CasbinRule
 	Category = &Q.Category
 	Express = &Q.Express
 	ShippingTemplates = &Q.ShippingTemplates
 	ShippingTemplatesFree = &Q.ShippingTemplatesFree
 	ShippingTemplatesRegion = &Q.ShippingTemplatesRegion
+	Sku = &Q.Sku
+	SkuAttribute = &Q.SkuAttribute
 	SmsRecord = &Q.SmsRecord
 	SmsTemplate = &Q.SmsTemplate
+	Spu = &Q.Spu
+	SpuLog = &Q.SpuLog
+	SpuLogistics = &Q.SpuLogistics
+	SpuPicture = &Q.SpuPicture
+	SpuService = &Q.SpuService
+	SpuStockStream = &Q.SpuStockStream
 	StoreBargain = &Q.StoreBargain
 	StoreBargainUser = &Q.StoreBargainUser
 	StoreBargainUserHelp = &Q.StoreBargainUserHelp
@@ -159,14 +177,23 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
 		db:                      db,
 		Article:                 newArticle(db, opts...),
+		Brand:                   newBrand(db, opts...),
 		CasbinRule:              newCasbinRule(db, opts...),
 		Category:                newCategory(db, opts...),
 		Express:                 newExpress(db, opts...),
 		ShippingTemplates:       newShippingTemplates(db, opts...),
 		ShippingTemplatesFree:   newShippingTemplatesFree(db, opts...),
 		ShippingTemplatesRegion: newShippingTemplatesRegion(db, opts...),
+		Sku:                     newSku(db, opts...),
+		SkuAttribute:            newSkuAttribute(db, opts...),
 		SmsRecord:               newSmsRecord(db, opts...),
 		SmsTemplate:             newSmsTemplate(db, opts...),
+		Spu:                     newSpu(db, opts...),
+		SpuLog:                  newSpuLog(db, opts...),
+		SpuLogistics:            newSpuLogistics(db, opts...),
+		SpuPicture:              newSpuPicture(db, opts...),
+		SpuService:              newSpuService(db, opts...),
+		SpuStockStream:          newSpuStockStream(db, opts...),
 		StoreBargain:            newStoreBargain(db, opts...),
 		StoreBargainUser:        newStoreBargainUser(db, opts...),
 		StoreBargainUserHelp:    newStoreBargainUserHelp(db, opts...),
@@ -231,14 +258,23 @@ type Query struct {
 	db *gorm.DB
 
 	Article                 article
+	Brand                   brand
 	CasbinRule              casbinRule
 	Category                category
 	Express                 express
 	ShippingTemplates       shippingTemplates
 	ShippingTemplatesFree   shippingTemplatesFree
 	ShippingTemplatesRegion shippingTemplatesRegion
+	Sku                     sku
+	SkuAttribute            skuAttribute
 	SmsRecord               smsRecord
 	SmsTemplate             smsTemplate
+	Spu                     spu
+	SpuLog                  spuLog
+	SpuLogistics            spuLogistics
+	SpuPicture              spuPicture
+	SpuService              spuService
+	SpuStockStream          spuStockStream
 	StoreBargain            storeBargain
 	StoreBargainUser        storeBargainUser
 	StoreBargainUserHelp    storeBargainUserHelp
@@ -304,14 +340,23 @@ func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
 		db:                      db,
 		Article:                 q.Article.clone(db),
+		Brand:                   q.Brand.clone(db),
 		CasbinRule:              q.CasbinRule.clone(db),
 		Category:                q.Category.clone(db),
 		Express:                 q.Express.clone(db),
 		ShippingTemplates:       q.ShippingTemplates.clone(db),
 		ShippingTemplatesFree:   q.ShippingTemplatesFree.clone(db),
 		ShippingTemplatesRegion: q.ShippingTemplatesRegion.clone(db),
+		Sku:                     q.Sku.clone(db),
+		SkuAttribute:            q.SkuAttribute.clone(db),
 		SmsRecord:               q.SmsRecord.clone(db),
 		SmsTemplate:             q.SmsTemplate.clone(db),
+		Spu:                     q.Spu.clone(db),
+		SpuLog:                  q.SpuLog.clone(db),
+		SpuLogistics:            q.SpuLogistics.clone(db),
+		SpuPicture:              q.SpuPicture.clone(db),
+		SpuService:              q.SpuService.clone(db),
+		SpuStockStream:          q.SpuStockStream.clone(db),
 		StoreBargain:            q.StoreBargain.clone(db),
 		StoreBargainUser:        q.StoreBargainUser.clone(db),
 		StoreBargainUserHelp:    q.StoreBargainUserHelp.clone(db),
@@ -384,14 +429,23 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
 		db:                      db,
 		Article:                 q.Article.replaceDB(db),
+		Brand:                   q.Brand.replaceDB(db),
 		CasbinRule:              q.CasbinRule.replaceDB(db),
 		Category:                q.Category.replaceDB(db),
 		Express:                 q.Express.replaceDB(db),
 		ShippingTemplates:       q.ShippingTemplates.replaceDB(db),
 		ShippingTemplatesFree:   q.ShippingTemplatesFree.replaceDB(db),
 		ShippingTemplatesRegion: q.ShippingTemplatesRegion.replaceDB(db),
+		Sku:                     q.Sku.replaceDB(db),
+		SkuAttribute:            q.SkuAttribute.replaceDB(db),
 		SmsRecord:               q.SmsRecord.replaceDB(db),
 		SmsTemplate:             q.SmsTemplate.replaceDB(db),
+		Spu:                     q.Spu.replaceDB(db),
+		SpuLog:                  q.SpuLog.replaceDB(db),
+		SpuLogistics:            q.SpuLogistics.replaceDB(db),
+		SpuPicture:              q.SpuPicture.replaceDB(db),
+		SpuService:              q.SpuService.replaceDB(db),
+		SpuStockStream:          q.SpuStockStream.replaceDB(db),
 		StoreBargain:            q.StoreBargain.replaceDB(db),
 		StoreBargainUser:        q.StoreBargainUser.replaceDB(db),
 		StoreBargainUserHelp:    q.StoreBargainUserHelp.replaceDB(db),
@@ -454,14 +508,23 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 
 type queryCtx struct {
 	Article                 IArticleDo
+	Brand                   IBrandDo
 	CasbinRule              ICasbinRuleDo
 	Category                ICategoryDo
 	Express                 IExpressDo
 	ShippingTemplates       IShippingTemplatesDo
 	ShippingTemplatesFree   IShippingTemplatesFreeDo
 	ShippingTemplatesRegion IShippingTemplatesRegionDo
+	Sku                     ISkuDo
+	SkuAttribute            ISkuAttributeDo
 	SmsRecord               ISmsRecordDo
 	SmsTemplate             ISmsTemplateDo
+	Spu                     ISpuDo
+	SpuLog                  ISpuLogDo
+	SpuLogistics            ISpuLogisticsDo
+	SpuPicture              ISpuPictureDo
+	SpuService              ISpuServiceDo
+	SpuStockStream          ISpuStockStreamDo
 	StoreBargain            IStoreBargainDo
 	StoreBargainUser        IStoreBargainUserDo
 	StoreBargainUserHelp    IStoreBargainUserHelpDo
@@ -524,14 +587,23 @@ type queryCtx struct {
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
 		Article:                 q.Article.WithContext(ctx),
+		Brand:                   q.Brand.WithContext(ctx),
 		CasbinRule:              q.CasbinRule.WithContext(ctx),
 		Category:                q.Category.WithContext(ctx),
 		Express:                 q.Express.WithContext(ctx),
 		ShippingTemplates:       q.ShippingTemplates.WithContext(ctx),
 		ShippingTemplatesFree:   q.ShippingTemplatesFree.WithContext(ctx),
 		ShippingTemplatesRegion: q.ShippingTemplatesRegion.WithContext(ctx),
+		Sku:                     q.Sku.WithContext(ctx),
+		SkuAttribute:            q.SkuAttribute.WithContext(ctx),
 		SmsRecord:               q.SmsRecord.WithContext(ctx),
 		SmsTemplate:             q.SmsTemplate.WithContext(ctx),
+		Spu:                     q.Spu.WithContext(ctx),
+		SpuLog:                  q.SpuLog.WithContext(ctx),
+		SpuLogistics:            q.SpuLogistics.WithContext(ctx),
+		SpuPicture:              q.SpuPicture.WithContext(ctx),
+		SpuService:              q.SpuService.WithContext(ctx),
+		SpuStockStream:          q.SpuStockStream.WithContext(ctx),
 		StoreBargain:            q.StoreBargain.WithContext(ctx),
 		StoreBargainUser:        q.StoreBargainUser.WithContext(ctx),
 		StoreBargainUserHelp:    q.StoreBargainUserHelp.WithContext(ctx),
