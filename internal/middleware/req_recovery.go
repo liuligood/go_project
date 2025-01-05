@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"crmeb_go/utils/ierror"
+	"crmeb_go/utils/izap"
 	"encoding/json"
 	"errors"
 	"github.com/google/uuid"
@@ -100,6 +101,9 @@ func GinZapWithConfig(logger ZapLogger, conf *Config) gin.HandlerFunc {
 			}
 
 			trace := uuid.NewString()
+
+			izap.Log.WithValue(c, zap.String("trace", trace))
+
 			fields := []zapcore.Field{
 				zap.String("trace", trace),
 				zap.Int("status", c.Writer.Status()),

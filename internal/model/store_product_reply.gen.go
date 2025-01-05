@@ -15,7 +15,7 @@ type StoreProductReply struct {
 	UID                  int64                 `gorm:"column:uid;type:int unsigned;not null;comment:用户ID" json:"uid"`                                           // 用户ID
 	Oid                  int64                 `gorm:"column:oid;type:int unsigned;not null;comment:订单ID" json:"oid"`                                           // 订单ID
 	Unique               string                `gorm:"column:unique;type:varchar(32);not null;comment:商品唯一id" json:"unique"`                                    // 商品唯一id
-	ReplyType            string                `gorm:"column:reply_type;type:varchar(32);not null;default:product;comment:某种商品类型(普通商品、秒杀商品）" json:"reply_type"` // 某种商品类型(普通商品、秒杀商品）
+	ReplyType            string                `gorm:"column:reply_type;type:varchar(32);not null;default:product_service;comment:某种商品类型(普通商品、秒杀商品）" json:"reply_type"` // 某种商品类型(普通商品、秒杀商品）
 	ProductScore         int64                 `gorm:"column:product_score;type:tinyint unsigned;not null;comment:商品分数" json:"product_score"`                   // 商品分数
 	ServiceScore         int64                 `gorm:"column:service_score;type:tinyint unsigned;not null;comment:服务分数" json:"service_score"`                   // 服务分数
 	Comment              string                `gorm:"column:comment;type:varchar(512);not null;comment:评论内容" json:"comment"`                                   // 评论内容

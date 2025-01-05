@@ -4,56 +4,81 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-type CreateProduct struct {
-	ID            int64       `json:"id"`                              // 商品id
-	Image         string      `json:"image" binding:"required"`        // 商品图片
-	SliderImages  []string    `json:"sliderImages" binding:"required"` // 轮播图
-	SliderImage   string      `json:"sliderImage" binding:"required"`  // 轮播图
-	StoreName     string      `json:"storeName" binding:"required"`    // 商品名称
-	StoreInfo     string      `json:"storeInfo" binding:"required"`    // 商品简介
-	Keyword       string      `json:"keyword" binding:"required"`      // 关键字
-	CateID        string      `json:"cateId" binding:"required"`       // 分类id 逗号隔开
-	UnitName      string      `json:"unitName" binding:"required"`     // 单位名
-	Sort          int64       `json:"sort"`                            // 排序
-	IsHot         bool        `json:"isHot"`                           // 是否热卖
-	IsBenefit     bool        `json:"isBenefit"`                       // 是否优惠
-	IsBest        bool        `json:"isBest"`                          // 是否精品
-	IsNew         bool        `json:"isNew"`                           // 是否新品
-	IsGood        bool        `json:"isGood"`                          // 是否优品推荐
-	GiveIntegral  int64       `json:"giveIntegral"`                    // 获得积分
-	isSub         bool        `json:"isSub" binding:"required"`        // 是否单独分佣不能为空
-	Ficti         int64       `json:"ficti"`                           // 虚拟销量
-	TempID        int64       `json:"tempId" binding:"required"`       // 运费模板ID
-	SpecType      bool        `json:"specType"`                        // 规格 0单 1多
-	Activity      []string    `json:"activity"`                        // 活动显示排序 0=默认，1=秒杀，2=砍价，3=拼团
-	AttrList      []Attr      `json:"Attr"`                            // 商品属性
-	AttrValueList []AttrValue `json:"attrValue"`                       // 商品属性详情
-	Context       string      `json:"context"`                         // 商品描述
-	CouponIds     []int64     `json:"couponIds"`                       // 优惠卷id集合
-	FlatPattern   string      `json:"flatPattern"`                     // 展示图
+type CreateProductParam struct {
+	ID               int64          `json:"id"`                 // 主键
+	Name             string         `json:"name"`               // 商品名称
+	Title            string         `json:"title"`              // 标题
+	Description      string         `json:"description"`        // 商品简介
+	ServerID         int64          `json:"server_id"`          // 商家id
+	CategoryID       int64          `json:"category_id"`        // 分类id
+	BrandID          int64          `json:"brand_id"`           // 品牌id
+	ModelID          int64          `json:"model_id"`           // 型号id
+	Keyword          string         `json:"keyword"`            // 关键词
+	Status           int64          `json:"status"`             // 状态(1:上架中,2:待审核,3:商家下架,4:系统下架)
+	Sort             int64          `json:"sort"`               // 排序
+	Sign             int64          `json:"sign"`               // spu标志（位运算）
+	Scene            int64          `json:"scene"`              // 场景（位运算）
+	UnitName         string         `json:"unit_name"`          // 单位名称
+	Cover            string         `json:"cover"`              // 封面图
+	DownReason       string         `json:"down_reason"`        // 下架原因
+	Version          int64          `json:"version"`            // 版本
+	SkuList          []Sku          `json:"sku_list"`           // 套餐信息
+	SpuPictureList   []SpuPicture   `json:"spu_picture_list"`   // 商品图片信息
+	SpuServiceList   []SpuService   `json:"spu_service_list"`   // 商品服务信息
+	SpuLogisticsList []SpuLogistics `json:"spu_logistics_list"` // 商品物流信息
+
 }
 
-type AttrValue struct {
-	ProductId    int64           `json:"productId" default:"0" binding:"required"` // 商品ID|添加时为0，修改时为商品id
-	Stock        int             `json:"stock" binding:"required"`                 // 库存
-	Sku          string          `json:"sku"`                                      // sku|活动商品必传
-	Price        decimal.Decimal `json:"price" binding:"required"`                 // 规格属性金额
-	Image        string          `json:"image" binding:"required"`                 // 商品规格属性图片
-	Cost         decimal.Decimal `json:"cost" binding:"required"`                  // 成本价
-	OtPrice      decimal.Decimal `json:"otPrice" binding:"required"`               // 原价
-	Weight       decimal.Decimal `json:"weight" binding:"required"`                // 重量
-	Volume       decimal.Decimal `json:"volume" binding:"required"`                // 体积
-	Brokerage    decimal.Decimal `json:"brokerage" binding:"required"`             // 一级返佣
-	BrokerageTwo decimal.Decimal `json:"brokerageTwo" binding:"required"`          // 二级返佣
-	AttrValue    string          `json:"attrValue"`                                // 属性对应 {"尺码":"2XL","颜色":"DX027白色"}
-	BarCode      string          `json:"barCode"`                                  // 商品条码
-	Quota        int64           `json:"quota"`                                    // 活动限购数量|活动商品专用字段
-	QuotaShow    int64           `json:"quotaShow"`                                // 活动限购数量显示|活动商品专用字段,添加时不传
-	MinPrice     decimal.Decimal `json:"minPrice"`                                 // 砍价商品最低价|砍价专用
+type Sku struct {
+	ID               int64           `json:"id"`                 // 主键
+	SpuID            int64           `json:"spu_id"`             // 商品id
+	Stock            int64           `json:"stock"`              // 库存
+	Price            decimal.Decimal `json:"price"`              // 价格
+	Status           int64           `json:"status"`             // 状态(1:关闭,2:正常)
+	Sign             int64           `json:"sign"`               // 标志(位运算)
+	Cost             decimal.Decimal `json:"cost"`               // 成本价
+	Weight           decimal.Decimal `json:"weight"`             // 重量
+	Volume           decimal.Decimal `json:"volume"`             // 体积
+	SkuAttributeList []SkuAttribute  `json:"sku_attribute_list"` // 套餐属性
 }
 
-type Attr struct {
-	AttrName   string `json:"attrName"`
-	AttrValues string `json:"attrValues"`
-	ID         int    `json:"id"`
+type SkuAttribute struct {
+	ID    int64  `json:"id"` // 主键
+	SkuID int64  `json:"sku_id"`
+	Type  int64  `json:"type"`  // 类型
+	Title string `json:"title"` // 属性标题
+	Value string `json:"value"` // 属性值
+	Sort  int64  `json:"sort"`  // 排序
+	Sign  int64  `json:"sign"`  // 标志(位运算)
+}
+
+type SpuPicture struct {
+	ID      int64  `json:"id"`      // 主键
+	SpuID   int64  `json:"spu_id"`  // 商品id
+	Type    int64  `json:"type"`    // 图片类型(1:封面,2:视频)
+	Picture string `json:"picture"` // 图片/视频
+	Sort    int64  `json:"sort"`    // 排序
+}
+
+type SpuService struct {
+	ID        int64  `json:"id"`         // 主键
+	SpuID     int64  `json:"spu_id"`     // 商品id
+	ServiceID int64  `json:"service_id"` // 服务id
+	Type      int64  `json:"type"`       // 类型
+	Name      string `json:"name"`       // 服务名称
+}
+
+type SpuLogistics struct {
+	ID              int64           `json:"id"`                // 主键
+	SpuID           int64           `json:"spu_id"`            // 商品id
+	Type            int64           `json:"type"`              // 类型(1:寄出,2:寄回)
+	Province        string          `json:"province"`          // 省
+	City            string          `json:"city"`              // 市
+	Region          string          `json:"region"`            // 区/县
+	PayType         int64           ` json:"pay_type"`         // 支付类型(1-包邮,2-到付,3-运费模版)
+	Price           decimal.Decimal `json:"price"`             // 价格
+	TempID          int64           `json:"temp_id"`           // 运费模版id
+	ExpressWay      int64           `json:"express_way"`       // 快递方式
+	ServerAddressID int64           `json:"server_address_id"` // 商家地址id
+	AddService      int64           `json:"add_service"`       // 增值服务(位运算)
 }

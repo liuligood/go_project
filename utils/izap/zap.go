@@ -1,15 +1,24 @@
 package izap
 
 import (
+	"context"
 	"crmeb_go/config"
 	"crmeb_go/utils/idirectory"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"os"
+	"time"
 )
 
-var Log *zap.Logger
+const ctxLoggerKey = "zapLogger"
+
+var Log *Logger
+
+type Logger struct {
+	*zap.Logger
+}
 
 func NewZap(z config.Zap) {
 	// 判断是否有Director文件夹 没有就创建
@@ -33,5 +42,35 @@ func NewZap(z config.Zap) {
 		logger = logger.WithOptions(zap.AddCaller())
 	}
 
-	Log = logger
+	Log = &Logger{
+		logger,
+	}
+}
+
+func timeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+	// enc.AppendString(t.Format("2006-01-02 15:04:05"))
+	enc.AppendString(t.Format("2006-01-02 15:04:05.000"))
+}
+
+// WithValue Adds a field to the specified context
+func (l *Logger) WithValue(ctx context.Context, fields ...zapcore.Field) context.Context {
+	if c, ok := ctx.(*gin.Context); ok {
+		ctx = c.Request.Context()
+		c.Request = c.Request.WithContext(context.WithValue(ctx, ctxLoggerKey, l.WithContext(ctx).With(fields...)))
+		return c
+	}
+	return context.WithValue(ctx, ctxLoggerKey, l.WithContext(ctx).With(fields...))
+}
+
+// WithContext Returns a zap instance from the specified context
+func (l *Logger) WithContext(ctx context.Context) *Logger {
+	if c, ok := ctx.(*gin.Context); ok {
+		ctx = c.Request.Context()
+	}
+	zl := ctx.Value(ctxLoggerKey)
+	ctxLogger, ok := zl.(*zap.Logger)
+	if ok {
+		return &Logger{ctxLogger}
+	}
+	return l
 }

@@ -5,6 +5,7 @@ import (
 	"crmeb_go/internal/service/admin_service"
 	"crmeb_go/internal/service/article_service"
 	"crmeb_go/internal/service/home_service"
+	"crmeb_go/internal/service/product_service"
 	"crmeb_go/internal/service/store_order_service"
 	"crmeb_go/internal/service/system_config_service"
 	"crmeb_go/internal/service/system_group_data_service"
@@ -25,6 +26,7 @@ type Container struct {
 	HomeService             home_service.HomeServiceImpl
 	UserVisitRecordService  user_visit_record_service.UserVisitRecordServiceImpl
 	StoreOrderService       store_order_service.StoreOrderServiceImpl
+	ProductService          product_service.ProductServiceImpl
 }
 
 func Register(svc *server.SvcContext) *Container {
@@ -39,5 +41,6 @@ func Register(svc *server.SvcContext) *Container {
 		HomeService:             home_service.NewHomeService(svc),
 		UserVisitRecordService:  user_visit_record_service.NewUserVisitRecordService(svc),
 		StoreOrderService:       store_order_service.NewStoreOrderService(svc),
+		ProductService:          product_service.NewProductService(svc),
 	}
 }

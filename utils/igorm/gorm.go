@@ -117,7 +117,7 @@ func (db *DB) Config(prefix string, singular bool) *gorm.Config {
 		general = db.config.Mysql.GeneralDB
 	}
 
-	logger := NewGormZapLogger(izap.Log, general.LogLevel())
+	logger := NewGormZapLogger(izap.Log.Logger, general.LogLevel())
 
 	return &gorm.Config{
 		Logger: logger,
