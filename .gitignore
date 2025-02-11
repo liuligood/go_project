@@ -23,4 +23,4 @@ go.work
 /log/
 .idea
 config/xyj_config.yaml
-/internal/model/
+internal/model/
