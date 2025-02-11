@@ -13,15 +13,15 @@ const TableNameStoreBargainUserHelp = "store_bargain_user_help"
 
 // StoreBargainUserHelp 砍价用户帮助表
 type StoreBargainUserHelp struct {
-	ID            int64                 `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true;comment:砍价用户帮助表ID" json:"id"` // 砍价用户帮助表ID
-	UID           int64                 `gorm:"column:uid;type:int unsigned;comment:帮助的用户id" json:"uid"`                               // 帮助的用户id
-	BargainID     int64                 `gorm:"column:bargain_id;type:int unsigned;comment:砍价商品ID" json:"bargain_id"`                  // 砍价商品ID
-	BargainUserID int64                 `gorm:"column:bargain_user_id;type:int unsigned;comment:用户参与砍价表id" json:"bargain_user_id"`     // 用户参与砍价表id
-	Price         decimal.Decimal       `gorm:"column:price;type:decimal(8,2) unsigned;comment:帮助砍价多少金额" json:"price"`                 // 帮助砍价多少金额
-	AddTime       int64                 `gorm:"column:add_time;type:bigint unsigned;comment:添加时间" json:"add_time"`                     // 添加时间
-	CreatedAt     int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`        // 创建时间
-	UpdatedAt     int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`        // 修改时间
-	DeletedAt     soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                // 是否删除
+	ID            int64                 `gorm:"column:id;type:int(10) unsigned;primaryKey;autoIncrement:true;comment:砍价用户帮助表ID" json:"id"` // 砍价用户帮助表ID
+	UID           int64                 `gorm:"column:uid;type:int(10) unsigned;comment:帮助的用户id" json:"uid"`                               // 帮助的用户id
+	BargainID     int64                 `gorm:"column:bargain_id;type:int(10) unsigned;comment:砍价商品ID" json:"bargain_id"`                  // 砍价商品ID
+	BargainUserID int64                 `gorm:"column:bargain_user_id;type:int(10) unsigned;comment:用户参与砍价表id" json:"bargain_user_id"`     // 用户参与砍价表id
+	Price         decimal.Decimal       `gorm:"column:price;type:decimal(8,2) unsigned;comment:帮助砍价多少金额" json:"price"`                     // 帮助砍价多少金额
+	AddTime       int64                 `gorm:"column:add_time;type:bigint(20) unsigned;comment:添加时间" json:"add_time"`                     // 添加时间
+	CreatedAt     int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"`        // 创建时间
+	UpdatedAt     int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"`        // 修改时间
+	DeletedAt     soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`                 // 是否删除
 }
 
 // TableName StoreBargainUserHelp's table name

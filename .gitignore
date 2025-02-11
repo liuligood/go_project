@@ -22,5 +22,5 @@ go.work
 /config.*
 /log/
 .idea
-config/local_config.yaml
+config/xyj_config.yaml
 /internal/model/

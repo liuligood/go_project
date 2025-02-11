@@ -10,19 +10,19 @@ const TableNameUserExperienceRecord = "user_experience_record"
 
 // UserExperienceRecord 用户经验记录表
 type UserExperienceRecord struct {
-	ID         int64                 `gorm:"column:id;type:int;primaryKey;autoIncrement:true;comment:记录id" json:"id"`                                   // 记录id
-	UID        int64                 `gorm:"column:uid;type:int;not null;comment:用户uid" json:"uid"`                                                     // 用户uid
+	ID         int64                 `gorm:"column:id;type:int(11);primaryKey;autoIncrement:true;comment:记录id" json:"id"`                               // 记录id
+	UID        int64                 `gorm:"column:uid;type:int(11);not null;comment:用户uid" json:"uid"`                                                 // 用户uid
 	LinkID     string                `gorm:"column:link_id;type:varchar(32);not null;default:0;comment:关联id-orderNo,(sign,system默认为0）" json:"link_id"`  // 关联id-orderNo,(sign,system默认为0）
 	LinkType   string                `gorm:"column:link_type;type:varchar(32);not null;default:order;comment:关联类型（order,sign,system）" json:"link_type"` // 关联类型（order,sign,system）
-	Type       int64                 `gorm:"column:type;type:int;not null;default:1;comment:类型：1-增加，2-扣减" json:"type"`                                  // 类型：1-增加，2-扣减
+	Type       int64                 `gorm:"column:type;type:int(11);not null;default:1;comment:类型：1-增加，2-扣减" json:"type"`                              // 类型：1-增加，2-扣减
 	Title      string                `gorm:"column:title;type:varchar(64);not null;comment:标题" json:"title"`                                            // 标题
-	Experience int64                 `gorm:"column:experience;type:int;not null;comment:经验" json:"experience"`                                          // 经验
-	Balance    int64                 `gorm:"column:balance;type:int;not null;comment:剩余" json:"balance"`                                                // 剩余
+	Experience int64                 `gorm:"column:experience;type:int(11);not null;comment:经验" json:"experience"`                                      // 经验
+	Balance    int64                 `gorm:"column:balance;type:int(11);not null;comment:剩余" json:"balance"`                                            // 剩余
 	Mark       string                `gorm:"column:mark;type:varchar(512);not null;comment:备注" json:"mark"`                                             // 备注
 	Status     int64                 `gorm:"column:status;type:tinyint(1);not null;default:1;comment:状态：1-成功（保留字段）" json:"status"`                      // 状态：1-成功（保留字段）
-	CreatedAt  int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                            // 创建时间
-	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                            // 修改时间
-	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                                    // 是否删除
+	CreatedAt  int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"`                        // 创建时间
+	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"`                        // 修改时间
+	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`                                 // 是否删除
 }
 
 // TableName UserExperienceRecord's table name

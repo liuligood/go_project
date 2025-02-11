@@ -49,9 +49,13 @@ func newSkuAttribute(db *gorm.DB, opts ...gen.DOOption) skuAttribute {
 type skuAttribute struct {
 	skuAttributeDo skuAttributeDo
 
-	ALL       field.Asterisk
-	ID        field.Int64  // 主键
-	SkuID     field.Int64  // skuId
+	ALL field.Asterisk
+	ID  field.Int64 // 主键
+	/*
+		skuId
+
+	*/
+	SkuID     field.Int64
 	Type      field.Int64  // 类型
 	Title     field.String // 属性标题
 	Value     field.String // 属性值

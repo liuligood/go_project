@@ -10,15 +10,15 @@ const TableNameSystemConfig = "system_config"
 
 // SystemConfig 配置表
 type SystemConfig struct {
-	ID        int64                 `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true;comment:配置id" json:"id"` // 配置id
-	Name      string                `gorm:"column:name;type:varchar(255);not null;comment:字段名称" json:"name"`                  // 字段名称
-	Title     string                `gorm:"column:title;type:varchar(255);not null;comment:字段提示文字" json:"title"`              // 字段提示文字
-	FormID    int64                 `gorm:"column:form_id;type:int;comment:表单id" json:"form_id"`                              // 表单id
-	Value     string                `gorm:"column:value;type:varchar(5000);comment:值" json:"value"`                           // 值
-	Status    int64                 `gorm:"column:status;type:tinyint(1);comment:是否隐藏" json:"status"`                         // 是否隐藏
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`   // 创建时间
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`   // 修改时间
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`           // 是否删除
+	ID        int64                 `gorm:"column:id;type:int(10) unsigned;primaryKey;autoIncrement:true;comment:配置id" json:"id"` // 配置id
+	Name      string                `gorm:"column:name;type:varchar(255);not null;comment:字段名称" json:"name"`                      // 字段名称
+	Title     string                `gorm:"column:title;type:varchar(255);not null;comment:字段提示文字" json:"title"`                  // 字段提示文字
+	FormID    int64                 `gorm:"column:form_id;type:int(11);comment:表单id" json:"form_id"`                              // 表单id
+	Value     string                `gorm:"column:value;type:varchar(5000);comment:值" json:"value"`                               // 值
+	Status    int64                 `gorm:"column:status;type:tinyint(1);comment:是否隐藏" json:"status"`                             // 是否隐藏
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"`   // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"`   // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`            // 是否删除
 }
 
 // TableName SystemConfig's table name

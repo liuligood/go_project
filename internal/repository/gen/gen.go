@@ -21,6 +21,7 @@ var (
 	Brand                   *brand
 	CasbinRule              *casbinRule
 	Category                *category
+	Demo                    *demo
 	Express                 *express
 	ShippingTemplates       *shippingTemplates
 	ShippingTemplatesFree   *shippingTemplatesFree
@@ -100,6 +101,7 @@ func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	Brand = &Q.Brand
 	CasbinRule = &Q.CasbinRule
 	Category = &Q.Category
+	Demo = &Q.Demo
 	Express = &Q.Express
 	ShippingTemplates = &Q.ShippingTemplates
 	ShippingTemplatesFree = &Q.ShippingTemplatesFree
@@ -180,6 +182,7 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 		Brand:                   newBrand(db, opts...),
 		CasbinRule:              newCasbinRule(db, opts...),
 		Category:                newCategory(db, opts...),
+		Demo:                    newDemo(db, opts...),
 		Express:                 newExpress(db, opts...),
 		ShippingTemplates:       newShippingTemplates(db, opts...),
 		ShippingTemplatesFree:   newShippingTemplatesFree(db, opts...),
@@ -261,6 +264,7 @@ type Query struct {
 	Brand                   brand
 	CasbinRule              casbinRule
 	Category                category
+	Demo                    demo
 	Express                 express
 	ShippingTemplates       shippingTemplates
 	ShippingTemplatesFree   shippingTemplatesFree
@@ -343,6 +347,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		Brand:                   q.Brand.clone(db),
 		CasbinRule:              q.CasbinRule.clone(db),
 		Category:                q.Category.clone(db),
+		Demo:                    q.Demo.clone(db),
 		Express:                 q.Express.clone(db),
 		ShippingTemplates:       q.ShippingTemplates.clone(db),
 		ShippingTemplatesFree:   q.ShippingTemplatesFree.clone(db),
@@ -432,6 +437,7 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 		Brand:                   q.Brand.replaceDB(db),
 		CasbinRule:              q.CasbinRule.replaceDB(db),
 		Category:                q.Category.replaceDB(db),
+		Demo:                    q.Demo.replaceDB(db),
 		Express:                 q.Express.replaceDB(db),
 		ShippingTemplates:       q.ShippingTemplates.replaceDB(db),
 		ShippingTemplatesFree:   q.ShippingTemplatesFree.replaceDB(db),
@@ -511,6 +517,7 @@ type queryCtx struct {
 	Brand                   IBrandDo
 	CasbinRule              ICasbinRuleDo
 	Category                ICategoryDo
+	Demo                    IDemoDo
 	Express                 IExpressDo
 	ShippingTemplates       IShippingTemplatesDo
 	ShippingTemplatesFree   IShippingTemplatesFreeDo
@@ -590,6 +597,7 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		Brand:                   q.Brand.WithContext(ctx),
 		CasbinRule:              q.CasbinRule.WithContext(ctx),
 		Category:                q.Category.WithContext(ctx),
+		Demo:                    q.Demo.WithContext(ctx),
 		Express:                 q.Express.WithContext(ctx),
 		ShippingTemplates:       q.ShippingTemplates.WithContext(ctx),
 		ShippingTemplatesFree:   q.ShippingTemplatesFree.WithContext(ctx),

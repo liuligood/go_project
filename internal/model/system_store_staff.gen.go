@@ -10,17 +10,17 @@ const TableNameSystemStoreStaff = "system_store_staff"
 
 // SystemStoreStaff 门店店员表
 type SystemStoreStaff struct {
-	ID           int64                 `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
-	UID          int64                 `gorm:"column:uid;type:int unsigned;not null;comment:管理员id" json:"uid"`                        // 管理员id
-	Avatar       string                `gorm:"column:avatar;type:varchar(255);not null;comment:店员头像" json:"avatar"`                   // 店员头像
-	StoreID      int64                 `gorm:"column:store_id;type:int unsigned;not null;comment:门店id" json:"store_id"`               // 门店id
-	StaffName    string                `gorm:"column:staff_name;type:varchar(64);not null;comment:店员名称" json:"staff_name"`            // 店员名称
-	Phone        string                `gorm:"column:phone;type:char(15);not null;comment:手机号码" json:"phone"`                         // 手机号码
-	VerifyStatus int64                 `gorm:"column:verify_status;type:tinyint unsigned;not null;comment:核销开关" json:"verify_status"` // 核销开关
-	Status       int64                 `gorm:"column:status;type:tinyint unsigned;not null;default:1;comment:状态" json:"status"`       // 状态
-	CreatedAt    int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`        // 创建时间
-	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`        // 修改时间
-	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                // 是否删除
+	ID           int64                 `gorm:"column:id;type:int(10) unsigned;primaryKey;autoIncrement:true" json:"id"`
+	UID          int64                 `gorm:"column:uid;type:int(10) unsigned;not null;comment:管理员id" json:"uid"`                       // 管理员id
+	Avatar       string                `gorm:"column:avatar;type:varchar(255);not null;comment:店员头像" json:"avatar"`                      // 店员头像
+	StoreID      int64                 `gorm:"column:store_id;type:int(10) unsigned;not null;comment:门店id" json:"store_id"`              // 门店id
+	StaffName    string                `gorm:"column:staff_name;type:varchar(64);not null;comment:店员名称" json:"staff_name"`               // 店员名称
+	Phone        string                `gorm:"column:phone;type:char(15);not null;comment:手机号码" json:"phone"`                            // 手机号码
+	VerifyStatus int64                 `gorm:"column:verify_status;type:tinyint(3) unsigned;not null;comment:核销开关" json:"verify_status"` // 核销开关
+	Status       int64                 `gorm:"column:status;type:tinyint(3) unsigned;not null;default:1;comment:状态" json:"status"`       // 状态
+	CreatedAt    int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"`       // 创建时间
+	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"`       // 修改时间
+	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`                // 是否删除
 }
 
 // TableName SystemStoreStaff's table name

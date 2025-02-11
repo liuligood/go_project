@@ -13,18 +13,18 @@ const TableNameUserRecharge = "user_recharge"
 
 // UserRecharge 用户充值表
 type UserRecharge struct {
-	ID           int64                 `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
-	UID          int64                 `gorm:"column:uid;type:int;comment:充值用户UID" json:"uid"`                                             // 充值用户UID
+	ID           int64                 `gorm:"column:id;type:int(10) unsigned;primaryKey;autoIncrement:true" json:"id"`
+	UID          int64                 `gorm:"column:uid;type:int(11);comment:充值用户UID" json:"uid"`                                         // 充值用户UID
 	OrderID      string                `gorm:"column:order_id;type:varchar(32);comment:订单号" json:"order_id"`                               // 订单号
 	Price        decimal.Decimal       `gorm:"column:price;type:decimal(8,2);comment:充值金额" json:"price"`                                   // 充值金额
 	GivePrice    decimal.Decimal       `gorm:"column:give_price;type:decimal(8,2);not null;default:0.00;comment:购买赠送金额" json:"give_price"` // 购买赠送金额
 	RechargeType string                `gorm:"column:recharge_type;type:varchar(32);comment:充值类型" json:"recharge_type"`                    // 充值类型
 	Paid         int64                 `gorm:"column:paid;type:tinyint(1);comment:是否充值" json:"paid"`                                       // 是否充值
-	PayTime      int64                 `gorm:"column:pay_time;type:bigint" json:"pay_time"`
+	PayTime      int64                 `gorm:"column:pay_time;type:bigint(20)" json:"pay_time"`
 	RefundPrice  decimal.Decimal       `gorm:"column:refund_price;type:decimal(10,2);default:0.00;comment:退款金额" json:"refund_price"` // 退款金额
-	CreatedAt    int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`       // 创建时间
-	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`       // 修改时间
-	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`               // 是否删除
+	CreatedAt    int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"`   // 创建时间
+	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"`   // 修改时间
+	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`            // 是否删除
 }
 
 // TableName UserRecharge's table name

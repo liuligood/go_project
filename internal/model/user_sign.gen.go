@@ -14,16 +14,16 @@ const TableNameUserSign = "user_sign"
 
 // UserSign 签到记录表
 type UserSign struct {
-	ID        int64                 `gorm:"column:id;type:int;primaryKey;autoIncrement:true" json:"id"`
-	UID       int64                 `gorm:"column:uid;type:int;not null;comment:用户uid" json:"uid"`                          // 用户uid
-	Title     string                `gorm:"column:title;type:varchar(255);not null;comment:签到说明" json:"title"`              // 签到说明
-	Number    int64                 `gorm:"column:number;type:int;not null;comment:获得" json:"number"`                       // 获得
-	Balance   int64                 `gorm:"column:balance;type:int;not null;comment:剩余" json:"balance"`                     // 剩余
-	Type      int64                 `gorm:"column:type;type:tinyint(1);not null;default:1;comment:类型，1积分，2经验" json:"type"`  // 类型，1积分，2经验
-	CreateDay time.Time             `gorm:"column:create_day;type:date;not null;comment:签到日期" json:"create_day"`            // 签到日期
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
+	ID        int64                 `gorm:"column:id;type:int(11);primaryKey;autoIncrement:true" json:"id"`
+	UID       int64                 `gorm:"column:uid;type:int(11);not null;comment:用户uid" json:"uid"`                          // 用户uid
+	Title     string                `gorm:"column:title;type:varchar(255);not null;comment:签到说明" json:"title"`                  // 签到说明
+	Number    int64                 `gorm:"column:number;type:int(11);not null;comment:获得" json:"number"`                       // 获得
+	Balance   int64                 `gorm:"column:balance;type:int(11);not null;comment:剩余" json:"balance"`                     // 剩余
+	Type      int64                 `gorm:"column:type;type:tinyint(1);not null;default:1;comment:类型，1积分，2经验" json:"type"`      // 类型，1积分，2经验
+	CreateDay time.Time             `gorm:"column:create_day;type:date;not null;comment:签到日期" json:"create_day"`                // 签到日期
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
 }
 
 // TableName UserSign's table name

@@ -13,8 +13,8 @@ const TableNameUserExtract = "user_extract"
 
 // UserExtract 用户提现表
 type UserExtract struct {
-	ID           int64                 `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
-	UID          int64                 `gorm:"column:uid;type:int unsigned" json:"uid"`
+	ID           int64                 `gorm:"column:id;type:int(10) unsigned;primaryKey;autoIncrement:true" json:"id"`
+	UID          int64                 `gorm:"column:uid;type:int(10) unsigned" json:"uid"`
 	RealName     string                `gorm:"column:real_name;type:varchar(64);comment:名称" json:"real_name"`                                                   // 名称
 	ExtractType  string                `gorm:"column:extract_type;type:varchar(32);default:bank;comment:bank = 银行卡 alipay = 支付宝 weixin=微信" json:"extract_type"` // bank = 银行卡 alipay = 支付宝 weixin=微信
 	BankCode     string                `gorm:"column:bank_code;type:varchar(32);comment:银行卡" json:"bank_code"`                                                  // 银行卡
@@ -23,14 +23,14 @@ type UserExtract struct {
 	ExtractPrice decimal.Decimal       `gorm:"column:extract_price;type:decimal(8,2) unsigned;default:0.00;comment:提现金额" json:"extract_price"`                  // 提现金额
 	Mark         string                `gorm:"column:mark;type:varchar(512)" json:"mark"`
 	Balance      decimal.Decimal       `gorm:"column:balance;type:decimal(8,2) unsigned;default:0.00" json:"balance"`
-	FailMsg      string                `gorm:"column:fail_msg;type:varchar(128);comment:无效原因" json:"fail_msg"`                 // 无效原因
-	Status       int64                 `gorm:"column:status;type:tinyint;comment:-1 未通过 0 审核中 1 已提现" json:"status"`            // -1 未通过 0 审核中 1 已提现
-	Wechat       string                `gorm:"column:wechat;type:varchar(15);comment:微信号" json:"wechat"`                       // 微信号
-	BankName     string                `gorm:"column:bank_name;type:varchar(512);comment:银行名称" json:"bank_name"`               // 银行名称
-	QrcodeURL    string                `gorm:"column:qrcode_url;type:varchar(512);comment:微信收款二维码" json:"qrcode_url"`          // 微信收款二维码
-	CreatedAt    int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
-	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
-	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
+	FailMsg      string                `gorm:"column:fail_msg;type:varchar(128);comment:无效原因" json:"fail_msg"`                     // 无效原因
+	Status       int64                 `gorm:"column:status;type:tinyint(4);comment:-1 未通过 0 审核中 1 已提现" json:"status"`             // -1 未通过 0 审核中 1 已提现
+	Wechat       string                `gorm:"column:wechat;type:varchar(15);comment:微信号" json:"wechat"`                           // 微信号
+	BankName     string                `gorm:"column:bank_name;type:varchar(512);comment:银行名称" json:"bank_name"`                   // 银行名称
+	QrcodeURL    string                `gorm:"column:qrcode_url;type:varchar(512);comment:微信收款二维码" json:"qrcode_url"`              // 微信收款二维码
+	CreatedAt    int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt    int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt    soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
 }
 
 // TableName UserExtract's table name

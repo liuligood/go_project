@@ -56,7 +56,7 @@ func (p *program) run() {
 	flag.Parse()
 
 	var c config.Conf
-	*confFile = "config/local_config.yaml"
+	*confFile = "config/xyj_config.yaml"
 	iconfig.New(&c, *confFile)
 
 	// 初始化zap日志库

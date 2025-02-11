@@ -13,18 +13,18 @@ const TableNameShippingTemplatesFree = "shipping_templates_free"
 
 // ShippingTemplatesFree 运费模板包邮
 type ShippingTemplatesFree struct {
-	ID        int64                 `gorm:"column:id;type:int;primaryKey;autoIncrement:true;comment:编号" json:"id"`             // 编号
-	TempID    int64                 `gorm:"column:temp_id;type:int;not null;comment:模板ID" json:"temp_id"`                      // 模板ID
-	CityID    int64                 `gorm:"column:city_id;type:int;not null;comment:城市ID" json:"city_id"`                      // 城市ID
-	Title     string                `gorm:"column:title;type:text;comment:描述" json:"title"`                                    // 描述
-	Number    decimal.Decimal       `gorm:"column:number;type:decimal(10,2);not null;default:0.00;comment:包邮件数" json:"number"` // 包邮件数
-	Price     decimal.Decimal       `gorm:"column:price;type:decimal(10,2);not null;default:0.00;comment:包邮金额" json:"price"`   // 包邮金额
-	Type      int64                 `gorm:"column:type;type:tinyint(1);not null;default:1;comment:计费方式" json:"type"`           // 计费方式
-	Uniqid    string                `gorm:"column:uniqid;type:varchar(32);not null;comment:分组唯一值" json:"uniqid"`               // 分组唯一值
-	Status    int64                 `gorm:"column:status;type:tinyint(1);comment:是否无效" json:"status"`                          // 是否无效
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`    // 创建时间
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`    // 修改时间
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`            // 是否删除
+	ID        int64                 `gorm:"column:id;type:int(11);primaryKey;autoIncrement:true;comment:编号" json:"id"`          // 编号
+	TempID    int64                 `gorm:"column:temp_id;type:int(11);not null;comment:模板ID" json:"temp_id"`                   // 模板ID
+	CityID    int64                 `gorm:"column:city_id;type:int(11);not null;comment:城市ID" json:"city_id"`                   // 城市ID
+	Title     string                `gorm:"column:title;type:text;comment:描述" json:"title"`                                     // 描述
+	Number    decimal.Decimal       `gorm:"column:number;type:decimal(10,2);not null;default:0.00;comment:包邮件数" json:"number"`  // 包邮件数
+	Price     decimal.Decimal       `gorm:"column:price;type:decimal(10,2);not null;default:0.00;comment:包邮金额" json:"price"`    // 包邮金额
+	Type      int64                 `gorm:"column:type;type:tinyint(1);not null;default:1;comment:计费方式" json:"type"`            // 计费方式
+	Uniqid    string                `gorm:"column:uniqid;type:varchar(32);not null;comment:分组唯一值" json:"uniqid"`                // 分组唯一值
+	Status    int64                 `gorm:"column:status;type:tinyint(1);comment:是否无效" json:"status"`                           // 是否无效
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
 }
 
 // TableName ShippingTemplatesFree's table name

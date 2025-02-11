@@ -10,17 +10,17 @@ const TableNameStoreSeckillManger = "store_seckill_manger"
 
 // StoreSeckillManger mapped from table <store_seckill_manger>
 type StoreSeckillManger struct {
-	ID         int64                 `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true" json:"id"`
-	Name       string                `gorm:"column:name;type:varchar(255);comment:秒杀名称" json:"name"`                         // 秒杀名称
-	StartTime  int64                 `gorm:"column:start_time;type:int;comment:秒杀开始时间段" json:"start_time"`                   // 秒杀开始时间段
-	EndTime    int64                 `gorm:"column:end_time;type:int;comment:秒杀结束时间段" json:"end_time"`                       // 秒杀结束时间段
-	Img        string                `gorm:"column:img;type:text;comment:主图" json:"img"`                                     // 主图
-	SilderImgs string                `gorm:"column:silder_imgs;type:text;comment:轮播图" json:"silder_imgs"`                    // 轮播图
-	Sort       int64                 `gorm:"column:sort;type:int;comment:排序" json:"sort"`                                    // 排序
-	Status     int64                 `gorm:"column:status;type:int;comment:状态 0=关闭 1=开启" json:"status"`                      // 状态 0=关闭 1=开启
-	CreatedAt  int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
-	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
-	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
+	ID         int64                 `gorm:"column:id;type:int(10) unsigned;primaryKey;autoIncrement:true" json:"id"`
+	Name       string                `gorm:"column:name;type:varchar(255);comment:秒杀名称" json:"name"`                             // 秒杀名称
+	StartTime  int64                 `gorm:"column:start_time;type:int(11);comment:秒杀开始时间段" json:"start_time"`                   // 秒杀开始时间段
+	EndTime    int64                 `gorm:"column:end_time;type:int(11);comment:秒杀结束时间段" json:"end_time"`                       // 秒杀结束时间段
+	Img        string                `gorm:"column:img;type:text;comment:主图" json:"img"`                                         // 主图
+	SilderImgs string                `gorm:"column:silder_imgs;type:text;comment:轮播图" json:"silder_imgs"`                        // 轮播图
+	Sort       int64                 `gorm:"column:sort;type:int(11);comment:排序" json:"sort"`                                    // 排序
+	Status     int64                 `gorm:"column:status;type:int(11);comment:状态 0=关闭 1=开启" json:"status"`                      // 状态 0=关闭 1=开启
+	CreatedAt  int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
 }
 
 // TableName StoreSeckillManger's table name

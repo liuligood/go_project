@@ -10,18 +10,18 @@ const TableNameCategory = "category"
 
 // Category 分类表
 type Category struct {
-	ID        int64                 `gorm:"column:id;type:int;primaryKey;comment:主键" json:"id"`                             // 主键
-	Pid       int64                 `gorm:"column:pid;type:int unsigned;not null;comment:父id" json:"pid"`                   // 父id
-	Name      string                `gorm:"column:name;type:varchar(255);not null;comment:名称" json:"name"`                  // 名称
-	Code      string                `gorm:"column:code;type:char(16);not null;comment:编码" json:"code"`                      // 编码
-	Icon      string                `gorm:"column:icon;type:varchar(255);not null;comment:图标" json:"icon"`                  // 图标
-	Extra     string                `gorm:"column:extra;type:varchar(255);not null;comment:json拓展" json:"extra"`            // json拓展
-	Sort      int64                 `gorm:"column:sort;type:int unsigned;not null;comment:排序" json:"sort"`                  // 排序
-	CreatedBy int64                 `gorm:"column:created_by;type:int unsigned;not null;comment:创建时间" json:"created_by"`    // 创建时间
-	UpdatedBy int64                 `gorm:"column:updated_by;type:int unsigned;not null;comment:修改时间" json:"updated_by"`    // 修改时间
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
+	ID        int64                 `gorm:"column:id;type:int(11);primaryKey;comment:主键" json:"id"`                             // 主键
+	Pid       int64                 `gorm:"column:pid;type:int(10) unsigned;not null;comment:父id" json:"pid"`                   // 父id
+	Name      string                `gorm:"column:name;type:varchar(255);not null;comment:名称" json:"name"`                      // 名称
+	Code      string                `gorm:"column:code;type:char(16);not null;comment:编码" json:"code"`                          // 编码
+	Icon      string                `gorm:"column:icon;type:varchar(255);not null;comment:图标" json:"icon"`                      // 图标
+	Extra     string                `gorm:"column:extra;type:varchar(255);not null;comment:json拓展" json:"extra"`                // json拓展
+	Sort      int64                 `gorm:"column:sort;type:int(10) unsigned;not null;comment:排序" json:"sort"`                  // 排序
+	CreatedBy int64                 `gorm:"column:created_by;type:int(10) unsigned;not null;comment:创建时间" json:"created_by"`    // 创建时间
+	UpdatedBy int64                 `gorm:"column:updated_by;type:int(10) unsigned;not null;comment:修改时间" json:"updated_by"`    // 修改时间
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
 }
 
 // TableName Category's table name

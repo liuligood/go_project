@@ -10,12 +10,12 @@ const TableNameStoreOrderStatus = "store_order_status"
 
 // StoreOrderStatus 订单操作记录表
 type StoreOrderStatus struct {
-	Oid           int64                 `gorm:"column:oid;type:int unsigned;not null;comment:订单id" json:"oid"`                       // 订单id
+	Oid           int64                 `gorm:"column:oid;type:int(10) unsigned;not null;comment:订单id" json:"oid"`                   // 订单id
 	ChangeType    string                `gorm:"column:change_type;type:varchar(32);not null;comment:操作类型" json:"change_type"`        // 操作类型
 	ChangeMessage string                `gorm:"column:change_message;type:varchar(256);not null;comment:操作备注" json:"change_message"` // 操作备注
-	CreatedAt     int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`      // 创建时间
-	UpdatedAt     int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`      // 修改时间
-	DeletedAt     soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`              // 是否删除
+	CreatedAt     int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"`  // 创建时间
+	UpdatedAt     int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"`  // 修改时间
+	DeletedAt     soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`           // 是否删除
 }
 
 // TableName StoreOrderStatus's table name

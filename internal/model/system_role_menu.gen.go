@@ -10,11 +10,11 @@ const TableNameSystemRoleMenu = "system_role_menu"
 
 // SystemRoleMenu 角色菜单关联表
 type SystemRoleMenu struct {
-	Rid       int64                 `gorm:"column:rid;type:int;primaryKey;comment:角色id" json:"rid"`                         // 角色id
-	MenuID    int64                 `gorm:"column:menu_id;type:int;primaryKey;comment:权限id" json:"menu_id"`                 // 权限id
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
+	Rid       int64                 `gorm:"column:rid;type:int(11);primaryKey;comment:角色id" json:"rid"`                         // 角色id
+	MenuID    int64                 `gorm:"column:menu_id;type:int(11);primaryKey;comment:权限id" json:"menu_id"`                 // 权限id
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
 }
 
 // TableName SystemRoleMenu's table name

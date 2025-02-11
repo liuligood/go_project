@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-const MySQLDSN = "root:dazhou520@tcp(127.0.0.1:3306)/crmeb?charset=utf8mb4&parseTime=True"
+const MySQLDSN = "root:Aa598885684@tcp(127.0.0.1:3306)/go_project?charset=utf8mb4&parseTime=True"
 
 func connectDB(dsn string) *gorm.DB {
 	db, err := gorm.Open(mysql.Open(dsn))

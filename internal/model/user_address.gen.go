@@ -10,22 +10,22 @@ const TableNameUserAddress = "user_address"
 
 // UserAddress 用户地址表
 type UserAddress struct {
-	ID        int64                 `gorm:"column:id;type:mediumint unsigned;primaryKey;autoIncrement:true;comment:用户地址id" json:"id"` // 用户地址id
-	UID       int64                 `gorm:"column:uid;type:int unsigned;not null;comment:用户id" json:"uid"`                            // 用户id
-	RealName  string                `gorm:"column:real_name;type:varchar(32);not null;comment:收货人姓名" json:"real_name"`                // 收货人姓名
-	Phone     string                `gorm:"column:phone;type:varchar(16);not null;comment:收货人电话" json:"phone"`                        // 收货人电话
-	Province  string                `gorm:"column:province;type:varchar(64);not null;comment:收货人所在省" json:"province"`                 // 收货人所在省
-	City      string                `gorm:"column:city;type:varchar(64);not null;comment:收货人所在市" json:"city"`                         // 收货人所在市
-	CityID    int64                 `gorm:"column:city_id;type:int;not null;comment:城市id" json:"city_id"`                             // 城市id
-	District  string                `gorm:"column:district;type:varchar(64);not null;comment:收货人所在区" json:"district"`                 // 收货人所在区
-	Detail    string                `gorm:"column:detail;type:varchar(256);not null;comment:收货人详细地址" json:"detail"`                   // 收货人详细地址
-	PostCode  int64                 `gorm:"column:post_code;type:int;not null;comment:邮编" json:"post_code"`                           // 邮编
-	Longitude string                `gorm:"column:longitude;type:varchar(16);not null;default:0;comment:经度" json:"longitude"`         // 经度
-	Latitude  string                `gorm:"column:latitude;type:varchar(16);not null;default:0;comment:纬度" json:"latitude"`           // 纬度
-	IsDefault int64                 `gorm:"column:is_default;type:tinyint unsigned;not null;comment:是否默认" json:"is_default"`          // 是否默认
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`           // 创建时间
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`           // 修改时间
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                   // 是否删除
+	ID        int64                 `gorm:"column:id;type:mediumint(8) unsigned;primaryKey;autoIncrement:true;comment:用户地址id" json:"id"` // 用户地址id
+	UID       int64                 `gorm:"column:uid;type:int(10) unsigned;not null;comment:用户id" json:"uid"`                           // 用户id
+	RealName  string                `gorm:"column:real_name;type:varchar(32);not null;comment:收货人姓名" json:"real_name"`                   // 收货人姓名
+	Phone     string                `gorm:"column:phone;type:varchar(16);not null;comment:收货人电话" json:"phone"`                           // 收货人电话
+	Province  string                `gorm:"column:province;type:varchar(64);not null;comment:收货人所在省" json:"province"`                    // 收货人所在省
+	City      string                `gorm:"column:city;type:varchar(64);not null;comment:收货人所在市" json:"city"`                            // 收货人所在市
+	CityID    int64                 `gorm:"column:city_id;type:int(11);not null;comment:城市id" json:"city_id"`                            // 城市id
+	District  string                `gorm:"column:district;type:varchar(64);not null;comment:收货人所在区" json:"district"`                    // 收货人所在区
+	Detail    string                `gorm:"column:detail;type:varchar(256);not null;comment:收货人详细地址" json:"detail"`                      // 收货人详细地址
+	PostCode  int64                 `gorm:"column:post_code;type:int(11);not null;comment:邮编" json:"post_code"`                          // 邮编
+	Longitude string                `gorm:"column:longitude;type:varchar(16);not null;default:0;comment:经度" json:"longitude"`            // 经度
+	Latitude  string                `gorm:"column:latitude;type:varchar(16);not null;default:0;comment:纬度" json:"latitude"`              // 纬度
+	IsDefault int64                 `gorm:"column:is_default;type:tinyint(3) unsigned;not null;comment:是否默认" json:"is_default"`          // 是否默认
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"`          // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"`          // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`                   // 是否删除
 }
 
 // TableName UserAddress's table name

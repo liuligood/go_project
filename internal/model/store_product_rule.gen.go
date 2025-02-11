@@ -10,12 +10,12 @@ const TableNameStoreProductRule = "store_product_rule"
 
 // StoreProductRule 商品规则值(规格)表
 type StoreProductRule struct {
-	ID        int64                 `gorm:"column:id;type:int;primaryKey;autoIncrement:true" json:"id"`
-	RuleName  string                `gorm:"column:rule_name;type:varchar(32);not null;comment:规格名称" json:"rule_name"`       // 规格名称
-	RuleValue string                `gorm:"column:rule_value;type:text;not null;comment:规格值" json:"rule_value"`             // 规格值
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
+	ID        int64                 `gorm:"column:id;type:int(11);primaryKey;autoIncrement:true" json:"id"`
+	RuleName  string                `gorm:"column:rule_name;type:varchar(32);not null;comment:规格名称" json:"rule_name"`           // 规格名称
+	RuleValue string                `gorm:"column:rule_value;type:text;not null;comment:规格值" json:"rule_value"`                 // 规格值
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
 }
 
 // TableName StoreProductRule's table name

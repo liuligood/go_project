@@ -10,11 +10,11 @@ const TableNameUserTag = "user_tag"
 
 // UserTag 标签管理
 type UserTag struct {
-	ID        int64                 `gorm:"column:id;type:smallint unsigned;primaryKey;autoIncrement:true" json:"id"`
-	Name      string                `gorm:"column:name;type:varchar(64);comment:标签名称" json:"name"`                          // 标签名称
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
+	ID        int64                 `gorm:"column:id;type:smallint(5) unsigned;primaryKey;autoIncrement:true" json:"id"`
+	Name      string                `gorm:"column:name;type:varchar(64);comment:标签名称" json:"name"`                              // 标签名称
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
 }
 
 // TableName UserTag's table name

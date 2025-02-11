@@ -10,11 +10,11 @@ const TableNameUserGroup = "user_group"
 
 // UserGroup 用户分组表
 type UserGroup struct {
-	ID        int64                 `gorm:"column:id;type:smallint unsigned;primaryKey;autoIncrement:true" json:"id"`
-	GroupName string                `gorm:"column:group_name;type:varchar(64);comment:用户分组名称" json:"group_name"`            // 用户分组名称
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
+	ID        int64                 `gorm:"column:id;type:smallint(5) unsigned;primaryKey;autoIncrement:true" json:"id"`
+	GroupName string                `gorm:"column:group_name;type:varchar(64);comment:用户分组名称" json:"group_name"`                // 用户分组名称
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
 }
 
 // TableName UserGroup's table name

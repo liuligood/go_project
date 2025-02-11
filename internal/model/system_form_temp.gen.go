@@ -10,13 +10,13 @@ const TableNameSystemFormTemp = "system_form_temp"
 
 // SystemFormTemp 表单模板
 type SystemFormTemp struct {
-	ID        int64                 `gorm:"column:id;type:int;primaryKey;autoIncrement:true;comment:表单模板id" json:"id"`      // 表单模板id
-	Name      string                `gorm:"column:name;type:varchar(500);not null;comment:表单名称" json:"name"`                // 表单名称
-	Info      string                `gorm:"column:info;type:varchar(500);not null;comment:表单简介" json:"info"`                // 表单简介
-	Content   string                `gorm:"column:content;type:text;not null;comment:表单内容" json:"content"`                  // 表单内容
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
+	ID        int64                 `gorm:"column:id;type:int(11);primaryKey;autoIncrement:true;comment:表单模板id" json:"id"`      // 表单模板id
+	Name      string                `gorm:"column:name;type:varchar(500);not null;comment:表单名称" json:"name"`                    // 表单名称
+	Info      string                `gorm:"column:info;type:varchar(500);not null;comment:表单简介" json:"info"`                    // 表单简介
+	Content   string                `gorm:"column:content;type:text;not null;comment:表单内容" json:"content"`                      // 表单内容
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
 }
 
 // TableName SystemFormTemp's table name

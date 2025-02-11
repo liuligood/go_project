@@ -10,19 +10,19 @@ const TableNameSystemCity = "system_city"
 
 // SystemCity 城市表
 type SystemCity struct {
-	ID         int64                 `gorm:"column:id;type:int;primaryKey" json:"id"`
-	CityID     int64                 `gorm:"column:city_id;type:int;not null;comment:城市id" json:"city_id"`                   // 城市id
-	Level      int64                 `gorm:"column:level;type:int;not null;comment:省市级别" json:"level"`                       // 省市级别
-	ParentID   int64                 `gorm:"column:parent_id;type:int;not null;comment:父级id" json:"parent_id"`               // 父级id
-	AreaCode   string                `gorm:"column:area_code;type:varchar(30);not null;comment:区号" json:"area_code"`         // 区号
-	Name       string                `gorm:"column:name;type:varchar(100);not null;comment:名称" json:"name"`                  // 名称
-	MergerName string                `gorm:"column:merger_name;type:varchar(255);not null;comment:合并名称" json:"merger_name"`  // 合并名称
-	Lng        string                `gorm:"column:lng;type:varchar(50);not null;comment:经度" json:"lng"`                     // 经度
-	Lat        string                `gorm:"column:lat;type:varchar(50);not null;comment:纬度" json:"lat"`                     // 纬度
-	IsShow     int64                 `gorm:"column:is_show;type:tinyint(1);not null;default:1;comment:是否展示" json:"is_show"`  // 是否展示
-	CreatedAt  int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
-	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
-	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`         // 是否删除
+	ID         int64                 `gorm:"column:id;type:int(11);primaryKey" json:"id"`
+	CityID     int64                 `gorm:"column:city_id;type:int(11);not null;comment:城市id" json:"city_id"`                   // 城市id
+	Level      int64                 `gorm:"column:level;type:int(11);not null;comment:省市级别" json:"level"`                       // 省市级别
+	ParentID   int64                 `gorm:"column:parent_id;type:int(11);not null;comment:父级id" json:"parent_id"`               // 父级id
+	AreaCode   string                `gorm:"column:area_code;type:varchar(30);not null;comment:区号" json:"area_code"`             // 区号
+	Name       string                `gorm:"column:name;type:varchar(100);not null;comment:名称" json:"name"`                      // 名称
+	MergerName string                `gorm:"column:merger_name;type:varchar(255);not null;comment:合并名称" json:"merger_name"`      // 合并名称
+	Lng        string                `gorm:"column:lng;type:varchar(50);not null;comment:经度" json:"lng"`                         // 经度
+	Lat        string                `gorm:"column:lat;type:varchar(50);not null;comment:纬度" json:"lat"`                         // 纬度
+	IsShow     int64                 `gorm:"column:is_show;type:tinyint(1);not null;default:1;comment:是否展示" json:"is_show"`      // 是否展示
+	CreatedAt  int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt  int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt  soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
 }
 
 // TableName SystemCity's table name

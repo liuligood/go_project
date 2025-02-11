@@ -13,44 +13,44 @@ const TableNameStoreCombination = "store_combination"
 
 // StoreCombination 拼团商品表
 type StoreCombination struct {
-	ID            int64                 `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true;comment:拼团商品ID" json:"id"` // 拼团商品ID
-	ProductID     int64                 `gorm:"column:product_id;type:int unsigned;not null;comment:商品id" json:"product_id"`        // 商品id
-	MerID         int64                 `gorm:"column:mer_id;type:int unsigned;comment:商户id" json:"mer_id"`                         // 商户id
-	Image         string                `gorm:"column:image;type:varchar(255);not null;comment:推荐图" json:"image"`                   // 推荐图
-	Images        string                `gorm:"column:images;type:varchar(2000);not null;comment:轮播图" json:"images"`                // 轮播图
-	Title         string                `gorm:"column:title;type:varchar(255);not null;comment:活动标题" json:"title"`                  // 活动标题
-	Attr          string                `gorm:"column:attr;type:varchar(255);comment:活动属性" json:"attr"`                             // 活动属性
-	People        int64                 `gorm:"column:people;type:int unsigned;not null;comment:参团人数" json:"people"`                // 参团人数
-	Info          string                `gorm:"column:info;type:varchar(255);not null;comment:简介" json:"info"`                      // 简介
-	Price         decimal.Decimal       `gorm:"column:price;type:decimal(10,2) unsigned;not null;comment:价格" json:"price"`          // 价格
-	Sort          int64                 `gorm:"column:sort;type:int unsigned;not null;comment:排序" json:"sort"`                      // 排序
-	Sales         int64                 `gorm:"column:sales;type:int unsigned;not null;comment:销量" json:"sales"`                    // 销量
-	Stock         int64                 `gorm:"column:stock;type:int unsigned;not null;comment:库存" json:"stock"`                    // 库存
-	AddTime       int64                 `gorm:"column:add_time;type:bigint;not null;comment:添加时间" json:"add_time"`                  // 添加时间
-	IsHost        int64                 `gorm:"column:is_host;type:tinyint unsigned;not null;comment:推荐" json:"is_host"`            // 推荐
-	IsShow        int64                 `gorm:"column:is_show;type:tinyint unsigned;not null;comment:商品状态" json:"is_show"`          // 商品状态
-	Combination   int64                 `gorm:"column:combination;type:tinyint unsigned;default:1" json:"combination"`
-	MerUse        int64                 `gorm:"column:mer_use;type:tinyint unsigned;comment:商户是否可用1可用0不可用" json:"mer_use"`                 // 商户是否可用1可用0不可用
-	IsPostage     int64                 `gorm:"column:is_postage;type:tinyint unsigned;comment:是否包邮1是0否" json:"is_postage"`                // 是否包邮1是0否
-	Postage       decimal.Decimal       `gorm:"column:postage;type:decimal(10,2) unsigned;comment:邮费" json:"postage"`                      // 邮费
-	StartTime     int64                 `gorm:"column:start_time;type:bigint unsigned;not null;comment:拼团开始时间" json:"start_time"`          // 拼团开始时间
-	StopTime      int64                 `gorm:"column:stop_time;type:bigint unsigned;not null;comment:拼团结束时间" json:"stop_time"`            // 拼团结束时间
-	EffectiveTime int64                 `gorm:"column:effective_time;type:int;not null;comment:拼团订单有效时间(小时)" json:"effective_time"`        // 拼团订单有效时间(小时)
-	Cost          decimal.Decimal       `gorm:"column:cost;type:decimal(10,2) unsigned;not null;default:0.00;comment:拼图商品成本" json:"cost"`  // 拼图商品成本
-	Browse        int64                 `gorm:"column:browse;type:int;comment:浏览量" json:"browse"`                                          // 浏览量
-	UnitName      string                `gorm:"column:unit_name;type:varchar(32);not null;comment:单位名" json:"unit_name"`                   // 单位名
-	TempID        int64                 `gorm:"column:temp_id;type:int;not null;comment:运费模板ID" json:"temp_id"`                            // 运费模板ID
-	Weight        decimal.Decimal       `gorm:"column:weight;type:decimal(8,2);default:0.00;comment:重量" json:"weight"`                     // 重量
-	Volume        decimal.Decimal       `gorm:"column:volume;type:decimal(8,2);default:0.00;comment:体积" json:"volume"`                     // 体积
-	Num           int64                 `gorm:"column:num;type:int;comment:单次购买数量" json:"num"`                                             // 单次购买数量
-	Quota         int64                 `gorm:"column:quota;type:int;not null;comment:限购总数" json:"quota"`                                  // 限购总数
-	QuotaShow     int64                 `gorm:"column:quota_show;type:int;not null;comment:限量总数显示" json:"quota_show"`                      // 限量总数显示
-	OtPrice       decimal.Decimal       `gorm:"column:ot_price;type:decimal(10,2);not null;comment:原价" json:"ot_price"`                    // 原价
-	OnceNum       int64                 `gorm:"column:once_num;type:int;not null;comment:每个订单可购买数量" json:"once_num"`                       // 每个订单可购买数量
-	VirtualRation int64                 `gorm:"column:virtual_ration;type:int;not null;default:100;comment:虚拟成团百分比" json:"virtual_ration"` // 虚拟成团百分比
-	CreatedAt     int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`            // 创建时间
-	UpdatedAt     int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`            // 修改时间
-	DeletedAt     soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                    // 是否删除
+	ID            int64                 `gorm:"column:id;type:int(10) unsigned;primaryKey;autoIncrement:true;comment:拼团商品ID" json:"id"` // 拼团商品ID
+	ProductID     int64                 `gorm:"column:product_id;type:int(10) unsigned;not null;comment:商品id" json:"product_id"`        // 商品id
+	MerID         int64                 `gorm:"column:mer_id;type:int(10) unsigned;comment:商户id" json:"mer_id"`                         // 商户id
+	Image         string                `gorm:"column:image;type:varchar(255);not null;comment:推荐图" json:"image"`                       // 推荐图
+	Images        string                `gorm:"column:images;type:varchar(2000);not null;comment:轮播图" json:"images"`                    // 轮播图
+	Title         string                `gorm:"column:title;type:varchar(255);not null;comment:活动标题" json:"title"`                      // 活动标题
+	Attr          string                `gorm:"column:attr;type:varchar(255);comment:活动属性" json:"attr"`                                 // 活动属性
+	People        int64                 `gorm:"column:people;type:int(10) unsigned;not null;comment:参团人数" json:"people"`                // 参团人数
+	Info          string                `gorm:"column:info;type:varchar(255);not null;comment:简介" json:"info"`                          // 简介
+	Price         decimal.Decimal       `gorm:"column:price;type:decimal(10,2) unsigned;not null;comment:价格" json:"price"`              // 价格
+	Sort          int64                 `gorm:"column:sort;type:int(10) unsigned;not null;comment:排序" json:"sort"`                      // 排序
+	Sales         int64                 `gorm:"column:sales;type:int(10) unsigned;not null;comment:销量" json:"sales"`                    // 销量
+	Stock         int64                 `gorm:"column:stock;type:int(10) unsigned;not null;comment:库存" json:"stock"`                    // 库存
+	AddTime       int64                 `gorm:"column:add_time;type:bigint(20);not null;comment:添加时间" json:"add_time"`                  // 添加时间
+	IsHost        int64                 `gorm:"column:is_host;type:tinyint(3) unsigned;not null;comment:推荐" json:"is_host"`             // 推荐
+	IsShow        int64                 `gorm:"column:is_show;type:tinyint(3) unsigned;not null;comment:商品状态" json:"is_show"`           // 商品状态
+	Combination   int64                 `gorm:"column:combination;type:tinyint(3) unsigned;default:1" json:"combination"`
+	MerUse        int64                 `gorm:"column:mer_use;type:tinyint(3) unsigned;comment:商户是否可用1可用0不可用" json:"mer_use"`                  // 商户是否可用1可用0不可用
+	IsPostage     int64                 `gorm:"column:is_postage;type:tinyint(3) unsigned;comment:是否包邮1是0否" json:"is_postage"`                 // 是否包邮1是0否
+	Postage       decimal.Decimal       `gorm:"column:postage;type:decimal(10,2) unsigned;comment:邮费" json:"postage"`                          // 邮费
+	StartTime     int64                 `gorm:"column:start_time;type:bigint(20) unsigned;not null;comment:拼团开始时间" json:"start_time"`          // 拼团开始时间
+	StopTime      int64                 `gorm:"column:stop_time;type:bigint(20) unsigned;not null;comment:拼团结束时间" json:"stop_time"`            // 拼团结束时间
+	EffectiveTime int64                 `gorm:"column:effective_time;type:int(11);not null;comment:拼团订单有效时间(小时)" json:"effective_time"`        // 拼团订单有效时间(小时)
+	Cost          decimal.Decimal       `gorm:"column:cost;type:decimal(10,2) unsigned;not null;default:0.00;comment:拼图商品成本" json:"cost"`      // 拼图商品成本
+	Browse        int64                 `gorm:"column:browse;type:int(11);comment:浏览量" json:"browse"`                                          // 浏览量
+	UnitName      string                `gorm:"column:unit_name;type:varchar(32);not null;comment:单位名" json:"unit_name"`                       // 单位名
+	TempID        int64                 `gorm:"column:temp_id;type:int(11);not null;comment:运费模板ID" json:"temp_id"`                            // 运费模板ID
+	Weight        decimal.Decimal       `gorm:"column:weight;type:decimal(8,2);default:0.00;comment:重量" json:"weight"`                         // 重量
+	Volume        decimal.Decimal       `gorm:"column:volume;type:decimal(8,2);default:0.00;comment:体积" json:"volume"`                         // 体积
+	Num           int64                 `gorm:"column:num;type:int(11);comment:单次购买数量" json:"num"`                                             // 单次购买数量
+	Quota         int64                 `gorm:"column:quota;type:int(11);not null;comment:限购总数" json:"quota"`                                  // 限购总数
+	QuotaShow     int64                 `gorm:"column:quota_show;type:int(11);not null;comment:限量总数显示" json:"quota_show"`                      // 限量总数显示
+	OtPrice       decimal.Decimal       `gorm:"column:ot_price;type:decimal(10,2);not null;comment:原价" json:"ot_price"`                        // 原价
+	OnceNum       int64                 `gorm:"column:once_num;type:int(11);not null;comment:每个订单可购买数量" json:"once_num"`                       // 每个订单可购买数量
+	VirtualRation int64                 `gorm:"column:virtual_ration;type:int(11);not null;default:100;comment:虚拟成团百分比" json:"virtual_ration"` // 虚拟成团百分比
+	CreatedAt     int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"`            // 创建时间
+	UpdatedAt     int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"`            // 修改时间
+	DeletedAt     soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`                     // 是否删除
 }
 
 // TableName StoreCombination's table name

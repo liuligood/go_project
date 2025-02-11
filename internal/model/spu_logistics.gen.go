@@ -13,23 +13,23 @@ const TableNameSpuLogistics = "spu_logistics"
 
 // SpuLogistics 商品物流表
 type SpuLogistics struct {
-	ID              int64                 `gorm:"column:id;type:int;primaryKey;comment:主键" json:"id"`                                            // 主键
-	SpuID           int64                 `gorm:"column:spu_id;type:int;not null;comment:商品id" json:"spu_id"`                                    // 商品id
-	Type            int64                 `gorm:"column:type;type:tinyint unsigned;not null;comment:类型(1:寄出,2:寄回)" json:"type"`                  // 类型(1:寄出,2:寄回)
-	Province        string                `gorm:"column:province;type:varchar(64);not null;comment:省" json:"province"`                           // 省
-	City            string                `gorm:"column:city;type:varchar(64);not null;comment:市" json:"city"`                                   // 市
-	Region          string                `gorm:"column:region;type:varchar(100);not null;comment:区/县" json:"region"`                            // 区/县
-	PayType         int64                 `gorm:"column:pay_type;type:tinyint unsigned;not null;comment:支付类型(1-包邮,2-到付,3-运费模版)" json:"pay_type"` // 支付类型(1-包邮,2-到付,3-运费模版)
-	Price           decimal.Decimal       `gorm:"column:price;type:decimal(10,4) unsigned;not null;default:0.0000;comment:价格" json:"price"`      // 价格
-	TempID          int64                 `gorm:"column:temp_id;type:int unsigned;not null;comment:运费模版id" json:"temp_id"`                       // 运费模版id
-	ExpressWay      int64                 `gorm:"column:express_way;type:tinyint unsigned;not null;comment:快递方式" json:"express_way"`             // 快递方式
-	ServerAddressID int64                 `gorm:"column:server_address_id;type:int unsigned;not null;comment:商家地址id" json:"server_address_id"`   // 商家地址id
-	AddService      int64                 `gorm:"column:add_service;type:tinyint unsigned;not null;comment:增值服务(位运算)" json:"add_service"`        // 增值服务(位运算)
-	CreatedAt       int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`                // 创建时间
-	UpdatedAt       int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`                // 修改时间
-	DeletedAt       soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`                        // 是否删除
-	CreatedBy       int64                 `gorm:"column:created_by;type:int unsigned;not null;comment:创建时间" json:"created_by"`                   // 创建时间
-	UpdatedBy       int64                 `gorm:"column:updated_by;type:int unsigned;not null;comment:修改时间" json:"updated_by"`                   // 修改时间
+	ID              int64                 `gorm:"column:id;type:int(11);primaryKey;comment:主键" json:"id"`                                           // 主键
+	SpuID           int64                 `gorm:"column:spu_id;type:int(11);not null;comment:商品id" json:"spu_id"`                                   // 商品id
+	Type            int64                 `gorm:"column:type;type:tinyint(3) unsigned;not null;comment:类型(1:寄出,2:寄回)" json:"type"`                  // 类型(1:寄出,2:寄回)
+	Province        string                `gorm:"column:province;type:varchar(64);not null;comment:省" json:"province"`                              // 省
+	City            string                `gorm:"column:city;type:varchar(64);not null;comment:市" json:"city"`                                      // 市
+	Region          string                `gorm:"column:region;type:varchar(100);not null;comment:区/县" json:"region"`                               // 区/县
+	PayType         int64                 `gorm:"column:pay_type;type:tinyint(3) unsigned;not null;comment:支付类型(1-包邮,2-到付,3-运费模版)" json:"pay_type"` // 支付类型(1-包邮,2-到付,3-运费模版)
+	Price           decimal.Decimal       `gorm:"column:price;type:decimal(10,4) unsigned;not null;default:0.0000;comment:价格" json:"price"`         // 价格
+	TempID          int64                 `gorm:"column:temp_id;type:int(10) unsigned;not null;comment:运费模版id" json:"temp_id"`                      // 运费模版id
+	ExpressWay      int64                 `gorm:"column:express_way;type:tinyint(3) unsigned;not null;comment:快递方式" json:"express_way"`             // 快递方式
+	ServerAddressID int64                 `gorm:"column:server_address_id;type:int(10) unsigned;not null;comment:商家地址id" json:"server_address_id"`  // 商家地址id
+	AddService      int64                 `gorm:"column:add_service;type:tinyint(3) unsigned;not null;comment:增值服务(位运算)" json:"add_service"`        // 增值服务(位运算)
+	CreatedAt       int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"`               // 创建时间
+	UpdatedAt       int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"`               // 修改时间
+	DeletedAt       soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`                        // 是否删除
+	CreatedBy       int64                 `gorm:"column:created_by;type:int(10) unsigned;not null;comment:创建时间" json:"created_by"`                  // 创建时间
+	UpdatedBy       int64                 `gorm:"column:updated_by;type:int(10) unsigned;not null;comment:修改时间" json:"updated_by"`                  // 修改时间
 }
 
 // TableName SpuLogistics's table name

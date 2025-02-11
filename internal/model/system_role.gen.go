@@ -10,14 +10,14 @@ const TableNameSystemRole = "system_role"
 
 // SystemRole 身份管理表
 type SystemRole struct {
-	ID        int64                 `gorm:"column:id;type:int unsigned;primaryKey;autoIncrement:true;comment:身份管理id" json:"id"` // 身份管理id
-	RoleName  string                `gorm:"column:role_name;type:varchar(32);not null;comment:身份管理名称" json:"role_name"`         // 身份管理名称
-	Rules     string                `gorm:"column:rules;type:text;not null;comment:身份管理权限(menus_id)" json:"rules"`              // 身份管理权限(menus_id)
-	Level     int64                 `gorm:"column:level;type:tinyint unsigned;not null" json:"level"`
-	Status    int64                 `gorm:"column:status;type:tinyint unsigned;not null;default:1;comment:状态" json:"status"` // 状态
-	CreatedAt int64                 `gorm:"column:created_at;type:bigint unsigned;not null;comment:创建时间" json:"created_at"`  // 创建时间
-	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint unsigned;not null;comment:修改时间" json:"updated_at"`  // 修改时间
-	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
+	ID        int64                 `gorm:"column:id;type:int(10) unsigned;primaryKey;autoIncrement:true;comment:身份管理id" json:"id"` // 身份管理id
+	RoleName  string                `gorm:"column:role_name;type:varchar(32);not null;comment:身份管理名称" json:"role_name"`             // 身份管理名称
+	Rules     string                `gorm:"column:rules;type:text;not null;comment:身份管理权限(menus_id)" json:"rules"`                  // 身份管理权限(menus_id)
+	Level     int64                 `gorm:"column:level;type:tinyint(3) unsigned;not null" json:"level"`
+	Status    int64                 `gorm:"column:status;type:tinyint(3) unsigned;not null;default:1;comment:状态" json:"status"` // 状态
+	CreatedAt int64                 `gorm:"column:created_at;type:bigint(20) unsigned;not null;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt int64                 `gorm:"column:updated_at;type:bigint(20) unsigned;not null;comment:修改时间" json:"updated_at"` // 修改时间
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at;type:tinyint(3) unsigned;not null;comment:是否删除" json:"-"`          // 是否删除
 }
 
 // TableName SystemRole's table name
