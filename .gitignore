@@ -23,4 +23,4 @@ go.work
 /log/
 .idea
 config/local_config.yaml
-
+/internal/model/
